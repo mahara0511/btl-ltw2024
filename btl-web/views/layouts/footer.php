@@ -65,7 +65,7 @@
     <script src="public/js/slick.min.js"></script>
     <script src="public/js/nouislider.min.js"></script>
     <script src="public/js/jquery.zoom.min.js"></script>
-    <script src="public/js/sweetalert.min"></script>
+    <script src="public/js/sweetalert.min.js"></script>
     <script src="public/js/jquery.payform.min.js" charset="utf-8"></script>
     <script src="public/js/main.js"></script>
     <script src="public/js/actions.js"></script>

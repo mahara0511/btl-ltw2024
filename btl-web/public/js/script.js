@@ -1,13 +1,12 @@
-$(function() {
-
+$(function () {
     var owner = $('#owner');
     var cardNumber = $('#cardNumber');
     var cardNumberField = $('#card-number-field');
-    var CVV = $("#cvv");
-    var mastercard = $("#mastercard");
+    var CVV = $('#cvv');
+    var mastercard = $('#mastercard');
     var confirmButton = $('#confirm-purchase');
-    var visa = $("#visa");
-    var amex = $("#amex");
+    var visa = $('#visa');
+    var amex = $('#amex');
 
     // Use the payform library to format and validate
     // the payment fields.
@@ -15,9 +14,7 @@ $(function() {
     cardNumber.payform('formatCardNumber');
     CVV.payform('formatCardCVC');
 
-
-    cardNumber.keyup(function() {
-
+    cardNumber.keyup(function () {
         amex.removeClass('transparent');
         visa.removeClass('transparent');
         mastercard.removeClass('transparent');
@@ -41,22 +38,21 @@ $(function() {
         }
     });
 
-    confirmButton.click(function(e) {
-
+    confirmButton.click(function (e) {
         e.preventDefault();
 
         var isCardValid = $.payform.validateCardNumber(cardNumber.val());
         var isCvvValid = $.payform.validateCardCVC(CVV.val());
 
-        if(owner.val().length < 5){
-            alert("Wrong owner name");
+        if (owner.val().length < 5) {
+            alert('Wrong owner name');
         } else if (!isCardValid) {
-            alert("Wrong card number");
+            alert('Wrong card number');
         } else if (!isCvvValid) {
-            alert("Wrong CVV");
+            alert('Wrong CVV');
         } else {
             // Everything is correct. Add your form submission code here.
-            alert("Everything is correct");
+            alert('Everything is correct');
         }
     });
 });

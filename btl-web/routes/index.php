@@ -1,12 +1,17 @@
 <?php 
 $request = $_SERVER['REQUEST_URI'];
 $request = parse_url($request, PHP_URL_PATH);
-
+echo "con ga";
 $parts = explode('/', $request);
     switch ($parts[1]) {
         case '':
             require(ROOT_PATH . '/controllers/HomeController.php');
             $controller = new HomeController();
+            $controller->index();
+            break;
+        case 'about_us':
+            require(ROOT_PATH . '/controllers/AboutUsController.php');
+            $controller = new AboutUsController();
             $controller->index();
             break;
         default:

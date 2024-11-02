@@ -1,7 +1,7 @@
 <?php
 session_start();
 $ip_add = getenv("REMOTE_ADDR");
-include "db.php";
+include "../config/db.php";
 if(isset($_POST["category"])){
 	$category_query = "SELECT * FROM categories";
     
@@ -331,7 +331,7 @@ if (isset($_POST["Common"])) {
                     
                     <div class="product-widget">
 												<div class="product-img">
-													<img src="product_images/'.$product_image.'" alt="">
+													<img src="public/product_images/'.$product_image.'" alt="">
 												</div>
 												<div class="product-body">
 													<h3 class="product-name"><a href="#">'.$product_title.'</a></h3>

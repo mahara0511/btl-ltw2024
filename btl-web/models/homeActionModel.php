@@ -1,7 +1,7 @@
 <?php
 session_start();
 $ip_add = getenv("REMOTE_ADDR");
-include "db.php";
+include "../config/db.php";
 
 if(isset($_POST["categoryhome"])){
 	$category_query = "SELECT * FROM categories WHERE cat_id!=1";
@@ -12,7 +12,7 @@ if(isset($_POST["categoryhome"])){
 				<div id='responsive-nav'>
 					<!-- NAV -->
 					<ul class='main-nav nav navbar-nav'>
-                    <li class='active'><a href='index.php'>Home</a></li>
+                    <li class='active'><a href=''>Home</a></li>
                     <li><a href='store.php'>Electronics</a></li>
 	";
 	if(mysqli_num_rows($run_query) > 0){
@@ -77,17 +77,18 @@ if(isset($_POST["getProducthome"])){
             $cat_name = $row["cat_title"];
 			echo "
 				
-                       <div class='product-widget'>
+							<div class='product-widget'>
                                 <a href='product.php?p=$pro_id'> 
 									<div class='product-img'>
-										<img src='product_images/$pro_image' alt=''>
+										<img src='public/product_images/$pro_image' alt='product-img'>
 									</div>
 									<div class='product-body'>
 										<p class='product-category'>$cat_name</p>
 										<h3 class='product-name'><a href='product.php?p=$pro_id'>$pro_title</a></h3>
 										<h4 class='product-price'>$pro_price<del class='product-old-price'>$990.00</del></h4>
-									</div></a>
-								</div>
+									</div>
+								</a>
+							</div>
                         
 			";
 		}

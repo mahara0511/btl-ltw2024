@@ -42,7 +42,7 @@ session_start();
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-left">
-						<li><a href="#"><i class="fa fa-phone"></i> +91-9535688928</a></li>
+						<li><a href="about_us"><i class="fa fa-users"></i> About us</a></li>
 						<li><a href="#"><i class="fa fa-envelope-o"></i> puneethreddy951@gmail.com</a></li>
 						<li><a href="#"><i class="fa fa-map-marker"></i>Bangalore</a></li>
 					</ul>
@@ -93,7 +93,7 @@ session_start();
 				<!-- container -->
 				<div class="container">
 					<!-- row -->
-					<div class="row">
+					<div class="row header-content">
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
@@ -114,7 +114,7 @@ session_start();
 									<select class="input-select">
 										<option value="0">All Categories</option>
 										<option value="1">Men</option>
-										<option value="1">Women </option>
+										<option value="2">Women </option>
 									</select>
 									<input class="input" id="search" type="text" placeholder="Search here">
 									<button type="submit" id="search_btn" class="search-btn">Search</button>
@@ -209,7 +209,7 @@ session_start();
                         </div>
                       </div>
                 <div class="modal fade" id="Modal_register" role="dialog">
-                        <div class="modal-dialog" style="">
+                        <div class="modal-dialog">
 
                           <!-- Modal content-->
                           <div class="modal-content">

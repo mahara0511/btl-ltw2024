@@ -3,7 +3,6 @@ $request = $_SERVER['REQUEST_URI'];
 $request = parse_url($request, PHP_URL_PATH);
 
 $parts = explode('/', $request);
-
     switch ($parts[1]) {
         case '':
             require(ROOT_PATH . '/controllers/HomeController.php');

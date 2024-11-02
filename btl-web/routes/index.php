@@ -9,12 +9,6 @@ $parts = explode('/', $request);
             $controller = new HomeController();
             $controller->index();
             break;
-        case 'product': 
-            require('Product.php');
-            break;
-        case 'api': 
-            require('api/index.php');
-            break;
         default:
             http_response_code(404);
             echo "404 Not Found";

@@ -184,7 +184,7 @@ session_start();
             </div>
 				<!-- responsive-nav -->
 				
-			<!-- /container -->
+		<!-- /container -->
 		</nav>
             
 

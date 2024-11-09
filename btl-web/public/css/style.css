@@ -568,10 +568,13 @@ textarea.input {
 }
 
 .header-search form .input-select {
-    /* margin-right: -4px; */
     border-radius: 40px 0px 0px 40px;
     outline: none;
     height: 40px;
+}
+
+.header-search form .input-select:hover {
+    cursor: pointer;
 }
 
 .header-search form .input {
@@ -652,7 +655,9 @@ textarea.input {
 .header-ctn .menu-toggle {
     display: none;
 }
-
+.cart-block:hover {
+    cursor: pointer;
+}
 .cart-dropdown {
     position: absolute;
     width: 300px;
@@ -675,6 +680,25 @@ textarea.input {
     max-height: 180px;
     overflow-y: scroll;
     margin-bottom: 15px;
+}
+
+/* Styling the scrollbar for WebKit browsers */
+.cart-dropdown .cart-list::-webkit-scrollbar {
+    width: 4px; /* Adjust this value for a thinner scrollbar */
+}
+
+.cart-dropdown .cart-list::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 4px; /* Round edges */
+}
+
+.cart-dropdown .cart-list::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Darker color on hover */
+}
+
+.cart-dropdown .cart-list::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background of the scrollbar track */
+    border-radius: 4px; /* Round edges */
 }
 
 .cart-dropdown .cart-list .product-widget {

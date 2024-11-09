@@ -1,6 +1,7 @@
 $(document).ready(function () {
     cat();
-    cathome();
+    let currentUrl = window.location.href;
+    cathome(currentUrl);
     brand();
     product();
 
@@ -17,11 +18,11 @@ $(document).ready(function () {
             },
         });
     }
-    function cathome() {
+    function cathome(currentUrl) {
         $.ajax({
             url: '../../models/homeActionModel.php',
             method: 'POST',
-            data: { categoryhome: 1 },
+            data: { categoryhome: 1, currentUrl },
             success: function (data) {
                 $('#get_category_home').html(data);
             },

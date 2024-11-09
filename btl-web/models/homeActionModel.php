@@ -5,15 +5,17 @@ include "../config/db.php";
 
 if(isset($_POST["categoryhome"])){
 	$category_query = "SELECT * FROM categories WHERE cat_id!=1";
-    
+	$current_page = $_POST["currentUrl"]; // Get the current page URL
 	$run_query = mysqli_query($con,$category_query) or die(mysqli_error($con));
+	echo $current_page;
 	echo "
 				<!-- responsive-nav -->
 				<div id='responsive-nav'>
 					<!-- NAV -->
 					<ul class='main-nav nav navbar-nav'>
-                    <li class='active'><a href=''>Home</a></li>
-                    <li><a href='store.php'>Electronics</a></li>
+                    <li class='" . ($current_page == '/' ? 'active' : '') . "'><a href='/'>Home</a></li>
+                    <li class='" . ($current_page == '/' ? 'active' : '') . "'><a href='/store.php'>Products</a></li>
+                    <li class='" . ($current_page == '/about_us' ? 'active' : '') . "'><a href='/about_us'>About Us</a></li>
 	";
 	if(mysqli_num_rows($run_query) > 0){
 		while($row = mysqli_fetch_array($run_query)){

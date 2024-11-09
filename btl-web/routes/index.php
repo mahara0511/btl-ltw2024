@@ -1,7 +1,7 @@
 <?php 
 $request = $_SERVER['REQUEST_URI'];
 $request = parse_url($request, PHP_URL_PATH);
-echo "con ga";
+
 $parts = explode('/', $request);
     switch ($parts[1]) {
         case '':

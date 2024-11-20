@@ -25,6 +25,7 @@ class ProductController
         }
 
         $brands = $this->model->getBrands();
+        $categories = $this->model->getCategories();
         include 'views/store.php';
     }
 

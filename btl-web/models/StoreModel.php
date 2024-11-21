@@ -1,5 +1,5 @@
 <?php
-class ProductModel
+class StoreModel
 {
     private $db;
 
@@ -20,6 +20,22 @@ class ProductModel
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function getProductsByBrand($brandId)
+    {
+        $query = $this->db->query("SELECT * FROM products,categories WHERE product_cat=cat_id AND product_brand = $brandId");
+
+        return $query->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // }
+    public function getProductsByCategory($categoryId)
+    {
+        $query = $this->db->query("SELECT * FROM products,categories WHERE product_cat=cat_id AND product_cat = $categoryId");
+
+        return $query->fetch_all(MYSQLI_ASSOC);
+    }
+
 
     public function getBrands()
     {
@@ -50,6 +66,10 @@ class ProductModel
                 $i++;
             }
         }
+
+        usort($brand_data, function ($a, $b) {
+            return $b['count_items'] <=> $a['count_items'];
+        });
 
         return $brand_data;
     }

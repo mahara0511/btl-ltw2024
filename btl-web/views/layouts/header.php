@@ -18,22 +18,33 @@ session_start();
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="public/css/bootstrap.min.css" />
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="css/slick.css" />
-    <link type="text/css" rel="stylesheet" href="css/slick-theme.css" />
+    <link type="text/css" rel="stylesheet" href="public/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="public/css/slick-theme.css" />
+
 
     <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="css/nouislider.min.css" />
+    <link type="text/css" rel="stylesheet" href="public/css/nouislider.min.css" />
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="public/css/font-awesome.min.css">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
-    <link type="text/css" rel="stylesheet" href="css/accountbtn.css" />
+    <link type="text/css" rel="stylesheet" href="public/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="public/css/accountbtn.css" />
 
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- ICON -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- SLIDER -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.css">
 
 
 
@@ -149,7 +160,7 @@ session_start();
                 </ul>
                 <ul class="header-links pull-right">
                     <li><a href="#"><i class="fa fa-inr"></i> INR</a></li>
-                    <li><?php
+                    <!-- <li><?php
                     include "db.php";
                     if (isset($_SESSION["uid"])) {
                         $sql = "SELECT first_name FROM user_info WHERE user_id='$_SESSION[uid]'";
@@ -181,7 +192,7 @@ session_start();
                     }
                     ?>
 
-                    </li>
+                    </li> -->
                 </ul>
 
             </div>
@@ -303,8 +314,8 @@ session_start();
                 </div>
                 <div class="modal-body">
                     <?php
-                    include "login_form.php";
-
+                    // include "login_form.php";
+                    
                     ?>
 
                 </div>
@@ -324,8 +335,8 @@ session_start();
                 </div>
                 <div class="modal-body">
                     <?php
-                    include "register_form.php";
-
+                    // include "register_form.php";
+                    
                     ?>
 
                 </div>

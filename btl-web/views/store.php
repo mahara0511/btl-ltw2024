@@ -158,17 +158,17 @@ include 'layouts/header.php';
                     <!-- store top filter -->
                     <div class="store-filter clearfix">
                         <div class="store-sort">
-                            <div class="store-sort-type">
+                            <div class="store-sort-type sort-by-select">
                                 <label>Sort By:</label>
-                                <select class="input-select">
+                                <select class="input-select ">
                                     <option value="Expensive">Expensive</option>
                                     <option value="Cheap">Cheap</option>
                                     <option value="Discount" selected>Biggest Discount</option>
                                 </select>
                             </div>
-                            <div class="store-sort-type">
+                            <div class="store-sort-type pagniation-input">
                                 <label>Show:</label>
-                                <select class="input-select">
+                                <select class="input-select ">
                                     <option value="10">10</option>
                                     <option value="20" selected>20</option>
                                     <option value="50">50</option>
@@ -246,13 +246,12 @@ include 'layouts/header.php';
 
                     <!-- store bottom filter -->
                     <div class="store-filter clearfix">
-                        <!-- <span class="store-qty">Showing 20-100 products</span> -->
                         <ul class="store-pagination" id="pageno">
-                            <li><a href="#"><i class="fa fa-angles-left"></i></a></li>
+                            <!-- <li><a href="#"><i class="fa fa-angles-left"></i></a></li>
                             <li><a href="#aside">3</a></li>
                             <li><a class="active" href="#aside">4</a></li>
                             <li><a href="#aside">5</a></li>
-                            <li><a href="#"><i class="fa fa-angles-right"></i></a></li>
+                            <li><a href="#"><i class="fa fa-angles-right"></i></a></li> -->
                         </ul>
                     </div>
                     <!-- /store bottom filter -->

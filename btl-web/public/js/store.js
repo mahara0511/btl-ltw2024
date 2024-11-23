@@ -40,7 +40,7 @@ $(document).ready(function () {
                 $("#store").html(newStoreContent); // Update only the store content
                 // Optionally, update the URL to reflect the current category
                 window.history.pushState(null, null, "index.php?cid=" + categoryId);
-                applyPriceFillter();
+                renderProductsList();
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching category:", error);
@@ -64,7 +64,7 @@ $(document).ready(function () {
                 $("#store").html(newStoreContent); // Update only the store content
                 // Optionally, update the URL to reflect the current category
                 window.history.pushState(null, null, "index.php?bid=" + brandId);
-                applyPriceFillter();
+                renderProductsList();
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching category:", error);
@@ -72,7 +72,7 @@ $(document).ready(function () {
         });
     });
 
-    applyPriceFillter();
+    renderProductsList();
 })  
 
 $(window).on("popstate", function () {
@@ -127,13 +127,19 @@ function loadDefaultContent() {
 
 
 
-function applyPriceFillter() {
+function renderProductsList() {
     const priceSlider = document.getElementById("price-slider");
     const priceMinInput = document.getElementById("price-min");
     const priceMaxInput = document.getElementById("price-max");
     const productContainer = document.getElementById("get_product");
-    const sortingSelect = document.querySelector(".store-sort-type select");
+    const sortingSelect = document.querySelector(".sort-by-select select");
+    const itemsPerPageSelect  = document.querySelector(".pagniation-input select");
+    const paginationContainer = document.getElementById("pageno");
     
+    let currentPage = 1; // Start at the first page
+    let itemsPerPage = parseInt(itemsPerPageSelect.value); // Default items per page
+
+
     // Desired range for the slider (e.g., 100,000 to 10,000,000)
     const minRange = 0;
     const maxRange = 50000;
@@ -141,7 +147,6 @@ function applyPriceFillter() {
     // Initialize noUiSlider
     if (priceSlider.noUiSlider) {
         priceSlider.noUiSlider.destroy();
-        console.log("Existing slider destroyed");
     }
     noUiSlider.create(priceSlider, {
         start: [minRange, maxRange/2], // Initial slider values
@@ -160,14 +165,10 @@ function applyPriceFillter() {
 
     // Function to update transform of noUi-origin elements
     function updateSliderOriginTransform() {
-        // Get all noUi-origin elements (they represent the handles)
         const origins = document.querySelectorAll('.noUi-origin');
         origins.forEach((origin, index) => {
-            // Get the current value of the slider handle
-            const currentValue = priceSlider.noUiSlider.get()[index]; // Get the current value of the slider handle
+            const currentValue = priceSlider.noUiSlider.get()[index];
             const percentageValue = (currentValue - minRange) / (maxRange - minRange) * 100; // Calculate percentage for x position
-
-            // Update the transform style of the noUi-origin to move it horizontally
             origin.style.transform = `translate(${percentageValue}%, 0px)`; // Move it by 100% of the x-axis
         });
     }
@@ -179,6 +180,8 @@ function applyPriceFillter() {
 
     // Helper function to filter and sort products
     function filterAndSortProducts() {
+        currentPage = 1; // Reset to first page
+        
         const minPrice = parseFloat(priceMinInput.value) || minRange;
         const maxPrice = parseFloat(priceMaxInput.value) || maxRange;
         const sortType = sortingSelect.value;
@@ -187,10 +190,12 @@ function applyPriceFillter() {
             productsToFilter = Array.from(productContainer.querySelectorAll(".product"));
             originProducts = productsToFilter
         }
-        productsToFilter = originProducts
+
+        // Reset the filtered list to original
+        productsToFilter = [...originProducts];
 
         // Filter products by price range
-        const filteredProducts = productsToFilter.filter(product => {
+        productsToFilter = productsToFilter.filter(product => {
             const price = parseFloat(
                 product.querySelector(".product-price").textContent.replace("$", "")
             );
@@ -198,7 +203,7 @@ function applyPriceFillter() {
         });
 
         // Sort products based on the selected criteria
-        filteredProducts.sort((a, b) => {
+        productsToFilter.sort((a, b) => {
             const priceA = parseFloat(a.querySelector(".product-price").textContent.replace("$", ""));
             const priceB = parseFloat(b.querySelector(".product-price").textContent.replace("$", ""));
             const discountA = parseInt(a.querySelector(".sale").textContent.replace("%", ""));
@@ -219,11 +224,123 @@ function applyPriceFillter() {
             }
         });
 
+        // Re-render pagination based on filtered items
+        renderPagination(productsToFilter.length);
+
+        // Update the visible products
+        updateVisibleProducts();
+
         // Update the container with the filtered and sorted products
+        // productContainer.innerHTML = `
+        //     ${filteredProducts.map(product => `<div class='col-md-4 col-xs-6'> ${product.outerHTML} </div>` ).join("")}
+        // `;
+    }
+
+
+
+    // // Pagination handler
+    // function renderPagination(totalItems) {
+    //     const totalPages = Math.ceil(totalItems / itemsPerPage);
+    //     paginationContainer.innerHTML = "";
+
+    //     // Create page links dynamically
+    //     for (let i = 1; i <= totalPages; i++) {
+    //         const pageItem = document.createElement("li");
+    //         pageItem.innerHTML = `<a href="#">${i}</a>`;
+    //         pageItem.querySelector("a").className = i === currentPage ? "active" : "";
+    //         pageItem.addEventListener("click", function (e) {
+    //             e.preventDefault();
+    //             currentPage = i;
+    //             updateVisibleProducts();
+    //             renderPagination(totalItems);
+    //         });
+    //         paginationContainer.appendChild(pageItem);
+    //     }
+    // }
+
+
+    // Pagination handler
+    function renderPagination(totalItems) {
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        paginationContainer.innerHTML = "";
+    
+        // Create the `<<` button to go to the first page
+        const firstPageItem = document.createElement("li");
+        firstPageItem.innerHTML = `<a href="#"><i class="fa fa-angles-left"></i></a>`;
+        if (currentPage === 1 || currentPage === 2) {
+            firstPageItem.classList.add("disabled"); // Add a class for disabled styling
+        } else {
+            firstPageItem.classList.remove("disabled"); // Remove a class for disabled styling
+        }
+        console.log(currentPage === 1)
+        firstPageItem.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (currentPage > 1) {
+                currentPage = 1;
+                updateVisibleProducts();
+                renderPagination(totalItems);
+            }
+        });
+        paginationContainer.appendChild(firstPageItem);
+    
+        // Determine the range of pages to display
+        let startPage = Math.max(1, currentPage - 1); // Show one page before the current
+        let endPage = Math.min(totalPages, currentPage + 1); // Show one page after the current
+    
+        // Adjust the range to always display 3 buttons, if possible
+        if (currentPage === 1) {
+            endPage = Math.min(3, totalPages);
+        } else if (currentPage === totalPages) {
+            startPage = Math.max(1, totalPages - 2);
+        }
+    
+        // Create the page number buttons
+        for (let i = startPage; i <= endPage; i++) {
+            const pageItem = document.createElement("li");
+            pageItem.innerHTML = `<a href="#">${i}</a>`;
+            pageItem.querySelector("a").className = i === currentPage ? "active" : "";
+            pageItem.addEventListener("click", function (e) {
+                e.preventDefault();
+                currentPage = i;
+                updateVisibleProducts();
+                renderPagination(totalItems);
+            });
+            paginationContainer.appendChild(pageItem);
+        }
+    
+        // Create the `>>` button to go to the last page
+        const lastPageItem = document.createElement("li");
+        lastPageItem.innerHTML = `<a href="#"><i class="fa fa-angles-right"></i></a>`;
+        if (currentPage === totalPages || currentPage === totalPages - 1) {
+            lastPageItem.classList.add("disabled"); // Add a class for disabled styling
+        } else {
+            lastPageItem.classList.remove("disabled"); // Remove a class for disabled styling
+        }
+        
+        lastPageItem.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (currentPage < totalPages) {
+                currentPage = totalPages;
+                updateVisibleProducts();
+                renderPagination(totalItems);
+            }
+        });
+        paginationContainer.appendChild(lastPageItem);
+    }
+    
+
+    // Update visible products based on pagination
+    function updateVisibleProducts() {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
+        const visibleProducts = productsToFilter.slice(startIndex, endIndex);
         productContainer.innerHTML = `
-            ${filteredProducts.map(product => `<div class='col-md-4 col-xs-6'> ${product.outerHTML} </div>` ).join("")}
+            ${visibleProducts.map(product => `<div class='col-md-4 col-xs-6'>${product.outerHTML}</div>`).join("")}
         `;
     }
+
+
 
     // Update inputs on slider change
     priceSlider.noUiSlider.on("update", function (values) {
@@ -245,6 +362,13 @@ function applyPriceFillter() {
 
     // Event: Sorting dropdown change
     sortingSelect.addEventListener("change", filterAndSortProducts);
+
+    // Event: Show pagination dropdown change
+    itemsPerPageSelect.addEventListener("change", function () {
+        itemsPerPage = parseInt(this.value);
+        filterAndSortProducts();
+    });
+
 
     // Event: Increase/Decrease inputs
     document.querySelectorAll(".qty-up").forEach(btn => {

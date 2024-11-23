@@ -1539,6 +1539,15 @@ background: linear-gradient(to bottom, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10
   cursor: default;
 }
 
+
+.store-pagination .disabled {
+  color: #FFF;
+  opacity: 0.25;
+  font-weight: 500;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .store-pagination li a {
   display: block;
 }

@@ -135,10 +135,11 @@ function renderProductsList() {
     const sortingSelect = document.querySelector(".sort-by-select select");
     const itemsPerPageSelect  = document.querySelector(".pagniation-input select");
     const paginationContainer = document.getElementById("pageno");
+    const searchInput = document.querySelector(".store-sort-type.text-search input");
     
     let currentPage = 1; // Start at the first page
     let itemsPerPage = parseInt(itemsPerPageSelect.value); // Default items per page
-
+    let searchQuery = ''
 
     // Desired range for the slider (e.g., 100,000 to 10,000,000)
     const minRange = 0;
@@ -186,6 +187,8 @@ function renderProductsList() {
         const maxPrice = parseFloat(priceMaxInput.value) || maxRange;
         const sortType = sortingSelect.value;
 
+        searchQuery = searchInput.value.trim().toLowerCase();
+
         if(originProducts.length === 0) {
             productsToFilter = Array.from(productContainer.querySelectorAll(".product"));
             originProducts = productsToFilter
@@ -199,7 +202,13 @@ function renderProductsList() {
             const price = parseFloat(
                 product.querySelector(".product-price").textContent.replace("$", "")
             );
-            return price >= minPrice && price <= maxPrice;
+            const productName = product.querySelector(".product-name a").textContent.trim().toLowerCase();
+
+            return (
+                price >= minPrice &&
+                price <= maxPrice &&
+                productName.includes(searchQuery)
+            );
         });
 
         // Sort products based on the selected criteria
@@ -251,7 +260,6 @@ function renderProductsList() {
         } else {
             firstPageItem.classList.remove("disabled"); // Remove a class for disabled styling
         }
-        console.log(currentPage === 1)
         firstPageItem.addEventListener("click", function (e) {
             e.preventDefault();
             if (currentPage > 1) {
@@ -360,6 +368,9 @@ function renderProductsList() {
         itemsPerPage = parseInt(this.value);
         filterAndSortProducts();
     });
+
+    // Event: Search events
+    searchInput.addEventListener("input", filterAndSortProducts);
 
 
     // Event: Increase/Decrease inputs

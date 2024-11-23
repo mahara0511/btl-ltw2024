@@ -158,6 +158,11 @@ include 'layouts/header.php';
                     <!-- store top filter -->
                     <div class="store-filter clearfix">
                         <div class="store-sort">
+                            <div class="store-sort-type text-search">
+                                <label>Search: </label>
+                                <input class="input-select" placeholder='Product name...'>
+                                </input>
+                            </div>
                             <div class="store-sort-type sort-by-select">
                                 <label>Sort By:</label>
                                 <select class="input-select ">

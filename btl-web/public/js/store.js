@@ -238,27 +238,6 @@ function renderProductsList() {
 
 
 
-    // // Pagination handler
-    // function renderPagination(totalItems) {
-    //     const totalPages = Math.ceil(totalItems / itemsPerPage);
-    //     paginationContainer.innerHTML = "";
-
-    //     // Create page links dynamically
-    //     for (let i = 1; i <= totalPages; i++) {
-    //         const pageItem = document.createElement("li");
-    //         pageItem.innerHTML = `<a href="#">${i}</a>`;
-    //         pageItem.querySelector("a").className = i === currentPage ? "active" : "";
-    //         pageItem.addEventListener("click", function (e) {
-    //             e.preventDefault();
-    //             currentPage = i;
-    //             updateVisibleProducts();
-    //             renderPagination(totalItems);
-    //         });
-    //         paginationContainer.appendChild(pageItem);
-    //     }
-    // }
-
-
     // Pagination handler
     function renderPagination(totalItems) {
         const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -342,6 +321,19 @@ function renderProductsList() {
 
 
 
+    // Prevent max price from being below 100
+    priceSlider.noUiSlider.on("update", function (values, handle) {
+        const minPrice = parseInt(values[0], 10);
+        const maxPrice = parseInt(values[1], 10);
+        
+        // Check if maxPrice is below 100
+        if (maxPrice < 100) {
+            // Set maxPrice back to 100 if dragged below the limit
+            priceSlider.noUiSlider.set([minPrice, 100]);
+        }
+    });
+    
+    
     // Update inputs on slider change
     priceSlider.noUiSlider.on("update", function (values) {
         priceMinInput.value = values[0];

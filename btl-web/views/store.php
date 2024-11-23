@@ -93,7 +93,7 @@ include 'layouts/header.php';
                             <div id="price-slider"></div>
                             <div class="price-slider-input">
                                 <div class="input-number price-min">
-                                    <input id="price-min" type="number" value="100000">
+                                    <input id="price-min" type="number">
                                     <span class="qty-up">+</span>
                                     <span class="qty-down">-</span>
                                 </div>
@@ -101,7 +101,7 @@ include 'layouts/header.php';
                                     <i class="fa-solid fa-left-right" style="width:10px; margin-right:4px;"></i>
                                 </span>
                                 <div class="input-number price-max">
-                                    <input id="price-max" type="number" value="10000000">
+                                    <input id="price-max" type="number">
                                     <span class="qty-up">+</span>
                                     <span class="qty-down">-</span>
                                 </div>

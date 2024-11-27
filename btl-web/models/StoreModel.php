@@ -110,12 +110,5 @@ class StoreModel
 
         return $cat_data;
     }
-
-    public function getProductById($product_id)
-    {
-        $query = $this->db->prepare("SELECT * FROM products WHERE product_id = ?");
-        $query->execute([$product_id]);
-        return $query->fetch();
-    }
 }
 ?>

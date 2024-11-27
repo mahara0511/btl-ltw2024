@@ -39,7 +39,7 @@ $(document).ready(function () {
                 const newStoreContent = $(response).find("#store").html(); // Get the content of #store div from the response
                 $("#store").html(newStoreContent); // Update only the store content
                 // Optionally, update the URL to reflect the current category
-                window.history.pushState(null, null, "index.php?cid=" + categoryId);
+                window.history.pushState(null, null, "index.php?action=view_category&cid=" + categoryId);
                 renderProductsList();
             },
             error: function (xhr, status, error) {
@@ -63,7 +63,7 @@ $(document).ready(function () {
                 const newStoreContent = $(response).find("#store").html(); // Get the content of #store div from the response
                 $("#store").html(newStoreContent); // Update only the store content
                 // Optionally, update the URL to reflect the current category
-                window.history.pushState(null, null, "index.php?bid=" + brandId);
+                window.history.pushState(null, null, "index.php?action=view_category&bid=" + brandId);
                 renderProductsList();
             },
             error: function (xhr, status, error) {
@@ -75,20 +75,20 @@ $(document).ready(function () {
     renderProductsList();
 })  
 
-$(window).on("popstate", function () {
-    let urlParams = new URLSearchParams(window.location.search);
-    let categoryId = urlParams.get('cid');
-    let brandId = urlParams.get('bid');
+// $(window).on("popstate", function () {
+//     let urlParams = new URLSearchParams(window.location.search);
+//     let categoryId = urlParams.get('cid');
+//     let brandId = urlParams.get('bid');
 
-    // Determine which data to load based on URL parameters
-    if (categoryId) {
-        loadData("view_category", { cid: categoryId });
-    } else if (brandId) {
-        loadData("view_brand", { bid: brandId });
-    } else {
-        loadData("view"); // Default content
-    }
-});
+//     // Determine which data to load based on URL parameters
+//     if (categoryId) {
+//         loadData("view_category", { cid: categoryId });
+//     } else if (brandId) {
+//         loadData("view_brand", { bid: brandId });
+//     } else {
+//         loadData("view"); // Default content
+//     }
+// });
 
 
 // Load data function for category or brand

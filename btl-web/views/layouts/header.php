@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 ?>
 
@@ -21,8 +23,10 @@ session_start();
     <link type="text/css" rel="stylesheet" href="public/css/bootstrap.min.css" />
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="public/css/slick.css" />
-    <link type="text/css" rel="stylesheet" href="public/css/slick-theme.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
 
 
     <!-- nouislider -->
@@ -250,25 +254,7 @@ session_start();
                             <!-- /Wishlist -->
 
                             <!-- Cart -->
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span>Your Cart</span>
-                                    <div class="badge qty">0</div>
-                                </a>
-                                <div class="cart-dropdown">
-                                    <div class="cart-list" id="cart_product">
-
-
-                                    </div>
-
-                                    <div class="cart-btns">
-                                        <a href="cart.php" style="width:100%;"><i class="fa fa-edit"></i> edit cart</a>
-
-                                    </div>
-                                </div>
-
-                            </div>
+                            <?php include 'cart_popup.php' ?>
                             <!-- /Cart -->
 
                             <!-- Menu Toogle -->

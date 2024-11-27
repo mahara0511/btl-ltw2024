@@ -56,9 +56,4 @@ class StoreController
     {
         $this->renderStore('brand', $bid);
     }
-
-    public function viewProduct($product_id)
-    {
-        return $this->model->getProductById($product_id);
-    }
 }

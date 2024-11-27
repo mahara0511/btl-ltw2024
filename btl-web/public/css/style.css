@@ -1577,6 +1577,10 @@ background: linear-gradient(to bottom, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10
 /*----------------------------*\
 	Product view
 \*----------------------------*/
+#product-main-img {
+  overflow: hidden;
+  text-align: center;
+}
 
 #product-main-img .slick-prev {
   -webkit-transform: translateX(-15px);
@@ -1614,35 +1618,67 @@ background: linear-gradient(to bottom, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10
 #product-imgs .product-preview {
   margin: 0px 5px;
   border: 1px solid #E4E7ED;
+  overflow: hidden;
 }
 
 #product-imgs .product-preview.slick-current {
   border-color: #D10024;
+  overflow: hidden;
 }
 
-#product-imgs .slick-prev {
+/* #product-imgs .slick-prev {
   top: -20px;
   left: 50%;
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
-}
+} */
 
-#product-imgs .slick-next {
+/* #product-imgs .slick-next {
   top: calc(100% - 20px);
   left: 50%;
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
+} */
+/* Add your custom icons */
+
+#product-imgs .slick-prev,
+#product-imgs .slick-next {
+    overflow: hidden;
 }
 
-#product-imgs .slick-prev:before {
-  content: "\f106";
+#product-imgs .slick-prev::before {
+  margin-left: 8px;
+  margin-right: 100px;
+  content: "\f106" !important;
+  overflow: hidden;
 }
 
-#product-imgs .slick-next:before {
-  content: "\f107";
+#product-imgs .slick-next::before {
+  margin-left: 8px;
+  margin-right: 100px;
+  content: "\f107" !important; /* Use your right arrow icon */
+  overflow: hidden;
 }
+
+#product-imgs .slick-arrow {
+  background-color: #E4E7ED ;
+  color: #000000;
+}
+#product-imgs .slick-arrow:hover {
+  background-color: #D10024 ;
+  color: #FFF;
+}
+
+/* #product-imgs .slick-arrow:focus {
+  background-color: #E4E7ED ;
+  color: #000000;
+} */
+
+
+
+
 
 .product-preview img {
   width: 100%;
@@ -1722,7 +1758,7 @@ background: linear-gradient(to bottom, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10
   border: 2px solid transparent;
   height: 40px;
   padding: 0 30px;
-  background-color: #ef233c;
+  background-color: green;
   color: #FFF;
   text-transform: uppercase;
   font-weight: 700;
@@ -1738,21 +1774,19 @@ background: linear-gradient(to bottom, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10
   width: 40px;
   height: 40px;
   line-height: 38px;
-  color: #D10024;
-  opacity: 0;
-  visibility: hidden;
+  color: green;
+  display: none;
 }
 
 .product-details .add-to-cart .add-to-cart-btn:hover {
   background-color: #FFF;
-  color: #D10024;
-  border-color: #D10024;
-  padding: 0px 30px 0px 50px;
+  color: green;
+  border-color: green;
 }
 
 .product-details .add-to-cart .add-to-cart-btn:hover>i {
-  opacity: 1;
-  visibility: visible;
+  display:inline-block;
+  padding: 0px 10px 0px 0px;
 }
 
 .product-details .add-to-cart .qty-label {
@@ -1761,7 +1795,7 @@ background: linear-gradient(to bottom, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10
   font-size: 12px;
   text-transform: uppercase;
   margin-right: 15px;
-  margin-bottom: 0px;
+  margin-bottom: 20px;
 }
 
 .product-details .add-to-cart .qty-label .input-number {
@@ -2255,6 +2289,7 @@ background: linear-gradient(to bottom, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, 
 \*----------------------------*/
 
 .slick-prev, .slick-next {
+  display: block;
   width: 40px;
   height: 40px;
   border: 1px solid #E4E7ED;
@@ -2263,9 +2298,11 @@ background: linear-gradient(to bottom, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, 
   z-index: 22;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
+  margin: auto !important;
 }
 
-.slick-prev:hover, .slick-prev:focus, .slick-next:hover, .slick-next:focus {
+
+.slick-prev:hover, .slick-next:hover {
   background-color: #D10024;
   border-color: #D10024;
 }
@@ -2273,6 +2310,7 @@ background: linear-gradient(to bottom, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, 
 .slick-prev:before, .slick-next:before {
   font-family: FontAwesome;
   color: #2B2D42;
+  content: "";
 }
 
 .slick-prev:before {
@@ -2283,35 +2321,51 @@ background: linear-gradient(to bottom, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, 
   content: "\f105";
 }
 
-.slick-prev:hover:before, .slick-prev:focus:before, .slick-next:hover:before, .slick-next:focus:before {
+.slick-prev:hover:before, .slick-next:hover:before {
   color: #FFF;
 }
 
-.slick-prev {
+/* .slick-prev {
   left: -20px;
 }
 
 .slick-next {
   right: -20px;
-}
+} */
 
 /*----------------------------*\
 	Dots
 \*----------------------------*/
-
-.slick-dots li, .slick-dots li button, .slick-dots li button:before {
-  width: 10px;
-  height: 10px;
+.slick-dots {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.slick-dots li button{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  background-color: #E4E7ED;
+  margin-right: 4px;
 }
 
-.slick-dots li button:before {
-  content: "";
-  opacity: 1;
+/* , .slick-dots li button, .slick-dots li button:before  */
+
+.slick-dots button {
+ content: "" !important;
+ font-size: 0px;
+}
+
+/* .slick-dots li button:before {
+  opacity: 0;
   background: #E4E7ED;
   border-radius: 50%;
-}
+} */
 
-.slick-dots li.slick-active button:before {
+.slick-dots li.slick-active button {
   background-color: #D10024;
 }
 
@@ -2358,7 +2412,7 @@ background: linear-gradient(to bottom, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, 
   }
   #product-imgs {
     margin-bottom: 60px;
-    margin-top: 15px;
+    margin-top: 100px;
   }
   #rating {
     text-align: center;

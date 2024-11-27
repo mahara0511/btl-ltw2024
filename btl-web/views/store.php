@@ -1,5 +1,5 @@
 <?php
-include 'layouts/header.php';
+// include 'layouts/header.php';
 ?>
 
 <?php
@@ -126,7 +126,7 @@ include 'layouts/header.php';
                             <!-- product widget -->
                             <?php foreach ($top_products as $product): ?>
                                 <div class='product-widget'>
-                                    <a href=<?php "'product.php?p=" . $product['product_id'] . "'" ?>>
+                                    <a href=<?php echo "'index.php?product_id=" . $product['product_id'] . "'" ?>>
                                         <div class='product-img'>
                                             <img src=<?php echo "'product_images/" . $product['product_image'] . "'" ?>
                                                 alt=''>
@@ -134,7 +134,7 @@ include 'layouts/header.php';
                                         <div class='product-body'>
                                             <p class='product-category'><?php echo $product['cat_title']; ?></p>
                                             <h3 class='product-name'>
-                                                <a href=<?php "'product.php?p=" . $product['product_id'] . "'" ?>>
+                                                <a href=<?php echo "'index.php?product_id=" . $product['product_id'] . "'" ?>>
                                                     <?php echo $product['product_title'] ?>
                                                 </a>
                                             </h3>
@@ -205,7 +205,7 @@ include 'layouts/header.php';
 
                                 <div class='col-md-4 col-xs-6'>
                                     <div class='product'>
-                                        <a href=<?php "product.php?p=" . $product['product_id'] . "'" ?>>
+                                        <a href=<?php echo "'index.php?product_id=" . $product['product_id'] . "'" ?>>
                                             <div class='product-img'>
                                                 <img src=<?php echo "'product_images/" . $product['product_image'] . "'" ?>
                                                     alt=<?php echo "'" . $product['product_title'] . "'" ?>>
@@ -218,7 +218,9 @@ include 'layouts/header.php';
                                         <div class='product-body'>
                                             <p class='product-category'><?php echo $product['cat_title']; ?></p>
                                             <div class='product-name header-cart-item-name'>
-                                                <a href='product.php?p=$pro_id'><?php echo $product['product_title'] ?></a>
+                                                <a href=<?php echo "'index.php?product_id=" . $product['product_id'] . "'" ?>>
+                                                    <?php echo $product['product_title'] ?>
+                                                </a>
                                             </div>
                                             <h4 class='product-price header-cart-item-info'>
                                                 <?php echo "$" . $new_price ?>

@@ -1,35 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latest News and Updates</title>
-
-    <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
-    <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="public/css/bootstrap.min.css"/>
-
-    <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="public/css/slick.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/slick-theme.css"/>
-
-    <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="public/css/nouislider.min.css"/>
-
-    <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="public/css/font-awesome.min.css">
-
-    <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="public/css/style.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/accountbtn.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/basic.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/news.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/aboutUs.css"/>
-</head>
-<body>
     <?php include ROOT_PATH."/views/layouts/header.php"; ?> 
+
+    <link type="text/css" rel="stylesheet" href="public/css/news.css"/>
+
     <div class="bigwrapper">
 
         <div class="about-section">

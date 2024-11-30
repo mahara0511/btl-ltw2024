@@ -310,7 +310,7 @@ if (!isset($_SESSION)) {
         </div>
     </div>
     <div class="modal fade" id="Modal_register" role="dialog">
-        <div class="modal-dialog" style="">
+        <div class="modal-dialog">
 
             <!-- Modal content-->
             <div class="modal-content">

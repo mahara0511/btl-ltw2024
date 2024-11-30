@@ -1,0 +1,44 @@
+.contact-heading {
+    padding: 50px;
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+}
+
+.contact-heading h1 {
+    color: #FF2400;
+}
+
+.contact-heading h3 {
+    color: rgb(0, 229, 255);
+}
+
+.contact-form-title {
+    margin: 40px 0 20px;
+    color: #474e5d;
+    font-size: 36px;
+}
+
+.contact-form-content {
+    background-color: white;
+}
+
+.support-form input {
+    width: 100%;
+}
+
+.contact-submit-btn {
+    background-color: rgb(0, 102, 255);
+    font-weight: bold;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+}
+
+.red-txt {
+    color: red;
+}

@@ -1,6 +1,7 @@
     <?php include ROOT_PATH."/views/layouts/header.php"; ?> 
 
     <link type="text/css" rel="stylesheet" href="public/css/news.css"/>
+    <link type="text/css" rel="stylesheet" href="public/css/aboutUs.css"/>
 
     <div class="bigwrapper">
 

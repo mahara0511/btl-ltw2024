@@ -7,7 +7,7 @@ if(isset($_POST["categoryhome"])){
 	$category_query = "SELECT * FROM categories WHERE cat_id!=1";
 	$current_page = $_POST["currentUrl"]; // Get the current page URL
 	$run_query = mysqli_query($con,$category_query) or die(mysqli_error($con));
-	echo $current_page;
+	// echo $current_page;
 	echo "
 				<!-- responsive-nav -->
 				<div id='responsive-nav'>

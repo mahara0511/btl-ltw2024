@@ -19,6 +19,8 @@ if(isset($_POST["categoryhome"])){
 						<li class='" . ($current_page == '/' ? 'active' : '') . "'><a href='/'>Home</a></li>
 						<li class='" . ($current_page == '/view_category' ? 'active' : '') . "'><a href='/view_category'>Products</a></li>
 						<li class='" . ($current_page == '/about_us' ? 'active' : '') . "'><a href='/about_us'>About Us</a></li>
+						<li class='" . ($current_page == '/contact_us' ? 'active' : '') . "'><a href='/contact_us'>Contact Us</a></li>
+						<li class='" . ($current_page == '/news' ? 'active' : '') . "'><a href='/news'>News</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>

@@ -1360,6 +1360,7 @@ textarea.input {
 
 .products-slick-nav .slick-prev,
 .products-slick-nav .slick-next {
+    font-size: 0;
     position: static;
     -webkit-transform: none;
     -ms-transform: none;

@@ -245,8 +245,8 @@ if (!isset($_SESSION)) {
                         <div class="header-ctn">
                             <!-- Wishlist -->
                             <div>
-                                <a href="https://github.com/puneethreddyhc">
-                                    <i class="fa fa-github"></i>
+                                <a href="">
+                                    <i class="fa-brands fa-github"></i>
                                     <span>Github</span>
 
                                 </a>

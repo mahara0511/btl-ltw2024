@@ -22,6 +22,16 @@ $parts = explode('/', $request);
             require(ROOT_PATH . '/controllers/StoreController.php');
             $controller = new StoreController($conn);
             break;
+        case 'news': 
+            require(ROOT_PATH . '/controllers/HomeController.php');
+            $controller = new HomeController();
+            $controller->news();
+            break;
+        case 'contact_us':
+            require(ROOT_PATH . '/controllers/HomeController.php');
+            $controller = new HomeController();
+            $controller->contact_us(); 
+            break;
         case 'view_brand':
             break;
         default:

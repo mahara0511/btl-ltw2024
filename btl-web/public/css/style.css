@@ -1024,23 +1024,15 @@ textarea.input {
 .product {
     position: relative;
     margin: 15px 0px;
-    -webkit-box-shadow:
-        0px 0px 0px 0px #e4e7ed,
-        0px 0px 0px 1px #e4e7ed;
-    box-shadow:
-        0px 0px 0px 0px #e4e7ed,
-        0px 0px 0px 1px #e4e7ed;
+    -webkit-box-shadow: 0px 0px 0px 0px #e4e7ed, 0px 0px 0px 1px #e4e7ed;
+    box-shadow: 0px 0px 0px 0px #e4e7ed, 0px 0px 0px 1px #e4e7ed;
     -webkit-transition: 0.2s all;
     transition: 0.2s all;
 }
 
 .product:hover {
-    -webkit-box-shadow:
-        0px 0px 6px 0px #e4e7ed,
-        0px 0px 0px 2px #d10024;
-    box-shadow:
-        0px 0px 6px 0px #e4e7ed,
-        0px 0px 0px 2px #d10024;
+    -webkit-box-shadow: 0px 0px 6px 0px #e4e7ed, 0px 0px 0px 2px #d10024;
+    box-shadow: 0px 0px 6px 0px #e4e7ed, 0px 0px 0px 2px #d10024;
 }
 
 .product .product-img {
@@ -2504,10 +2496,8 @@ textarea.input {
 .main-raised {
     margin: -7px 30px 0px;
     border-radius: 6px;
-    box-shadow:
-        0 16px 24px 2px rgba(0, 0, 0, 0.14),
-        0 6px 30px 5px rgba(0, 0, 0, 0.12),
-        0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+        0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .main {
     background: #fff;
@@ -2517,10 +2507,8 @@ textarea.input {
 .mainn-raised {
     margin: px 0px 0px;
     border-radius: 6px;
-    box-shadow:
-        0 16px 24px 2px rgba(0, 0, 0, 0.14),
-        0 6px 30px 5px rgba(0, 0, 0, 0.12),
-        0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+        0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 .mainn {
     background: #c9d6ff; /* fallback for old browsers */

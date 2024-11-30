@@ -1,8 +1,9 @@
-<?php 
+<?php
 $request = $_SERVER['REQUEST_URI'];
 $request = parse_url($request, PHP_URL_PATH);
 
 $parts = explode('/', $request);
+
     switch ($parts[1]) {
         case '':
             require(ROOT_PATH . '/controllers/HomeController.php');
@@ -14,9 +15,27 @@ $parts = explode('/', $request);
             $controller = new AboutUsController();
             $controller->index();
             break;
+        case 'product': 
+            require('Product.php');
+            break;
+        case 'view_category':
+            require(ROOT_PATH . '/controllers/StoreController.php');
+            $controller = new StoreController($conn);
+            break;
+        case 'view_brand':
+            break;
         default:
             http_response_code(404);
             echo "404 Not Found";
             break;
     }
+
+// if ($_GET['action'] == 'listProducts') {
+//     $db = $conn;
+//     $productModel = new ProductModel($db);
+//     $productController = new ProductController($productModel);
+//     $products = $productController->listProducts();
+//     include 'views/product_list_view.php';
+// }
+
 ?>

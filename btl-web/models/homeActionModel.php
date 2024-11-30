@@ -7,40 +7,24 @@ if(isset($_POST["categoryhome"])){
 	$category_query = "SELECT * FROM categories WHERE cat_id!=1";
 	$current_page = $_POST["currentUrl"]; // Get the current page URL
 	$run_query = mysqli_query($con,$category_query) or die(mysqli_error($con));
+
+	$parsed_url = parse_url($current_page);
+    $current_page = isset($parsed_url['path']) ? $parsed_url['path'] : '/'; // Lấy phần đường dẫn (path)
 	// echo $current_page;
 	echo "
 				<!-- responsive-nav -->
 				<div id='responsive-nav'>
 					<!-- NAV -->
 					<ul class='main-nav nav navbar-nav'>
-                    <li class='" . ($current_page == '/' ? 'active' : '') . "'><a href='/'>Home</a></li>
-                    <li class='" . ($current_page == '/' ? 'active' : '') . "'><a href='/store.php'>Products</a></li>
-                    <li class='" . ($current_page == '/about_us' ? 'active' : '') . "'><a href='/about_us'>About Us</a></li>
-	";
-	if(mysqli_num_rows($run_query) > 0){
-		while($row = mysqli_fetch_array($run_query)){
-			$cid = $row["cat_id"];
-			$cat_name = $row["cat_title"];
-            
-            $sql = "SELECT COUNT(*) AS count_items FROM products,categories WHERE product_cat=cat_id";
-            $query = mysqli_query($con,$sql);
-            $row = mysqli_fetch_array($query);
-            $count=$row["count_items"];
-            
-            
-            
-			echo "
-                               <li class='categoryhome' cid='$cid'><a href='store.php'>$cat_name</a></li>
-			";
-		}
-        
-		echo "</ul>
+						<li class='" . ($current_page == '/' ? 'active' : '') . "'><a href='/'>Home</a></li>
+						<li class='" . ($current_page == '/view_category' ? 'active' : '') . "'><a href='/view_category'>Products</a></li>
+						<li class='" . ($current_page == '/about_us' ? 'active' : '') . "'><a href='/about_us'>About Us</a></li>
+					</ul>
 					<!-- /NAV -->
 				</div>
 				<!-- /responsive-nav -->
-               
-			";
-	}
+	";
+	    
 }
 
 

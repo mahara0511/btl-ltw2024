@@ -301,7 +301,6 @@ if (!isset($_SESSION)) {
                 <div class="modal-body">
                     <?php
                     // include "login_form.php";
-                    
                     ?>
 
                 </div>

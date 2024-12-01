@@ -22,6 +22,32 @@
 
 <script src="public/js/store.js"></script>
 
+
+<!-- Modal -->
+<div class="modal fade" id="Modal_alert" tabindex="-1" role="dialog" aria-labelledby="ModalAlertLabel"
+    aria-hidden="true" style="height: 500px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="ModalAlertLabel">Alert</h5>
+            </div>
+            <div class="modal-body">
+                <p id="modal_message">Product has been added to cart successfully!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <div class="main main-raised">
     <div class="section">
         <!-- container -->
@@ -238,7 +264,7 @@
                                         </div>
                                         <div class='add-to-cart'>
                                             <button pid=<?php echo "\"" . $product['product_id'] . "\"" ?> id='product'
-                                                class='add-to-cart-btn block2-btn-towishlist' href='#'>
+                                                class='add-to-cart-btn block2-btn-towishlist'>
                                                 <i class='fa fa-shopping-cart'></i> add to cart
                                             </button>
                                         </div>

@@ -12,7 +12,30 @@ $_SESSION['product_id'] = $product_detail['product_id'];
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="public/js/product.js"></script>
 
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+
+<!-- Modal -->
+<div class="modal fade" id="Modal_alert" tabindex="-1" role="dialog" aria-labelledby="ModalAlertLabel"
+    aria-hidden="true" style="height: 500px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="ModalAlertLabel">Notification</h5>
+            </div>
+            <div class="modal-body">
+                <p id="modal_message">Product has been added to cart successfully!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -78,7 +101,7 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                         </h3>
                         <span class="product-available">In Stock</span>
                     </div>
-                    <p style="margin: 20px auto; max-height: 200px; overflow-y: scroll;">
+                    <p style="margin: 20px auto; max-height: 200px; overflow-y: auto;">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                         incididunt ut
 
@@ -249,6 +272,9 @@ $_SESSION['product_id'] = $product_detail['product_id'];
 
 </div>
 <!-- /container -->
+
+
+
 
 
 <!-- /Section -->

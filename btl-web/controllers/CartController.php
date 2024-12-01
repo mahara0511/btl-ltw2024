@@ -1,6 +1,10 @@
 <?php
 require_once 'models/CartModel.php';
 
+// $ip_add = $_SERVER['REMOTE_ADDR'];
+// $uid = $_SESSION['uid'] ?? null;
+
+
 class CartController
 {
     private $model;
@@ -14,7 +18,11 @@ class CartController
     public function view_cart($ip_add, $uid = null)
     {
         $cart_items = $this->model->getUserCartData($ip_add, $uid);
-        $data = ['cart_items' => $cart_items];
+        $total_price = 0;
+        foreach ($cart_items as $item) {
+            $total_price += $item['qty'] * $item['product_price'];
+        }
+        $data = ['cart_items' => $cart_items, 'total_price' => $total_price];
         $this->render('views/cart.php', $data);
     }
 
@@ -22,8 +30,13 @@ class CartController
     public function view_cart_dropdown($ip_add, $uid = null)
     {
         $cart_items = $this->model->getUserCartData($ip_add, $uid);
-        $data = ['cart_items' => $cart_items];
-        $this->render('views/layouts/cart_popup.php', $data);
+        $total_price = 0;
+        foreach ($cart_items as $item) {
+            $total_price += $item['qty'] * $item['product_price'];
+        }
+        $data = ['cart_items' => $cart_items, 'total_price' => $total_price];
+        return $data;
+        // $this->render('views/layouts/cart_popup.php', $data);
     }
 
     // Handle cart actions (e.g., add, remove, update)
@@ -70,6 +83,32 @@ class CartController
             include $view;
         } else {
             echo "View not found: $view";
+        }
+    }
+
+    public function handleAjaxRequest()
+    {
+        $action = $_POST['action'] ?? '';
+        $pid = $_POST['product_id'] ?? 0;
+        $qty = $_POST['qty'] ?? 1;
+
+        $ip_add = $_SERVER['REMOTE_ADDR'];
+        $uid = $_SESSION['uid'] ?? null;
+
+        $response = [
+            'status' => 'error',
+            'message' => 'Invalid request.'
+        ];
+
+        switch ($action) {
+            case 'updateItemfromCart':
+                $response = $this->takeCartAction('updateItemfromCart', $pid, $qty, $ip_add, $uid);
+                break;
+            case 'removeItemfromCart':
+                $response = $this->takeCartAction('removeItemfromCart', $pid, 0, $ip_add, $uid);
+                break;
+            default:
+                $response['message'] = 'Unknown action.';
         }
     }
 }

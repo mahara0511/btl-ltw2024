@@ -1,0 +1,95 @@
+/* pc */
+@media (min-width: 64em) {
+    #header .mobile-menu-btn {
+        display: none;
+    }
+}
+
+/* tablet and mobile */
+@media (max-width: 63.9375em) {
+    #nav .subnav a {
+        appearance: none;
+    }
+
+    .contact-info {
+        line-height: 2;
+    }
+
+    .form-control {
+        padding: 15px;
+    }
+
+    .form-submit-btn {
+        padding: 14px 14px;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .place-ticket-btn {
+        padding: 14px 16px;
+    }
+
+    #footer li {
+        padding: 6px;
+    }
+}
+
+/* tablet */
+@media (min-width: 46.25em) and (max-width: 63.9375em) {
+    #header .mobile-menu-btn {
+        display: none;
+    }
+}
+
+/* mobile */
+@media (max-width: 46.1875em) {
+    .s-full-width,
+    .s-col-full {
+        width: 100% !important;
+    }
+
+    .s-mt-8 {
+        margin-top: 8px;
+    }
+
+    .s-mt-16 {
+        margin-top: 16px;
+    }
+
+    .s-mt-32 {
+        margin-top: 32px;
+    }
+
+    #header {
+        overflow: hidden;
+    }
+
+    #header .search-btn {
+        display: none;
+    }
+
+    #nav > li {
+        display: block;
+    }
+
+    #nav {
+        display: block;
+    }
+
+    #nav .subnav {
+        position: initial;
+        background-color: #333;
+    }
+
+    #nav .subnav a {
+        padding: 0 44px;
+    }
+
+    #nav .subnav a:visited {
+        color: #fff;
+    }
+
+    #content .member-img {
+        width: 60%;
+    }
+}

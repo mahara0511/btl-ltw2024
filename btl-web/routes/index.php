@@ -1,7 +1,7 @@
 <?php
 $request = $_SERVER['REQUEST_URI'];
 $request = parse_url($request, PHP_URL_PATH);
-
+require_once 'config/db_connect.php';
 $parts = explode('/', $request);
 
     switch ($parts[1]) {

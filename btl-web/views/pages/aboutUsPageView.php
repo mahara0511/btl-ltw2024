@@ -1,96 +1,138 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
-
-    <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
-    <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="public/css/bootstrap.min.css"/>
-
-    <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="public/css/slick.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/slick-theme.css"/>
-
-    <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="public/css/font-awesome.min.css">
-
-    <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="public/css/style.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/accountbtn.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/basic.css"/>
-    <link type="text/css" rel="stylesheet" href="public/css/aboutUs.css"/>
-</head>
-<body>
     <?php include ROOT_PATH."/views/layouts/header.php"; ?> 
+
+    <link rel="stylesheet" href="public/css/aboutUsPage.css">
+    <link rel="stylesheet" href="public/css/aboutUsresponsive.css">
+    <link rel="stylesheet" href="public/fonts/themify-icons-font/themify-icons/themify-icons.css">
     <div class="bigwrapper">
 
-        <div class="about-section">
-            <h1 class="about-us-title">About Us</h1>
-            <p>Some text about who we are and what we do.</p>
-            <p>Resize the browser window to see that this page is responsive by the way.</p>
-        </div>
+
+
+            <!-- about section -->
+            <div class="content-wrapper">
+                <div id="band" class="content-section">
+                    <h2 class="section-heading">ONLINE SHOPPING</h2>
+                    <p class="section-sub-heading">Buy all the world</p>
+                    <p class="about">
+                        Shop from our extensive collection of high-quality products, carefully curated to meet your every need. Whether you’re looking for the latest gadgets, stylish apparel, or everyday essentials, we’ve got you covered.
+                        Enjoy unbeatable prices, exclusive discounts, and fast, reliable shipping. At <strong>Online shopping</strong>, customer satisfaction is our top priority, which is why we offer secure payments and hassle-free returns for a seamless shopping experience.
+                        <strong>Don’t miss out – explore our store now and grab your favorites before they’re gone!</strong>
+                    </p>
+                    <div class="member-list row">
+                        <div class="text-center col col-three s-col-full mt-16">
+                            <p class="member-name">John</p>
+                            <img src="public/img/member-list/member1.jpg" alt="name" class="member-img">
+                        </div>
     
-        <h2 class= "our-team-title" style="text-align:center">Our Team</h2>
-        <div class="container about-content">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="public/img/img_avatar3.png" alt="Jane" style="width:100%">
-                        <div class="wrapper">
-                            <h2>Jane Doe</h2>
-                            <p class="person-title">CEO & Founder</p>
-                            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                            <p>jane@example.com</p>
-                            <p><button class="button">Contact</button></p>
+                        <div class="text-center col col-three s-col-full mt-16">
+                            <p class="member-name">Sarah</p>
+                            <img src="public/img/member-list/member1.jpg" alt="name" class="member-img">
                         </div>
-                    </div>
-                </div>
-        
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="public/img/img_avatar3.png" alt="Mike" style="width:100%">
-                        <div class="wrapper">
-                            <h2>Mike Ross</h2>
-                            <p class="person-title">Art Director</p>
-                            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                            <p>mike@example.com</p>
-                            <p><button class="button">Contact</button></p>
-                        </div>
-                    </div>
-                </div>
-        
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="public/img/img_avatar3.png" alt="John" style="width:100%">
-                        <div class="wrapper">
-                            <h2>John Doe</h2>
-                            <p class="person-title">Designer</p>
-                            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                            <p>john@example.com</p>
-                            <p><button class="button">Contact</button></p>
-                        </div>
-                    </div>
-                </div>
     
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="public/img/img_avatar3.png" alt="Tom" style="width:100%">
-                        <div class="wrapper">
-                            <h2>Tom Hanks</h2>
-                            <p class="person-title">CIO</p>
-                            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                            <p>tom@example.com</p>
-                            <p><button class="button">Contact</button></p>
+                        <div class="text-center col col-three s-col-full mt-16">
+                            <p class="member-name">Mike</p>
+                            <img src="public/img/member-list/member1.jpg" alt="name" class="member-img">
                         </div>
+                        <div class="clear"></div>
                     </div>
                 </div>
             </div>
+            
+
+            <!-- tour section -->
+            <div id="tour" class="tour-section">
+                <div class="content-section">
+                    <h2 class="section-heading">LOCAL STORE</h2>
+                    <p class="section-sub-heading">You can buy all what you want!</p>
+                    <ul class="ticket-list">
+                        <li>New York<span class="sold-out">Comming soon</span></li>
+                        <li>Florida<span class="sold-out">Comming soon</span></li>
+                        <li>Ohio<span class="quantity">3</span></li>
+                    </ul>
+                    
+                    <div class="place-list row">
+                        <div class="col col-three s-col-full mt-16">
+                            <img src="public/img/place-list/place1.jpg" alt="New York" class="place-img">
+                            <div class="place-infor">
+                                <p class="place-heading">New York</p>
+                                <div class="place-time">
+                                    Opening: 6am - 10pm
+                                </div>
+                                <div class="place-desc">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</div>
+                                <button class="place-ticket-btn js-place-ticket-btn s-full-width ">See Map</button>
+                            </div>
+                        </div>
+   
+                        <div class="col col-three s-col-full mt-16">
+                            <img src="public/img/place-list/place2.jpg" alt="New York" class="place-img">
+                            <div class="place-infor">
+                                <p class="place-heading">Florida</p>
+                                <div class="place-time">Opening: 7am - 9pm</div>
+                                <div class="place-desc">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</div>
+                                <button class="place-ticket-btn js-place-ticket-btn s-full-width ">See Map</button>
+                            </div>
+                        </div>
+                        
+                        <div class="col col-three s-col-full mt-16">
+                            <img src="public/img/place-list/place3.jpg" alt="New York" class="place-img">
+                            <div class="place-infor">
+                                <p class="place-heading">Ohio</p>
+                                <div class="place-time">Opening: 7am - 9pm</div>
+                                <div class="place-desc">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</div>
+                                <button class="place-ticket-btn js-place-ticket-btn s-full-width ">See Map</button>
+                            </div>
+                        </div>
+
+                        <div class="clear"></div>
+                    </div>
+            
+                <div class="modal js-modal">
+                    <div class="modal-container">
+                        <div class="modal-close js-modal-close">
+                            <i class="close-btn ti-close"></i>
+                            
+                        </div>
+                        <div class="clear"></div>
+                        <header class="modal-header">
+                            <i class="modal-bag-icon ti-bag"></i>
+                            Tickets
+                        </header>
+
+                        <div class="modal-body">
+                            <label for="modal-input-number-ticket" class="modal-label-input">
+                                <i class="cart-icon ti-shopping-cart"></i>
+                                Tickets, $15 per person
+                            </label>
+                            <input type="text" id="modal-input-number-ticket" class="modal-input" placeholder="How many?">
+
+                            <label for="modal-input-email" class="modal-label-input">
+                                <i class="ti-user"></i>
+                                Send To 
+                            </label>
+                            <input type="text" id="modal-input-email" class="modal-input" placeholder="Enter Email">
+
+                            <button class="modal-pay-btn">
+                                Pay <i class="ti-check"></i>
+                            </button>
+                        </div>
+
+                        
+
+                        <div class="modal-footer">
+                            <p>Need <a href="#">help?</a></p>
+                        </div>
+
+                    </div>
+                </div>
+                    
+                </div>
+            </div>
+
+
+            <!-- Begin image section -->
+            <div class="image-section">
+                <img src="public/img/map.jpg" class="tour-map" alt="">
+            </div>
         </div>
-    </div>
     <?php include ROOT_PATH."/views/layouts/footer.php"; ?>
 
     <script src="public/js/jquery.min.js"></script>

@@ -50,35 +50,8 @@
     width: 100%;
 }
 
-#slider {
-    position: relative;
-    background: url(../img/slider1.png) top center / cover no-repeat;
-    padding-top: 50%;
-}
-
-#slider .text-content {
-    color: white;
-    position: absolute;
-    bottom: 48px;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
-#slider .text-heading {
-    font-size: 24px;
-    margin-bottom: 10px;
-    font-weight: 400;
-}
-
-#slider .text-description {
-    font-size: 15px;
-    margin-top: 25px;
-    text-shadow: 0 0 1px #000;
-}
-
 .content-wrapper {
-    background-color: #fff;
+    background-color: #ecd59d;
 }
 
 .content-section {

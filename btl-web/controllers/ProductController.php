@@ -14,7 +14,7 @@ class ProductController
         $product_detail = $this->model->getProductById($product_id);
         $product_detail['sale'] = rand(0, 75);
         $related_products = $this->getRelatedProducts($product_id, $product_detail['cat_id']);
-        include 'views/product.php';
+        require_once 'views/product.php';
     }
     public function getRelatedProducts($product_id, $cat_id)
     {

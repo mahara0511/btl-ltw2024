@@ -128,27 +128,22 @@
 <!-- <script src="https://unpkg.com/@popperjs/core@2"></script> -->
 <script>
     $(document).ready(function () {
-        // $('.dropdown').on('click', function () {
+        // $('.cart-dropdown').on('click', function (e) {
         //     e.stopPropagation();
-        //     $(this).toggleClass('open');
-        //     $(this).find('.dropdown-toggle').attr('aria-expanded', 'true');
         // });
-        // // Close the dropdown when clicking outside
-        // $(document).on('click', function (e) {
-        //     if (!$(e.target).closest('.dropdown').length) {
-        //         $('.dropdown').removeClass('open');
-        //         $(this).attr('aria-expanded', 'false');
-        //     }
-        // });
-
-        $('.cart-dropdown').on('click', function (e) {
-            e.stopPropagation();
+        $('.dropdown').on('click', function () {
+            // e.stopPropagation();
+            $(this).toggleClass('open');
+            $(this).find('.dropdown-toggle').attr('aria-expanded', 'true');
         });
-
+        // Close the dropdown when clicking outside
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.dropdown').length) {
+                $('.dropdown').removeClass('open');
+                $(this).attr('aria-expanded', 'false');
+            }
+        });
     });
-
-
-
 </script>
 
 

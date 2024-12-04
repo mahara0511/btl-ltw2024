@@ -36,7 +36,7 @@ $(document).ready(function () {
         window.history.pushState(
           null,
           null,
-          'index.php?action=view_category&cid=' + brandId
+          'index.php?action=view_category&cid=' + categoryId
         )
         renderProductsList()
         handleAddToCartBtn()
@@ -77,20 +77,20 @@ $(document).ready(function () {
   handleAddToCartBtn()
 })
 
-// $(window).on("popstate", function () {
-//     let urlParams = new URLSearchParams(window.location.search);
-//     let categoryId = urlParams.get('cid');
-//     let brandId = urlParams.get('bid');
+$(window).on('popstate', function () {
+  let urlParams = new URLSearchParams(window.location.search)
+  let categoryId = urlParams.get('cid')
+  let brandId = urlParams.get('bid')
 
-//     // Determine which data to load based on URL parameters
-//     if (categoryId) {
-//         loadData("view_category", { cid: categoryId });
-//     } else if (brandId) {
-//         loadData("view_brand", { bid: brandId });
-//     } else {
-//         loadData("view"); // Default content
-//     }
-// });
+  // Determine which data to load based on URL parameters
+  if (categoryId) {
+    loadData('view_category', { cid: categoryId })
+  } else if (brandId) {
+    loadData('view_brand', { bid: brandId })
+  } else {
+    loadData('view') // Default content
+  }
+})
 
 // Load data function for category or brand
 function loadData(action, params) {

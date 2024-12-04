@@ -158,9 +158,9 @@ if (!isset($_SESSION)) {
         <div id="top-header">
             <div class="container">
                 <ul class="header-links pull-left">
-                    <li><a href="#"><i class="fa fa-phone"></i> +91-9535688928</a></li>
-                    <li><a href="#"><i class="fa fa-envelope-o"></i> puneethreddy951@gmail.com</a></li>
-                    <li><a href="#"><i class="fa fa-map-marker"></i>Bangalore</a></li>
+                    <li><a href="#"><i class="fa fa-phone"></i> 0905.xxx.yyy</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> laptrinhweb@gmail.com</a></li>
+                    <li><a href="#"><i class="fa fa-map-marker"></i>Ho Chi Minh city, Viet Nam</a></li>
                 </ul>
                 <ul class="header-links pull-right">
                     <li><a href="#"><i class="fa fa-inr"></i> INR</a></li>
@@ -245,8 +245,8 @@ if (!isset($_SESSION)) {
                         <div class="header-ctn">
                             <!-- Wishlist -->
                             <div>
-                                <a href="https://github.com/puneethreddyhc">
-                                    <i class="fa fa-github"></i>
+                                <a href="">
+                                    <i class="fa-brands fa-github"></i>
                                     <span>Github</span>
 
                                 </a>
@@ -279,10 +279,9 @@ if (!isset($_SESSION)) {
     <nav id='navigation'>
         <!-- container -->
         <div class="container" id="get_category_home">
-
+                    
         </div>
         <!-- responsive-nav -->
-
         <!-- /container -->
     </nav>
 
@@ -300,7 +299,8 @@ if (!isset($_SESSION)) {
                 </div>
                 <div class="modal-body">
                     <?php
-                    // include "login_form.php";
+                    include "login_form.php";
+                    
                     ?>
 
                 </div>
@@ -310,7 +310,7 @@ if (!isset($_SESSION)) {
         </div>
     </div>
     <div class="modal fade" id="Modal_register" role="dialog">
-        <div class="modal-dialog" style="">
+        <div class="modal-dialog">
 
             <!-- Modal content-->
             <div class="modal-content">
@@ -320,8 +320,7 @@ if (!isset($_SESSION)) {
                 </div>
                 <div class="modal-body">
                     <?php
-                    // include "register_form.php";
-                    
+                    include "register_form.php";
                     ?>
 
                 </div>

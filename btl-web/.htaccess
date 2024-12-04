@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /
+
+# Chuyển hướng tất cả các URL qua index.js
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php [L,QSA]

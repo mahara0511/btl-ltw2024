@@ -1,5 +1,6 @@
 <?php
-// include 'layouts/header.php';
+require_once ROOT_PATH . "/views/layouts/header.php";
+
 ?>
 
 <?php
@@ -19,6 +20,9 @@
 // }
 
 ?>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <script src="public/js/store.js"></script>
 
@@ -151,16 +155,17 @@
                         <div id="get_product_home">
                             <!-- product widget -->
                             <?php foreach ($top_products as $product): ?>
-                                <div class='product-widget'>
-                                    <a href=<?php echo "'index.php?product_id=" . $product['product_id'] . "'" ?>>
+                                <div class='product-widget'
+                                    onclick="window.location.href='/store?product_id=<?php echo $product['product_id']; ?>'">
+                                    <a href=<?php echo "'/store?product_id=" . $product['product_id'] . "'" ?>>
                                         <div class='product-img'>
                                             <img src=<?php echo "'product_images/" . $product['product_image'] . "'" ?>
-                                                alt=''>
+                                                alt='' width="60px" height="60px">
                                         </div>
                                         <div class='product-body'>
                                             <p class='product-category'><?php echo $product['cat_title']; ?></p>
                                             <h3 class='product-name'>
-                                                <a href=<?php echo "'index.php?product_id=" . $product['product_id'] . "'" ?>>
+                                                <a href=<?php echo "'/store?product_id=" . $product['product_id'] . "'" ?>>
                                                     <?php echo $product['product_title'] ?>
                                                 </a>
                                             </h3>
@@ -231,7 +236,7 @@
 
                                 <div class='col-md-4 col-xs-6'>
                                     <div class='product'>
-                                        <a href=<?php echo "'index.php?product_id=" . $product['product_id'] . "'" ?>>
+                                        <a href=<?php echo "'/store?product_id=" . $product['product_id'] . "'" ?>>
                                             <div class='product-img'>
                                                 <img src=<?php echo "'product_images/" . $product['product_image'] . "'" ?>
                                                     alt=<?php echo "'" . $product['product_title'] . "'" ?>>
@@ -244,7 +249,7 @@
                                         <div class='product-body'>
                                             <p class='product-category'><?php echo $product['cat_title']; ?></p>
                                             <div class='product-name header-cart-item-name'>
-                                                <a href=<?php echo "'index.php?product_id=" . $product['product_id'] . "'" ?>>
+                                                <a href=<?php echo "'/store?product_id=" . $product['product_id'] . "'" ?>>
                                                     <?php echo $product['product_title'] ?>
                                                 </a>
                                             </div>

@@ -1,4 +1,8 @@
 <?php
+require_once ROOT_PATH . "/views/layouts/header.php";
+?>
+
+<?php
 $cart_items = $data['cart_items'] ?? [];
 $total_price = $data['total_price'] ?? 0;
 ?>
@@ -109,7 +113,7 @@ $total_price = $data['total_price'] ?? 0;
                             <tfoot>
                                 <tr>
                                     <td>
-                                        <a href="index.php?action=view" class="btn btn-warning">
+                                        <a href="/" class="btn btn-warning">
                                             <i class="fa fa-angle-left"></i> Continue Shopping
                                         </a>
                                     </td>

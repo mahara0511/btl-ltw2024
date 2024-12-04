@@ -60,71 +60,67 @@ document.addEventListener('DOMContentLoaded', function () {
     quantityInput.value++
   })
 
-  // Handle add-to-cart functionality
+  // Add-to-cart functionality
+  $(document).on('click', '.add-to-cart-btn', function (event) {
+    event.preventDefault()
+    const productId = $(this).attr('pid')
+    const quantity =
+      $(this).closest('.product').find('#quantity-input').val() || 1 // Default to 1 if not found
 
-  $(document).on(
-    'click',
-    '.btn-group .add-to-cart-btn#product',
-    function (event) {
-      event.preventDefault()
-      const productId = $(this).attr('pid')
-      const quantity = parseInt(quantityInput.value)
+    const modal = $('#Modal_alert')
 
-      const modal = $('#Modal_alert')
-
-      function toggleModal() {
-        let title = modal.find('#ModalAlertLabel')[0].innerHTML
-        if (title) {
-          if (modal.hasClass(title)) {
-            modal.removeClass(title)
-          } else {
-            modal.addClass(title)
-          }
-        }
-        if (modal.hasClass('show')) {
-          modal.removeClass('show').addClass('fade')
+    function toggleModal() {
+      let title = modal.find('#ModalAlertLabel')[0].innerHTML
+      if (title) {
+        if (modal.hasClass(title)) {
+          modal.removeClass(title)
         } else {
-          modal.removeClass('fade').addClass('show')
+          modal.addClass(title)
         }
       }
-
-      function showModal(modalItem, title, content) {
-        modalItem.find('#ModalAlertLabel').text(title)
-        modalItem.find('#modal_message').text(content)
-        toggleModal()
+      if (modal.hasClass('show')) {
+        modal.removeClass('show').addClass('fade')
+      } else {
+        modal.removeClass('fade').addClass('show')
       }
-
-      $('#Modal_alert button').on('click', toggleModal)
-
-      $.ajax({
-        url: 'index.php',
-        method: 'POST',
-        data: {
-          cart_action: 'addToCart',
-          pid: productId,
-          qty: quantity,
-        },
-        success: function (response) {
-          // console.log(response)
-
-          // alert('Product is added to cart successfully.')
-          // location.reload() // Reload to update the cart
-
-          showModal(
-            modal,
-            'Notification',
-            'Product is added to cart successfully.'
-          )
-          $('#Modal_alert button').on('click', function () {
-            if (modal.hasClass('fade')) {
-              location.reload() // Reload to update the cart
-            }
-          })
-        },
-        error: function () {
-          alert('An error occurred while updating the cart.')
-        },
-      })
     }
-  )
+
+    function showModal(modalItem, title, content) {
+      modalItem.find('#ModalAlertLabel').text(title)
+      modalItem.find('#modal_message').text(content)
+      toggleModal()
+    }
+
+    $('#Modal_alert button').on('click', toggleModal)
+
+    $.ajax({
+      url: '/view_cart',
+      method: 'POST',
+      data: {
+        cart_action: 'addToCart',
+        pid: productId,
+        qty: quantity,
+      },
+      success: function (response) {
+        let status = 'Notification'
+        if (response.status === 'warning') status = 'Alert'
+        if (response.status === 'error') status = 'Error'
+
+        showModal(
+          modal,
+          status,
+          response.message || 'An error occurred while adding to cart.'
+        )
+
+        $('#Modal_alert button').on('click', function () {
+          if (modal.hasClass('fade')) {
+            location.reload() // Reload to update the cart
+          }
+        })
+      },
+      error: function () {
+        showModal(modal, 'Error', 'An error occurred while updating the cart.')
+      },
+    })
+  })
 })

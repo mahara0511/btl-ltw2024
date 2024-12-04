@@ -1,9 +1,7 @@
 <?php
-require_once 'models/CartModel.php';
 
 // $ip_add = $_SERVER['REMOTE_ADDR'];
 // $uid = $_SESSION['uid'] ?? null;
-
 
 class CartController
 {
@@ -11,6 +9,7 @@ class CartController
 
     public function __construct($db)
     {
+        require_once(ROOT_PATH . '/models/CartModel.php');
         $this->model = new CartModel($db);
     }
 
@@ -59,6 +58,7 @@ class CartController
                 $count = $this->model->countUserCart($ip_add, $uid);
                 $response = [
                     'status' => 'success',
+                    'message' => "Counting user cart was successfully!",
                     'count' => $count,
                 ];
                 break;
@@ -69,7 +69,10 @@ class CartController
                 $response = $this->model->updateItemfromCart($pid, $qty, $ip_add, $uid);
                 break;
             default:
-                $response['message'] = "ERROR: Cannot find this type of action!";
+                $response = [
+                    'status' => 'error',
+                    'message' => 'ERROR: Cannot find this type of action!',
+                ];
         }
 
         return $response;
@@ -88,10 +91,9 @@ class CartController
 
     public function handleAjaxRequest()
     {
-        $action = $_POST['action'] ?? '';
-        $pid = $_POST['product_id'] ?? 0;
+        $action = $_POST['cart_action'] ?? '';
+        $pid = $_POST['pid'] ?? 0;
         $qty = $_POST['qty'] ?? 1;
-
         $ip_add = $_SERVER['REMOTE_ADDR'];
         $uid = $_SESSION['uid'] ?? null;
 
@@ -102,13 +104,19 @@ class CartController
 
         switch ($action) {
             case 'updateItemfromCart':
-                $response = $this->takeCartAction('updateItemfromCart', $pid, $qty, $ip_add, $uid);
+                $response = $this->takeCartAction($action, $pid, $qty, $ip_add, $uid);
                 break;
             case 'removeItemfromCart':
-                $response = $this->takeCartAction('removeItemfromCart', $pid, 0, $ip_add, $uid);
+                $response = $this->takeCartAction($action, $pid, 0, $ip_add, $uid);
+                break;
+            case 'addToCart':
+                $response = $this->takeCartAction($action, $pid, $qty, $ip_add, $uid);
                 break;
             default:
                 $response['message'] = 'Unknown action.';
         }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
 }

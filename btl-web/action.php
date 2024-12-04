@@ -1,89 +1,47 @@
 <?php
+session_start();
 require_once 'config/db_connect.php';
 require_once 'controllers/AdminController.php';
 require_once 'controllers/StoreController.php';
 require_once 'controllers/ProductController.php';
 require_once 'controllers/CartController.php';
-// require_once 'controllers/OrderController.php';
-
-
-
-// Example usage
-// $categoryController = new AdminController($conn);
-// $categoryController->getAdmin(1);
-// echo '<br>';
-
-$storeController = new StoreController($conn);
-$productController = new ProductController($conn);
-$cartController = new CartController($conn);
-// $cartController->view_cart_dropdown($_SERVER['REMOTE_ADDR'], $_SESSION['uid'] ?? null);
+require_once 'controllers/OrderController.php';
 ?>
+
 
 <?php
 // Determine the action
-$action = $_GET['action'] ?? null;
 
-// Routing logic
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Handle GET requests
-    switch ($action) {
-        case 'view_category':
-            if (isset($_GET['cid']) && is_numeric($_GET['cid'])) {
-                $storeController->view_category($_GET['cid']);
-            } else {
-                echo "ERROR: Invalid category ID.";
-            }
-            break;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-        case 'view_brand':
-            if (isset($_GET['bid']) && is_numeric($_GET['bid'])) {
-                $storeController->view_brand($_GET['bid']);
-            } else {
-                echo "ERROR: Invalid brand ID.";
-            }
-            break;
-
-        case 'view':
-            $storeController->view();
-            break;
-
-        case 'view_cart':
-            $cartController->view_cart($_SERVER['REMOTE_ADDR'], $_SESSION['uid'] ?? null);
-            break;
-
-        case 'product_detail':
-            if (isset($_GET['product_id']) && is_numeric($_GET['product_id'])) {
-                $productController->view_product_detail(intval($_GET['product_id']));
-            } else {
-                echo "ERROR: Product not found or invalid request.";
-            }
-            break;
-
+    switch ($requestUri) {
+        case '/cart-actions':
+            require_once 'controllers/CartController.php';
+            $cartController->handleAjaxRequest();
+            exit;
         default:
-            echo "ERROR: Action not found.";
-            break;
-    }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle POST requests (e.g., cart actions via AJAX)
-    $typeOfCartAction = $_POST['cart_action'] ?? '';
-    echo $typeOfCartAction;
-    $pid = $_POST['pid'] ?? 0;
-    $qty = $_POST['qty'] ?? 1;
-    $ip_add = $_SERVER['REMOTE_ADDR'];
-    $uid = $_SESSION['uid'] ?? null;
-    $response = [
-        'status' => 'error',
-        'message' => 'Invalid request.'
-    ];
-    // Process cart actions
-    if ($typeOfCartAction) {
-        $response = $cartController->takeCartAction($typeOfCartAction, intval($pid), intval($qty), $ip_add, $uid);
-        echo json_encode($response);
-        exit;
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid cart action.']);
-        exit;
-    }
-} else {
+            exit;
 
+    }
+
+    // // Handle POST requests (e.g., cart actions via AJAX)
+    // $typeOfCartAction = $_POST['cart_action'] ?? '';
+    // $pid = $_POST['pid'] ?? 0;
+    // $qty = $_POST['qty'] ?? 1;
+    // $ip_add = $_SERVER['REMOTE_ADDR'];
+    // $uid = $_SESSION['uid'] ?? null;
+    // $response = [
+    //     'status' => 'error',
+    //     'message' => 'Invalid request.'
+    // ];
+    // // Process cart actions
+    // if ($typeOfCartAction) {
+    //     $response = $cartController->takeCartAction($typeOfCartAction, intval($pid), intval($qty), $ip_add, $uid);
+    //     header('Content-Type: application/json');
+    //     echo json_encode($response);
+    // } else {
+    //     header('Content-Type: application/json');
+    //     echo json_encode(['status' => 'error', 'message' => 'Invalid cart action.']);
+    // }
 }

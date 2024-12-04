@@ -126,21 +126,21 @@
 </div> -->
 
 <!-- <script src="https://unpkg.com/@popperjs/core@2"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script> -->
+
 <script>
     $(document).ready(function () {
-        // $('.cart-dropdown').on('click', function (e) {
-        //     e.stopPropagation();
-        // });
-        $('.dropdown').on('click', function () {
-            // e.stopPropagation();
+        $('.dropdown').on('click', function (e) {
+            e.stopPropagation();
             $(this).toggleClass('open');
-            $(this).find('.dropdown-toggle').attr('aria-expanded', 'true');
+            $(this).find('.dropdown-toggle').attr('aria-expanded', $(this).hasClass('open'));
         });
-        // Close the dropdown when clicking outside
         $(document).on('click', function (e) {
             if (!$(e.target).closest('.dropdown').length) {
                 $('.dropdown').removeClass('open');
-                $(this).attr('aria-expanded', 'false');
+                $('.dropdown-toggle').attr('aria-expanded', 'false');
             }
         });
     });
@@ -148,8 +148,8 @@
 
 
 <?php
-require_once 'controllers/CartController.php';
-require_once 'config/db_connect.php';
+require_once(ROOT_PATH . '/controllers/CartController.php');
+require(ROOT_PATH . '/config/db_connect.php');
 $cartController = new CartController($conn);
 ?>
 
@@ -197,7 +197,7 @@ $cartController = new CartController($conn);
             <?php endif; ?>
         </div>
         <div class="cart-btns">
-            <a href="index.php?action=view_cart" style="width:100%;"><i class="fa fa-edit"></i> edit cart</a>
+            <a href="/view_cart" style="width:100%;"><i class="fa fa-edit"></i> edit cart</a>
         </div>
     </div>
 </div>

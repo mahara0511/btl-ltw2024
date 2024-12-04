@@ -1,5 +1,5 @@
 <?php
-// include 'layouts/header.php';
+require_once ROOT_PATH . "/views/layouts/header.php";
 ?>
 
 <?php
@@ -50,7 +50,7 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                 <div id="product-main-img">
                     <div class="product-preview">
                         <img src=<?php echo "'product_images/" . $product_detail['product_image'] . "'" ?> alt=""
-                            style="transform: rotate(0deg);">
+                            height="450px" style="transform: rotate(0deg);">
                     </div>
                 </div>
             </div>
@@ -60,26 +60,26 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                 <div id="product-imgs" class="slick-slider">
                     <div class="product-preview">
                         <img src=<?php echo "'product_images/" . $product_detail['product_image'] . "'" ?> alt=""
-                            style="transform: rotate(0deg);">
+                            height="150px" style="transform: rotate(0deg);">
                     </div>
 
                     <div class="product-preview">
                         <img src=<?php echo "'product_images/" . $product_detail['product_image'] . "'" ?> alt=""
-                            style="transform: rotate(15deg);">
+                            height="150px" style="transform: rotate(15deg);">
                     </div>
 
                     <div class="product-preview">
                         <img src=<?php echo "'product_images/" . $product_detail['product_image'] . "'" ?> alt=""
-                            style="transform: rotate(-15deg);">
+                            height="150px" style="transform: rotate(-15deg);">
                     </div>
 
                     <div class=" product-preview">
                         <img src=<?php echo "'product_images/" . $product_detail['product_image'] . "'" ?> alt=""
-                            style="transform: skewY(15deg) scale(0.9);">
+                            height="150px" style="transform: skewY(15deg) scale(0.9);">
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="product-details">
                     <h2 class="product-name"><?php echo $product_detail['product_title'] ?></h2>
                     <div>
@@ -212,7 +212,7 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                     ?>
                     <div class='col-md-3 col-xs-6 w-100'>
                         <div class='product'>
-                            <a href=<?php echo "'index.php?product_id=" . $related_product['product_id'] . "'" ?>>
+                            <a href=<?php echo "'store?product_id=" . $related_product['product_id'] . "'" ?>>
                                 <div class='product-img'>
                                     <img src=<?php echo "'product_images/" . $related_product['product_image'] . "'" ?>
                                         alt=<?php echo "'" . $related_product['product_title'] . "'" ?>>
@@ -225,7 +225,7 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                             <div class='product-body'>
                                 <p class='product-category'><?php echo $related_product['cat_title']; ?></p>
                                 <div class='product-name header-cart-item-name'>
-                                    <a href=<?php echo "'index.php?product_id=" . $related_product['product_id'] . "'" ?>>
+                                    <a href=<?php echo "'store?product_id=" . $related_product['product_id'] . "'" ?>>
                                         <?php echo $related_product['product_title'] ?>
                                     </a>
                                 </div>

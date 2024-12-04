@@ -47,7 +47,7 @@ $(document).ready(function () {
       // If the quantity has changed
       if (quantity > 0) {
         $.ajax({
-          url: 'index.php', // Endpoint for handling cart actions
+          url: '/view_cart', // Endpoint for handling cart actions
           type: 'POST',
           data: {
             cart_action: 'updateItemfromCart',
@@ -56,11 +56,23 @@ $(document).ready(function () {
           },
           success: function (response) {
             // Show success modal with message
-            // Check if modal is visible (has the 'show' class)
-            //   $('#ModalAlertLabel').text('Notification')
-            //   $('#modal_message').text('Updated quantity successfully!')
-            //   toggleModal()
-            showModal(modal, 'Notification', 'Updated quantity successfully!')
+            var status = 'Error'
+            switch (response.status) {
+              case 'success':
+                status = 'Notification'
+                break
+              case 'warning':
+                status = 'Alert'
+                break
+              default:
+                status = 'Error'
+                break
+            }
+            showModal(
+              modal,
+              status,
+              response.message || 'An error occurred while updating the cart.'
+            )
             $('#Modal_alert button').on('click', function () {
               if (modal.hasClass('fade')) {
                 location.reload() // Reload to update the cart
@@ -68,11 +80,15 @@ $(document).ready(function () {
             })
           },
           error: function () {
-            alert('An error occurred while updating the cart.')
+            showModal(
+              modal,
+              'Error',
+              'An error occurred while updating the cart.'
+            )
           },
         })
       } else {
-        alert('Quantity must be at least 1.')
+        showModal(modal, 'Alert', 'Quantity must be at least 1.')
       }
     } else {
       // If quantity has not changed
@@ -86,19 +102,30 @@ $(document).ready(function () {
     const product_id = $(this).attr('remove_id')
     if (confirm('Are you sure you want to remove this item from the cart?')) {
       $.ajax({
-        url: 'index.php', // Endpoint for handling cart actions
+        url: '/view_cart', // Endpoint for handling cart actions
         type: 'POST',
         data: {
           cart_action: 'removeItemfromCart',
           pid: product_id,
         },
         success: function (response) {
-          // Show success modal with message
-          //   $('#ModalAlertLabel').text('Notification')
-          //   $('#modal_message').text('Removed item successfully!')
-          //   toggleModal()
-
-          showModal(modal, 'Notification', 'Removed item successfully!')
+          var status = 'Error'
+          switch (response.status) {
+            case 'success':
+              status = 'Notification'
+              break
+            case 'warning':
+              status = 'Alert'
+              break
+            default:
+              status = 'Error'
+              break
+          }
+          showModal(
+            modal,
+            status,
+            response.message || 'An error occurred while removing product.'
+          )
 
           $('#Modal_alert button').on('click', function () {
             if (modal.hasClass('fade')) {
@@ -107,7 +134,11 @@ $(document).ready(function () {
           })
         },
         error: function () {
-          alert('An error occurred while removing the item from the cart.')
+          showModal(
+            modal,
+            'Error',
+            'An error occurred while removing the item from the cart.'
+          )
         },
       })
     }

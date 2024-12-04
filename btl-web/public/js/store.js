@@ -27,7 +27,7 @@ $(document).ready(function () {
     originProducts = []
     productsToFilter = []
     $.ajax({
-      url: 'index.php?action=view_category',
+      url: '/store?action=view_category',
       method: 'GET',
       data: { cid: categoryId },
       success: function (response) {
@@ -36,7 +36,7 @@ $(document).ready(function () {
         window.history.pushState(
           null,
           null,
-          'index.php?action=view_category&cid=' + categoryId
+          '/store?action=view_category&cid=' + categoryId
         )
         renderProductsList()
         handleAddToCartBtn()
@@ -54,7 +54,7 @@ $(document).ready(function () {
     originProducts = []
     productsToFilter = []
     $.ajax({
-      url: 'index.php?action=view_brand',
+      url: '/store?action=view_brand',
       method: 'GET',
       data: { bid: brandId },
       success: function (response) {
@@ -63,7 +63,7 @@ $(document).ready(function () {
         window.history.pushState(
           null,
           null,
-          'index.php?action=view_brand&bid=' + brandId
+          '/store?action=view_brand&bid=' + brandId
         )
         renderProductsList()
         handleAddToCartBtn()
@@ -95,7 +95,7 @@ $(window).on('popstate', function () {
 // Load data function for category or brand
 function loadData(action, params) {
   $.ajax({
-    url: `index.php?action=${action}`,
+    url: `/store?action=${action}`,
     method: 'GET',
     data: params,
     success: function (response) {
@@ -111,7 +111,7 @@ function loadData(action, params) {
 // Load the default content (e.g., all products)
 function loadDefaultContent() {
   $.ajax({
-    url: 'index.php?action=view', // or whatever action loads the main store view
+    url: '/store?action=view', // or whatever action loads the main store view
     method: 'GET',
     success: function (response) {
       const newStoreContent = $(response).find('#store').html()
@@ -156,7 +156,7 @@ function handleAddToCartBtn() {
     $('#Modal_alert button').on('click', toggleModal)
 
     $.ajax({
-      url: 'index.php',
+      url: '/view_cart',
       method: 'POST',
       data: {
         cart_action: 'addToCart',
@@ -164,11 +164,23 @@ function handleAddToCartBtn() {
         qty: 1,
       },
       success: function (response) {
-        // console.log(response)
+        // Show success modal with message
+        var status = 'Error'
+        switch (response.status) {
+          case 'success':
+            status = 'Notification'
+            break
+          case 'warning':
+            status = 'Alert'
+            break
+          default:
+            status = 'Error'
+            break
+        }
         showModal(
           modal,
-          'Notification',
-          'Product is added to cart successfully.'
+          status,
+          response.message || 'An error occurred while updating the cart.'
         )
         $('#Modal_alert button').on('click', function () {
           if (modal.hasClass('fade')) {
@@ -177,7 +189,7 @@ function handleAddToCartBtn() {
         })
       },
       error: function () {
-        alert('An error occurred while updating the cart.')
+        showModal(modal, 'Error', 'An error occurred while updating the cart.')
       },
     })
   })

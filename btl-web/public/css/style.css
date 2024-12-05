@@ -249,7 +249,9 @@ textarea.input {
 }
 
 .input-number input[type='number'] {
+  -webkit-appearance: textfield;
   -moz-appearance: textfield;
+  appearance: textfield;
   height: 40px;
   width: 100%;
   border: 1px solid #e4e7ed;

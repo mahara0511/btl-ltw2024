@@ -1,13 +1,22 @@
 <?php
 
 require_once 'models/AdminInfoModel.php';
+require_once 'models/UserModel.php';
+require_once 'models/ProductModel.php';
+require_once 'models/OrderModel.php';
 
 class AdminController
 {
     private $model;
+    private $userModel;
+    private $productModel;
+    private $orderModel;
     public function __construct($db)
     {
         $this->model = new AdminInfoModel($db);
+        $this->userModel = new UserModel();
+        $this->productModel = new ProductModel($db);
+        $this->orderModel = new OrderModel($db);
     }
 
     public function getAdmin($admin_id)
@@ -27,7 +36,6 @@ class AdminController
             header('location: /admin/'); // Chuyển hướng đến trang admin
             exit();
         }
-        echo $_SESSION['admin'];
         $email = '';
         $errors = array();
         if (isset($_POST['login_admin'])) {
@@ -68,6 +76,48 @@ class AdminController
         if(!isset($_SESSION['admin'])) {
             header('location: /admin/');
         }
+    }
+
+    public function index() {
+        $this->isLogin();
+        $number_of_users = $this->userModel->getNumberOfUsers();
+        $number_of_products = $this->productModel->getNumberOfCategory();
+        $number_of_orders = $this->orderModel->getNumberOfOrders();
+        $all_users = $this->userModel->getAllUsers();
+        $categories = $this->productModel->getCategories();
+
+        $cate_data = [];
+        while (list($cat_id, $cat_title) = mysqli_fetch_array($categories)) {
+            $count = $this->productModel->getProductCountByCategory($cat_id);
+            $cate_data[] = [
+                'cat_id' => $cat_id,
+                'cat_title' => $cat_title,
+                'count' => $count,
+            ];
+        }
+
+        $brands = $this->productModel->getBrands();
+
+        $brand_data = [];
+        while (list($brand_id, $brand_title) = mysqli_fetch_array($brands)) {
+            $count = $this->productModel->getBrandCount($brand_id);
+            $brand_data[] = [
+                'brand_id' => $brand_id,
+                'brand_title' => $brand_title,
+                'count' => $count,
+            ];
+        }
+
+        $subcribers = $this->userModel->getEmailInfo();
+
+        include_once 'views/admin/index/index.php';
+    }
+
+    public function handleUser() {
+        $this->isLogin();
+
+        $all_users = $this->userModel->getAllUsers();
+        include_once 'views/admin/handleUser.php';
     }
 
 }

@@ -42,5 +42,7 @@ class AdminInfoModel
         $query = $this->db->prepare("INSERT INTO admin_info (admin_name, admin_email, admin_password) VALUES (?, ?, ?)");
         $query->execute([$name, $email, $password]);
     }
+
+    
 }
 ?>

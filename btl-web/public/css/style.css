@@ -249,7 +249,9 @@ textarea.input {
 }
 
 .input-number input[type='number'] {
+  -webkit-appearance: textfield;
   -moz-appearance: textfield;
+  appearance: textfield;
   height: 40px;
   width: 100%;
   border: 1px solid #e4e7ed;
@@ -759,6 +761,7 @@ textarea.input {
 .cart-dropdown .cart-list .product-widget .product-img {
   left: 0px;
   top: 0px;
+  width: 50px;
 }
 
 .cart-dropdown .cart-list .product-widget .product-body .product-price {

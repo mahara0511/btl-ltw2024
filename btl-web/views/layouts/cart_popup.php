@@ -171,14 +171,15 @@ $cartController = new CartController($conn);
         <div class="cart-list" id="cart_product">
             <?php if (!empty($cart_items)): ?>
                 <?php foreach ($cart_items as $item): ?>
-                    <div class="product-widget">
+                    <div class="product-widget"
+                        onclick="window.location.href='/store?product_id=<?php echo $item['product_id']; ?>'">
                         <div class="product-img">
                             <img src="<?= 'product_images/' . htmlspecialchars($item['product_image']); ?>"
-                                alt="<?= htmlspecialchars($item['product_title']); ?>" width="60px" height="60px">
+                                alt="<?= htmlspecialchars($item['product_title']); ?>">
                         </div>
                         <div class="product-body">
                             <h3 class="product-name"><a
-                                    href="index.php?product_id=<?= $item['product_id'] ?>"><?= htmlspecialchars($item['product_title']); ?></a>
+                                    href="/store?product_id=<?= $item['product_id'] ?>"><?= htmlspecialchars($item['product_title']); ?></a>
                             </h3>
                             <h4 class="product-price">
                                 <span class="qty"><?= $item['qty']; ?></span> x $<?= $item['product_price']; ?>

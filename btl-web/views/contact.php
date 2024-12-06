@@ -19,37 +19,37 @@
                     <br><br>
                     <div class="col-md-6">
                         <label for="fname">First Name: <span class="red-txt">*</span></label><br>
-                        <input type="text" id="fname" name="fname" required>
+                        <input type="text" id="fname" name="fname" placeholder="John" required>
                         <p><br></p>
                     </div>
 
                     <div class="col-md-6">
                         <label for="lname">Last Name: <span class="red-txt">*</span></label><br>
-                        <input type="text" id="lname" name="lname" required>
+                        <input type="text" id="lname" name="lname" placeholder="Doe" required>
                         <p><br></p>
                     </div>
 
                     <div class="col-md-6">
                         <label for="email">Email: <span class="red-txt">*</span></label><br>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" placeholder="johndoe@gmail.com" required>
                         <p><br></p>
                     </div>
 
                     <div class="col-md-6">
                         <label for="phone">Phone Number: <span class="red-txt">*</span></label><br>
-                        <input type="text" id="phone" name="phone" required>
+                        <input type="text" id="phone" name="phone" placeholder="0901234567" required>
                         <p><br></p>
                     </div>
 
                     <div class="col-md-12">
                         <label for="sbj">Subject: <span class="red-txt">*</span></label><br>
-                        <input type="text" id="sbj" name="sbj" style="width: 100%;" required>
+                        <input type="text" id="sbj" name="sbj" style="width: 100%;" placeholder="Your problem" required>
                         <p><br></p>
                     </div>
                     
                     <div class="col-md-12">
                         <label for="message">How we might help you? <span class="red-txt">*</span></label><br>
-                        <textarea id="message" name="message" rows="5" style="width: 100%;" required></textarea>
+                        <textarea id="message" name="message" rows="5" style="width: 100%;" placeholder="Describe your problem" required></textarea>
                         <p><br></p>
                     </div>
 

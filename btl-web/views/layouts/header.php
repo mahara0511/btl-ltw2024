@@ -279,7 +279,7 @@ if (!isset($_SESSION)) {
     <nav id='navigation'>
         <!-- container -->
         <div class="container" id="get_category_home">
-                    
+
         </div>
         <!-- responsive-nav -->
         <!-- /container -->
@@ -300,7 +300,7 @@ if (!isset($_SESSION)) {
                 <div class="modal-body">
                     <?php
                     include "login_form.php";
-                    
+
                     ?>
 
                 </div>

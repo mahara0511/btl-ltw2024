@@ -49,3 +49,9 @@
     margin-bottom: 10px;
     opacity: 0.8;
 }
+
+.news-p {
+    text-align: justify;
+    text-justify: inter-word;
+    text-indent: 5%;
+}

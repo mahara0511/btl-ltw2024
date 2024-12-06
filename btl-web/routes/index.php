@@ -23,9 +23,9 @@ $parts = explode('/', $request);
             $controller = new StoreController($conn);
             break;
         case 'news': 
-            require(ROOT_PATH . '/controllers/HomeController.php');
-            $controller = new HomeController();
-            $controller->news();
+            require(ROOT_PATH . '/controllers/newsController.php');
+            $controller = new NewsController();
+            $controller->index();
             break;
         case 'contact_us':
             require(ROOT_PATH . '/controllers/HomeController.php');

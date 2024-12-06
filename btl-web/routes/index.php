@@ -28,6 +28,9 @@ $parts = explode('/', $request);
             $controller->index();
             break;
         case 'contact_us':
+            if (!empty($_POST["desEmail"])) {
+                mail($_POST["desEmail"], $_POST["sbj"], $_POST["message"], );
+            }
             require(ROOT_PATH . '/controllers/HomeController.php');
             $controller = new HomeController();
             $controller->contact_us(); 

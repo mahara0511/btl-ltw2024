@@ -23,14 +23,15 @@
                         $news_title = $dummy['title'];
                         $news_subtitle = $dummy['subtitle'];
                         $news_content = $dummy['content'];
-                        $news_image = '/../public/img/'.$dummy['img'];
+                        $news_image = $dummy['img'];
                         $news_category = $dummy['category'];
                         ?>
 
                         <a href="#" onclick="<?php echo("showNews($news_id);"); ?>">
                             <div class="col-md-4">
                                 <div class="card">
-                                    <img src="public/img/general_news_photo.jpg" alt="News Image" style="width:100%">
+                                    <?php echo "<script>console.log($news_image)</script>" ?>
+                                    <img src="public/img/<?php echo $news_image ?>" alt="News Image" style="width:100%">
                                     <div class="wrapper">
                                         <div class="news-title">
                                             <p><?php echo $news_title ?></p>
@@ -123,7 +124,7 @@
             $news_title = $dummy['title'];
             $news_subtitle = $dummy['subtitle'];
             $news_content = implode("\\n", explode(PHP_EOL, $dummy['content']));
-            $news_image = '/../public/img/'.$dummy['img'];
+            $news_image = '/public/img/'.$dummy['img'];
             $news_category = $dummy['category'];
 
             echo "console.log(newsData)\n

@@ -79,3 +79,7 @@ html {
         display: block;
     }
 }
+
+.wrapper h2 {
+    height: 9vh;
+}

@@ -39,52 +39,77 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="card">
-                        <img src="public/img/img_avatar3.png" alt="Jane" style="width:100%">
+                        <img src="public/img/img_avatar3.png" alt="Khanh" style="width:100%">
                         <div class="wrapper">
-                            <h2>Jane Doe</h2>
+                            <h2>Nguyen Minh Khanh</h2>
                             <p class="person-title">CEO & Founder</p>
-                            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                            <p>jane@example.com</p>
-                            <p><button class="button">Contact</button></p>
+                            <form action="contact_us" method="POST">
+                                <input type="hidden" id="dummy" name="dummy" value="">
+                                <input type="hidden" id="name" name="name" value="Nguyen Minh Khanh">
+                                <input type="hidden" id="email" name="email" value="khanh.nguyenminh0101@hcmut.edu.vn">
+                                <input type="hidden" id="pos" name="pos" value="CEO & Founder">
+                                <input type="hidden" id="img" name="img" value="img_avatar3.png">
+                                <input type="hidden" id="about" name="about" value="Some text about Khanh lorem ipsum.">
+                                <p><input type="submit" class="button" value="Contact"></p>
+                            </form>
+                            <!-- <p><button class="button" onclick="location.href = 'contact_us'">Contact</button></p> -->
                         </div>
                     </div>
                 </div>
         
                 <div class="col-md-3">
                     <div class="card">
-                        <img src="public/img/img_avatar3.png" alt="Mike" style="width:100%">
+                        <img src="public/img/img_avatar3.png" alt="Tuan" style="width:100%">
                         <div class="wrapper">
-                            <h2>Mike Ross</h2>
+                            <h2>Nguyen Truyen Tuan</h2>
                             <p class="person-title">Art Director</p>
-                            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                            <p>mike@example.com</p>
-                            <p><button class="button">Contact</button></p>
+                            <form action="contact_us" method="POST">
+                                <input type="hidden" id="dummy" name="dummy" value="">
+                                <input type="hidden" id="name" name="name" value="Nguyen Truyen Tuan">
+                                <input type="hidden" id="email" name="email" value="tuan.nguyenkhmtk22@hcmut.edu.vn">
+                                <input type="hidden" id="pos" name="pos" value="Art Director">
+                                <input type="hidden" id="img" name="img" value="img_avatar3.png">
+                                <input type="hidden" id="about" name="about" value="Some text about Tuan lorem ipsum.">
+                                <p><input type="submit" class="button" value="Contact"></p>
+                            </form>
                         </div>
                     </div>
                 </div>
         
                 <div class="col-md-3">
                     <div class="card">
-                        <img src="public/img/img_avatar3.png" alt="John" style="width:100%">
+                        <img src="public/img/img_avatar3.png" alt="Anh" style="width:100%">
                         <div class="wrapper">
-                            <h2>John Doe</h2>
+                            <h2>Tran Nhu Mai Anh</h2>
                             <p class="person-title">Designer</p>
-                            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                            <p>john@example.com</p>
-                            <p><button class="button">Contact</button></p>
+                            <form action="contact_us" method="POST">
+                                <input type="hidden" id="dummy" name="dummy" value="">
+                                <input type="hidden" id="name" name="name" value="Tran Nhu Mai Anh">
+                                <input type="hidden" id="pos" name="pos" value="Designer">
+                                <input type="hidden" id="img" name="img" value="img_avatar3.png">
+                                <input type="hidden" id="about" name="about" value="Some text about Anh lorem ipsum.">
+                                <input type="hidden" id="email" name="email" value="anh.tran2004@hcmut.edu.vn">
+                                <p><input type="submit" class="button" value="Contact"></p>
+                            </form>
                         </div>
                     </div>
                 </div>
     
                 <div class="col-md-3">
                     <div class="card">
-                        <img src="public/img/img_avatar3.png" alt="Tom" style="width:100%">
+                        <img src="public/img/img_avatar3.png" alt="Vinh" style="width:100%">
                         <div class="wrapper">
-                            <h2>Tom Hanks</h2>
+                            <h2>Le Ngoc Vinh</h2>
                             <p class="person-title">CIO</p>
-                            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                            <p>tom@example.com</p>
-                            <p><button class="button">Contact</button></p>
+                            <form action="contact_us" method="POST">
+                                <input type="hidden" id="dummy" name="dummy" value="">
+                                <input type="hidden" id="name" name="name" value="Le Ngoc Vinh">
+                                <input type="hidden" id="email" name="email" value="vinh.lengoc@hcmut.edu.vn">
+                                <input type="hidden" id="pos" name="pos" value="CIO">
+                                <input type="hidden" id="img" name="img" value="img_avatar3.png">
+                                <input type="hidden" id="about" name="about" value="Some text about Vinh lorem ipsum.">
+                                <p><input type="submit" class="button" value="Contact"></p>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -116,7 +141,7 @@
             }
         }
     </script>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         $('.block2-btn-addcart').each(function(){
             var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
             $(this).on('click', function(){
@@ -130,6 +155,6 @@
                 swal(nameProduct, "is added to wishlist !", "success");
             });
         });
-    </script>
+    </script> -->
 </body>
 </html>

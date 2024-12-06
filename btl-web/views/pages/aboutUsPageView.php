@@ -44,7 +44,7 @@
                             <h2>Nguyen Minh Khanh</h2>
                             <p class="person-title">CEO & Founder</p>
                             <form action="contact_us" method="POST">
-                                <input type="hidden" id="dummy" name="dummy" value="">
+                                <input type="hidden" id="dummy" name="dummy" value="abcxyz">
                                 <input type="hidden" id="name" name="name" value="Nguyen Minh Khanh">
                                 <input type="hidden" id="email" name="email" value="khanh.nguyenminh0101@hcmut.edu.vn">
                                 <input type="hidden" id="pos" name="pos" value="CEO & Founder">
@@ -64,7 +64,7 @@
                             <h2>Nguyen Truyen Tuan</h2>
                             <p class="person-title">Art Director</p>
                             <form action="contact_us" method="POST">
-                                <input type="hidden" id="dummy" name="dummy" value="">
+                                <input type="hidden" id="dummy" name="dummy" value="abcxyz">
                                 <input type="hidden" id="name" name="name" value="Nguyen Truyen Tuan">
                                 <input type="hidden" id="email" name="email" value="tuan.nguyenkhmtk22@hcmut.edu.vn">
                                 <input type="hidden" id="pos" name="pos" value="Art Director">
@@ -83,7 +83,7 @@
                             <h2>Tran Nhu Mai Anh</h2>
                             <p class="person-title">Designer</p>
                             <form action="contact_us" method="POST">
-                                <input type="hidden" id="dummy" name="dummy" value="">
+                                <input type="hidden" id="dummy" name="dummy" value="abcxyz">
                                 <input type="hidden" id="name" name="name" value="Tran Nhu Mai Anh">
                                 <input type="hidden" id="pos" name="pos" value="Designer">
                                 <input type="hidden" id="img" name="img" value="img_avatar3.png">
@@ -102,7 +102,7 @@
                             <h2>Le Ngoc Vinh</h2>
                             <p class="person-title">CIO</p>
                             <form action="contact_us" method="POST">
-                                <input type="hidden" id="dummy" name="dummy" value="">
+                                <input type="hidden" id="dummy" name="dummy" value="abcxyz">
                                 <input type="hidden" id="name" name="name" value="Le Ngoc Vinh">
                                 <input type="hidden" id="email" name="email" value="vinh.lengoc@hcmut.edu.vn">
                                 <input type="hidden" id="pos" name="pos" value="CIO">

@@ -31,7 +31,7 @@
 
                     <div class="signin-form">
                         <h2 class="form-title">ADMIN LOGIN</h2>
-                        <form  class="register-form" id="login-form" action="login" method="post">
+                        <form class="register-form" id="login-form" action="login" method="post">
                             <div class="alert alert-danger"><h4 id="e_msg">
                             <?php  if (count($errors) > 0) : ?>
                             <div class="error">
@@ -64,6 +64,6 @@
 
     <!-- JS -->
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="public/js/main.js"></script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>

@@ -3,6 +3,8 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+define('ROOT_API', 'http://localhost');
 define('ROOT_PATH', __DIR__);
 require_once("routes/index.php");
 ?>

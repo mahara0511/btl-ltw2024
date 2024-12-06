@@ -58,7 +58,7 @@ class AdminController
                     $_SESSION['admin_name'] = $admin_username;
                     $_SESSION['admin'] = TRUE;
                     $_SESSION['success'] = "You are now logged in";
-                    header('location: /admin/');
+                    header('location: /admin');
                     exit(); // Luôn thêm exit sau header
                 } else {
                     // Thêm lỗi vào mảng $errors
@@ -73,8 +73,16 @@ class AdminController
     } 
 
     public function isLogin() {
-        if(!isset($_SESSION['admin'])) {
-            header('location: /admin/');
+        if (!isset($_SESSION['admin'])) {
+            // Nếu là yêu cầu API, trả về lỗi JSON thay vì chuyển hướng
+            if ($_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
+                echo json_encode(['success' => false, 'message' => 'Unauthorized access.']);
+                exit;
+            } else {
+                // Chuyển hướng cho các yêu cầu từ trình duyệt
+                header('location: /admin');
+                exit;
+            }
         }
     }
 
@@ -118,6 +126,58 @@ class AdminController
 
         $all_users = $this->userModel->getAllUsers();
         include_once 'views/admin/handleUser.php';
+    }
+
+    public function handleUserDelete() {
+        // Đọc dữ liệu JSON từ request
+        $data = json_decode(file_get_contents("php://input"), true);
+    
+        // Kiểm tra dữ liệu đầu vào
+        if (!isset($data['user_ids']) || !is_array($data['user_ids']) || count($data['user_ids']) === 0) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'No user IDs provided.']);
+            exit;
+        }
+    
+        // Chuyển ID sang mảng số nguyên
+        $user_ids = array_map('intval', $data['user_ids']);
+    
+        // Gọi phương thức xóa
+        $results = $this->userModel->deleteUsers($user_ids);
+    
+        // Trả về phản hồi
+        header('Content-Type: application/json');
+        if ($results) {
+            echo json_encode(['success' => true, 'message' => 'Deleted Successfully.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Deleted Failed.']);
+        }
+        exit;
+    }
+    
+    public function handleUserEdit() {
+        $data = json_decode(file_get_contents("php://input"), true);
+    }
+
+    public function handleUserAdd() {
+        if($_REQUEST["REQUEST_METHOD"] == "POST") {
+            $firstName = htmlspecialchars(trim($_POST['first_name']));
+            $lastName = htmlspecialchars(trim($_POST['last_name']));
+            $email = htmlspecialchars(trim($_POST['email']));
+            $password = htmlspecialchars(trim($_POST['password']));
+            $phone = htmlspecialchars(trim($_POST['phone']));
+            $city = htmlspecialchars(trim($_POST['city']));
+            $country = htmlspecialchars(trim($_POST['country']));
+        
+            // Kiểm tra dữ liệu đã làm sạch
+            if (empty($firstName)) {
+                echo "First Name is required.";
+            } else {
+                echo "First Name: " . $firstName;
+            }
+        }
+
+        
     }
 
 }

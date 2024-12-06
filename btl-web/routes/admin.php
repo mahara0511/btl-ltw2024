@@ -13,6 +13,15 @@
             case 'handleUser': 
                 $controller->handleUser();
                 break;
+            case 'handleUserDelete': 
+                $controller->handleUserDelete();
+                break;
+            case 'handleUserEdit': 
+                $controller->handleUserEdit();
+                break;
+            case 'handleUserAdd': 
+                $controller->handleUserAdd();
+                break; 
             default:
                 http_response_code(404);
                 echo "404 Not Found";

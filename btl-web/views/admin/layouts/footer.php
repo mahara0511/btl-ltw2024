@@ -13,24 +13,21 @@
 </footer>
     </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!--   Core JS Files   -->
-  <script src="./assets/js/core/jquery.min.js"></script>
-  <script src="./assets/js/core/popper.min.js"></script>
-  <script src="./assets/js/core/bootstrap-material-design.min.js"></script>
-  <script src=""></script>
-  <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src=""></script>
-  <!--  Google Maps Plugin    -->
-  <script src=""></script>
+  <script src="/public/adminAsset/js/core/jquery.min.js"></script>
+  <script src="/public/adminAsset/js/core/popper.min.js"></script>
+  <script src="/public/adminAsset/js/core/bootstrap-material-design.min.js"></script>
+  <script src="/public/adminAsset/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  
   <!-- Chartist JS -->
-  <script src="./assets/js/plugins/chartist.min.js"></script>
+  <script src="/public/adminAsset/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->
-  <script src="./assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="/public/adminAsset/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="./assets/js/material-dashboard.js?v=2.1.0"></script>
-  <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-  <script src="./assets/demo/demo.js"></script>
+  <script src="/public/adminAsset/js/material-dashboard.js?v=2.1.0"></script>
+
   <script>
     $(document).ready(function() {
       $().ready(function() {

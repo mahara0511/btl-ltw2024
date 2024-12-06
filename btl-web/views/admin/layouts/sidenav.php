@@ -2,12 +2,12 @@
 
   if (!isset($_SESSION['admin_name'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: .././login.php');
+    header('location: /admin/login');
   }
   if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['admin_name']);
-    header("location: .././login.php");
+    header("location: /admin/login");
   }
 
   $current_path = $_SERVER['REQUEST_URI'];
@@ -31,6 +31,11 @@
         <meta
             content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
             name="viewport"
+        />
+
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css"
+            rel="stylesheet"
         />
         <!--     Fonts and icons     -->
         <link

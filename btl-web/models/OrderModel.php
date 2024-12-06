@@ -22,5 +22,11 @@ class OrderModel
         $query = $this->db->prepare("INSERT INTO orders (user_id, product_id, qty, trx_id, p_status) VALUES (?, ?, ?, ?, ?)");
         $query->execute([$user_id, $product_id, $qty, $trx_id, $p_status]);
     }
+
+    public function getNumberOfOrders() {
+        $query = "SELECT order_id FROM orders_info"; 
+        $result = mysqli_query($this->db, $query); 
+        return mysqli_num_rows($result); 
+    }
 }
 ?>

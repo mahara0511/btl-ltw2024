@@ -39,5 +39,48 @@ class ProductModel
         ");
         return $query->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function getNumberOfCategory(){
+
+        $query = "SELECT cat_id FROM categories"; 
+        $result = mysqli_query($this->db, $query); 
+        if ($result) 
+            { 
+                // it return number of rows in the table. 
+                return mysqli_num_rows($result);  
+            }
+    }
+
+    public function getCategories()
+    {
+        $sql = "SELECT * FROM categories";
+        $result = mysqli_query($this->db, $sql) or die("Query getCategories failed...");
+        return $result;
+    }
+
+    // Đếm số lượng sản phẩm trong mỗi danh mục
+    public function getProductCountByCategory($categoryId)
+    {
+        $sql = "SELECT COUNT(*) AS count_items FROM products WHERE product_cat = $categoryId";
+        $query = mysqli_query($this->db, $sql);
+        $row = mysqli_fetch_array($query);
+        return $row['count_items'] ?? 0;
+    }
+
+    public function getBrands()
+    {
+        $sql = "SELECT * FROM brands";
+        $result = mysqli_query($this->db, $sql) or die("Query getCategories failed...");
+        return $result;
+    }
+
+    // Đếm số lượng sản phẩm trong mỗi danh mục
+    public function getBrandCount($brandId)
+    {
+        $sql = "SELECT COUNT(*) AS count_items FROM products WHERE product_brand = $brandId";
+        $query = mysqli_query($this->db, $sql);
+        $row = mysqli_fetch_array($query);
+        return $row['count_items'] ?? 0;
+    }
 }
 ?>

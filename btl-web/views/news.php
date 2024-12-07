@@ -21,7 +21,7 @@
                         <br>
                         <button id="back-btn" onclick="setSessionCookie(<?php echo ($curpage - 1); ?>)" class="btn-back-and-forth">Back</button>
                         <button class="page-num" disabled="true">Page <?php echo $curpage ?> / <?php echo $npage ?></button>
-                        <button id="front-btn" onclick="setSessionCookie(<?php echo ($curpage + 1); ?>)" class="btn-back-and-forth">Forth</button>
+                        <button id="forth-btn" onclick="setSessionCookie(<?php echo ($curpage + 1); ?>)" class="btn-back-and-forth">Next</button>
                         <br>
                     </div>
                     <?php foreach ($news as $dummy):

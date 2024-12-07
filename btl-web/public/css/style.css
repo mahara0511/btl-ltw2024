@@ -1850,18 +1850,11 @@ table#cart tbody td.actions {
 
 #product-imgs .slick-prev {
   top: -20px;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
+  /* left: 100%; */
 }
 
 #product-imgs .slick-next {
   top: calc(100% - 20px);
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
 }
 
 #product-imgs .slick-prev,

@@ -142,3 +142,7 @@ $total_price = $data['total_price'] ?? 0;
         </div>
     </div>
 </section>
+
+<?php
+require_once ROOT_PATH . "/views/layouts/footer.php";
+?>

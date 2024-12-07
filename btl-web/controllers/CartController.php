@@ -1,8 +1,4 @@
 <?php
-
-// $ip_add = $_SERVER['REMOTE_ADDR'];
-// $uid = $_SESSION['uid'] ?? null;
-
 class CartController
 {
     private $model;
@@ -14,36 +10,52 @@ class CartController
     }
 
     // Render the main cart view
-    public function view_cart($ip_add, $uid = null)
+    public function view_cart($uid = null)
     {
-        $cart_items = $this->model->getUserCartData($ip_add, $uid);
-        $total_price = 0;
-        foreach ($cart_items as $item) {
-            $total_price += $item['qty'] * $item['product_price'];
+        if (!$uid) {
+            $this->redirectToLogin();
+            return;
         }
-        $data = ['cart_items' => $cart_items, 'total_price' => $total_price];
+
+        $cart_items = $this->model->getUserCartData($uid);
+        $total_price = $this->calculateTotalPrice($cart_items);
+
+        $data = [
+            'cart_items' => $cart_items,
+            'total_price' => $total_price
+        ];
         $this->render('views/cart.php', $data);
     }
 
     // Render the cart dropdown (e.g., popup)
-    public function view_cart_dropdown($ip_add, $uid = null)
+    public function view_cart_dropdown($uid = null)
     {
-        $cart_items = $this->model->getUserCartData($ip_add, $uid);
-        $total_price = 0;
-        foreach ($cart_items as $item) {
-            $total_price += $item['qty'] * $item['product_price'];
+        if (!$uid) {
+            return [];
         }
-        $data = ['cart_items' => $cart_items, 'total_price' => $total_price];
-        return $data;
-        // $this->render('views/layouts/cart_popup.php', $data);
+
+        $cart_items = $this->model->getUserCartData($uid);
+        $total_price = $this->calculateTotalPrice($cart_items);
+
+        return [
+            'cart_items' => $cart_items,
+            'total_price' => $total_price
+        ];
     }
 
     // Handle cart actions (e.g., add, remove, update)
-    public function takeCartAction($actionCart, $pid, $qty, $ip_add, $uid = null)
+    public function takeCartAction($actionCart, $pid, $qty, $uid = null)
     {
         // Validate inputs
         $pid = intval($pid);
         $qty = intval($qty);
+
+        if (!$uid) {
+            return [
+                'status' => 'warning',
+                'message' => 'User not logged in. Please log in to modify your cart.'
+            ];
+        }
 
         $response = [
             'status' => 'warning',
@@ -52,30 +64,52 @@ class CartController
 
         switch ($actionCart) {
             case "addToCart":
-                $response = $this->model->addToCart($pid, $qty, $ip_add, $uid);
+                $response = $this->model->addToCart($pid, $qty, $uid);
                 break;
             case "countUserCart":
-                $count = $this->model->countUserCart($ip_add, $uid);
+                $count = $this->model->countUserCart($uid);
                 $response = [
                     'status' => 'success',
-                    'message' => "Counting user cart was successfully!",
+                    'message' => "Cart item count retrieved successfully!",
                     'count' => $count,
                 ];
                 break;
             case "removeItemfromCart":
-                $response = $this->model->removeItemfromCart($pid, $ip_add, $uid);
+                $response = $this->model->removeItemfromCart($pid, $uid);
                 break;
             case "updateItemfromCart":
-                $response = $this->model->updateItemfromCart($pid, $qty, $ip_add, $uid);
+                $response = $this->model->updateItemfromCart($pid, $qty, $uid);
                 break;
             default:
                 $response = [
                     'status' => 'error',
-                    'message' => 'ERROR: Cannot find this type of action!',
+                    'message' => 'Unknown action.',
                 ];
         }
 
         return $response;
+    }
+
+
+    // Helper function to calculate total price
+    private function calculateTotalPrice($cart_items)
+    {
+        $total_price = 0;
+
+        if (isset($cart_items)) {
+            foreach ($cart_items as $item) {
+                $total_price += $item['qty'] * $item['product_price'];
+            }
+        }
+
+        return $total_price;
+    }
+
+    // Redirect to login page if the user is not logged in
+    private function redirectToLogin()
+    {
+        header("Location: /login");
+        exit();
     }
 
     // Helper function to render a view
@@ -94,7 +128,6 @@ class CartController
         $action = $_POST['cart_action'] ?? '';
         $pid = $_POST['pid'] ?? 0;
         $qty = $_POST['qty'] ?? 1;
-        $ip_add = $_SERVER['REMOTE_ADDR'];
         $uid = $_SESSION['uid'] ?? null;
 
         $response = [
@@ -104,13 +137,13 @@ class CartController
 
         switch ($action) {
             case 'updateItemfromCart':
-                $response = $this->takeCartAction($action, $pid, $qty, $ip_add, $uid);
+                $response = $this->takeCartAction($action, $pid, $qty, $uid);
                 break;
             case 'removeItemfromCart':
-                $response = $this->takeCartAction($action, $pid, 0, $ip_add, $uid);
+                $response = $this->takeCartAction($action, $pid, 0, $uid);
                 break;
             case 'addToCart':
-                $response = $this->takeCartAction($action, $pid, $qty, $ip_add, $uid);
+                $response = $this->takeCartAction($action, $pid, $qty, $uid);
                 break;
             default:
                 $response['message'] = 'Unknown action.';

@@ -2,6 +2,11 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+if (array_key_exists('logout', $_POST)){
+    require_once ROOT_PATH."/controllers/userInfoController.php";
+    unset($_POST['logout']);
+    userInfoController::logout();
+}
 
 ?>
 
@@ -166,17 +171,29 @@ if (!isset($_SESSION)) {
                     <li><a href="#"><i class="fa fa-inr"></i> INR</a></li>
                     <li><?php
                     include ROOT_PATH. "/config/db.php";
-                    if (isset($_SESSION["uid"])) {
+                    if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])) {
+                        if (!isset($_SESSION["uid"])){
+                            $_SESSION["uid"] = $_COOKIE["uid"];
+                            $_SESSION["name"] = $_COOKIE["name"];
+                        }
                         $sql = "SELECT first_name FROM user_info WHERE user_id='$_SESSION[uid]'";
                         $query = mysqli_query($con, $sql);
                         $row = mysqli_fetch_array($query);
 
                         echo '
                                <div class="dropdownn">
-                                  <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> HI ' . $row["first_name"] . '</a>
+                                  <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> HI ' . $row["first_name"]. '</a>
                                   <div class="dropdownn-content">
-                                    <a href="" data-toggle="modal" data-target="#profile"><i class="fa fa-user-circle" aria-hidden="true" ></i>My Profile</a>
-                                    <a href="logout.php"  ><i class="fa fa-sign-in" aria-hidden="true"></i>Log out</a>
+                                    <a href="/user_info" ><i class="fa fa-user-circle" aria-hidden="true" ></i>My Profile</a>
+                                    
+                                    <form method="post"  class="inline dropdown">
+                                        <input type="hidden" name="logout" value="logout">
+                                        <button type="submit" name="submit_param" value="submit_value" class="link-button">
+                                            <i class="fa fa-sign-in" aria-hidden="true"></i>Log out
+                                            
+                                         </button>
+                                    </form>
+                                    
                                     
                                   </div>
                                 </div>';
@@ -187,8 +204,8 @@ if (!isset($_SESSION)) {
                                   <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> My Account</a>
 								  <div class="dropdownn-content">
 								  	<a href="admin/login" ><i class="fa fa-user" aria-hidden="true" ></i>Admin</a>
-                                    <a href="" data-toggle="modal" data-target="#Modal_login"><i class="fa fa-sign-in" aria-hidden="true" ></i>Login</a>
-                                    <a href="" data-toggle="modal" data-target="#Modal_register"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a>
+                                   <a href="/login" ><i class="fa fa-sign-in" aria-hidden="true" ></i>Login</a>
+                                    <a href="/register" ><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a>
                                     
                                   </div>
                                 </div>';
@@ -286,46 +303,4 @@ if (!isset($_SESSION)) {
     </nav>
 
 
-    <!-- NAVIGATION -->
-
-    <div class="modal fade" id="Modal_login" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                </div>
-                <div class="modal-body">
-                    <?php
-                    include "login_form.php";
-
-                    ?>
-
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-    <div class="modal fade" id="Modal_register" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                </div>
-                <div class="modal-body">
-                    <?php
-                    include "register_form.php";
-                    ?>
-
-                </div>
-
-            </div>
-
-        </div>
-    </div>
+ 

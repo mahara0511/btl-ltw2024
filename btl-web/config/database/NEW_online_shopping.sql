@@ -1,17 +1,17 @@
 -- Active: 1727756928890@@127.0.0.1@3306@onlineshop
-CREATE DATABASE onlineshop DEFAULT CHARACTER SET = 'utf8mb4';
+-- CREATE DATABASE onlineshop DEFAULT CHARACTER SET = 'utf8mb4';
 
 -- Table structure for table `brands`
 CREATE TABLE `brands` (
     `brand_id` INT(100) NOT NULL,
     `brand_title` VARCHAR(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- Table structure for table `categories`
 CREATE TABLE `categories` (
     `cat_id` INT(100) NOT NULL,
     `cat_title` VARCHAR(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- Table structure for table `products`
 CREATE TABLE `products` (
@@ -20,10 +20,10 @@ CREATE TABLE `products` (
     `product_brand` INT(100) NOT NULL,
     `product_title` VARCHAR(255) NOT NULL,
     `product_price` DECIMAL(10, 2) NOT NULL,
-    `product_sale` DECIMAL(3, 2) NOT NULL,
+    `product_sale` INT(4) NOT NULL,
     `product_desc` TEXT NOT NULL,
     `product_image` TEXT NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- Table structure for table `user_info`
 CREATE TABLE `user_info` (
@@ -36,7 +36,7 @@ CREATE TABLE `user_info` (
     `address` VARCHAR(255) NOT NULL,
     `district` VARCHAR(255) NOT NULL,
     `province` VARCHAR(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- Table structure for table `cart`
 CREATE TABLE `cart` (
@@ -44,7 +44,7 @@ CREATE TABLE `cart` (
     `p_id` INT(100) NOT NULL,
     `user_id` INT(10) NOT NULL,
     `qty` INT(10) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- Table structure for table `orders_info`
 CREATE TABLE `orders_info` (
@@ -60,7 +60,7 @@ CREATE TABLE `orders_info` (
     `cardnumber` VARCHAR(20) NOT NULL,
     `prod_count` INT(15) DEFAULT NULL,
     `total_amt` DECIMAL(10, 2) DEFAULT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- Table structure for table `order_products`
 CREATE TABLE `order_products` (
@@ -69,7 +69,7 @@ CREATE TABLE `order_products` (
     `product_id` INT(11) NOT NULL,
     `qty` INT(15) DEFAULT NULL,
     `amt` DECIMAL(10, 2) DEFAULT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- Table structure for table `comments`
 CREATE TABLE `comments` (
@@ -81,7 +81,7 @@ CREATE TABLE `comments` (
     `content` TEXT NOT NULL,
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` DATETIME DEFAULT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- Table structure for table `newscategory`
 CREATE TABLE `newscategory` (
@@ -96,7 +96,8 @@ CREATE TABLE `news` (
     `subtitle` varchar(255) DEFAULT NULL,
     `content` varchar(8191) DEFAULT NULL,
     `img` varchar(255) DEFAULT NULL,
-    `categoryid` int(11) NOT NULL
+    `category` varchar(63) NOT NULL,
+    `uploaddate` date NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- Table structure for table `admin_info`
@@ -105,7 +106,7 @@ CREATE TABLE `admin_info` (
     `admin_name` varchar(100) NOT NULL,
     `admin_email` varchar(255) NOT NULL,
     `admin_password` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 INSERT INTO
     `admin_info` (
@@ -131,7 +132,7 @@ VALUES (
 CREATE TABLE `email_info` (
     `email_id` int(100) NOT NULL,
     `email` text NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 INSERT INTO
     `email_info` (`email_id`, `email`)
@@ -162,9 +163,7 @@ ALTER TABLE `comments` ADD PRIMARY KEY (`cmt_id`);
 
 ALTER TABLE `newscategory` ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `news`
-ADD PRIMARY KEY (`id`),
-ADD KEY `categoryid` (`categoryid`);
+ALTER TABLE `news` ADD PRIMARY KEY (`id`);
 
 -- Add AUTO_INCREMENT
 ALTER TABLE `brands`
@@ -231,9 +230,6 @@ ADD CONSTRAINT `fk_comments_product` FOREIGN KEY (`p_id`) REFERENCES `products` 
 
 ALTER TABLE `comments`
 ADD CONSTRAINT `fk_comments_parent` FOREIGN KEY (`parent_id`) REFERENCES `comments` (`cmt_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE `news`
-ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `newscategory` (`id`);
 
 -- INSERT DATA ------------------------------------------------------------------
 INSERT INTO
@@ -984,7 +980,7 @@ VALUES (
         'john.doe@example.com',
         MD5('password123'),
         '9876543210',
-        '123 Main Street, New York, NY',
+        '123 Main Street',
         'New York',
         'NY'
     ),
@@ -994,7 +990,7 @@ VALUES (
         'jane.smith@example.com',
         MD5('password123'),
         '9876543211',
-        '456 Oak Avenue, Los Angeles, CA',
+        '456 Oak Avenue',
         'Los Angeles',
         'CA'
     ),
@@ -1004,7 +1000,7 @@ VALUES (
         'alice.johnson@example.com',
         MD5('password123'),
         '9876543212',
-        '789 Pine Road, San Francisco, CA',
+        '789 Pine Road',
         'San Francisco',
         'CA'
     ),
@@ -1014,7 +1010,7 @@ VALUES (
         'bob.brown@example.com',
         MD5('password123'),
         '9876543213',
-        '101 Maple Lane, Chicago, IL',
+        '101 Maple Lane',
         'Chicago',
         'IL'
     ),
@@ -1024,7 +1020,7 @@ VALUES (
         'charlie.williams@example.com',
         MD5('password123'),
         '9876543214',
-        '202 Birch Street, Houston, TX',
+        '202 Birch Street',
         'Houston',
         'TX'
     ),
@@ -1034,7 +1030,7 @@ VALUES (
         'david.jones@example.com',
         MD5('password123'),
         '9876543215',
-        '303 Cedar Drive, Phoenix, AZ',
+        '303 Cedar Drive',
         'Phoenix',
         'AZ'
     ),
@@ -1044,7 +1040,7 @@ VALUES (
         'eva.miller@example.com',
         MD5('password123'),
         '9876543216',
-        '404 Elm Boulevard, Philadelphia, PA',
+        '404 Elm Boulevard',
         'Philadelphia',
         'PA'
     ),
@@ -1054,7 +1050,7 @@ VALUES (
         'frank.davis@example.com',
         MD5('password123'),
         '9876543217',
-        '505 Pine Circle, San Antonio, TX',
+        '505 Pine Circle',
         'San Antonio',
         'TX'
     ),
@@ -1064,7 +1060,7 @@ VALUES (
         'grace.garcia@example.com',
         MD5('password123'),
         '9876543218',
-        '606 Oak Avenue, San Diego, CA',
+        '606 Oak Avenue',
         'San Diego',
         'CA'
     ),
@@ -1074,7 +1070,7 @@ VALUES (
         'henry.martinez@example.com',
         MD5('password123'),
         '9876543219',
-        '707 Maple Street, Dallas, TX',
+        '707 Maple Street',
         'Dallas',
         'TX'
     ),
@@ -1084,7 +1080,7 @@ VALUES (
         'isabel.hernandez@example.com',
         MD5('password123'),
         '9876543220',
-        '808 Birch Lane, Austin, TX',
+        '808 Birch Lane',
         'Austin',
         'TX'
     ),
@@ -1094,7 +1090,7 @@ VALUES (
         'jack.lopez@example.com',
         MD5('password123'),
         '9876543221',
-        '909 Cedar Street, Jacksonville, FL',
+        '909 Cedar Street',
         'Jacksonville',
         'FL'
     ),
@@ -1104,7 +1100,7 @@ VALUES (
         'karen.gonzalez@example.com',
         MD5('password123'),
         '9876543222',
-        '1001 Elm Avenue, Fort Worth, TX',
+        '1001 Elm Avenue',
         'Fort Worth',
         'TX'
     ),
@@ -1114,7 +1110,7 @@ VALUES (
         'louis.wilson@example.com',
         MD5('password123'),
         '9876543223',
-        '1102 Pine Road, Columbus, OH',
+        '1102 Pine Road',
         'Columbus',
         'OH'
     ),
@@ -1124,7 +1120,7 @@ VALUES (
         'maria.taylor@example.com',
         MD5('password123'),
         '9876543224',
-        '1203 Oak Boulevard, Charlotte, NC',
+        '1203 Oak Boulevard',
         'Charlotte',
         'NC'
     ),
@@ -1134,7 +1130,7 @@ VALUES (
         'nina.anderson@example.com',
         MD5('password123'),
         '9876543225',
-        '1304 Maple Drive, Detroit, MI',
+        '1304 Maple Drive',
         'Detroit',
         'MI'
     ),
@@ -1144,7 +1140,7 @@ VALUES (
         'oscar.thomas@example.com',
         MD5('password123'),
         '9876543226',
-        '1405 Birch Circle, Boston, MA',
+        '1405 Birch Circle',
         'Boston',
         'MA'
     ),
@@ -1154,7 +1150,7 @@ VALUES (
         'paul.jackson@example.com',
         MD5('password123'),
         '9876543227',
-        '1506 Cedar Lane, Seattle, WA',
+        '1506 Cedar Lane',
         'Seattle',
         'WA'
     ),
@@ -1164,7 +1160,7 @@ VALUES (
         'quincy.white@example.com',
         MD5('password123'),
         '9876543228',
-        '1607 Elm Road, Denver, CO',
+        '1607 Elm Road',
         'Denver',
         'CO'
     ),
@@ -1174,7 +1170,7 @@ VALUES (
         'rita.harris@example.com',
         MD5('password123'),
         '9876543229',
-        '1708 Pine Boulevard, Portland, OR',
+        '1708 Pine Boulevard',
         'Portland',
         'OR'
     );
@@ -1268,7 +1264,8 @@ INSERT INTO
         `subtitle`,
         `content`,
         `img`,
-        `categoryid`
+        `category`,
+        `uploaddate`
     )
 VALUES (
         1,
@@ -1276,7 +1273,8 @@ VALUES (
         'Discover the freshest looks for the season with our exclusive fall collection. Shop now to stay stylish!',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis tortor id tempor hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Praesent finibus diam erat, eget ultrices ante congue a. Proin sed tellus aliquet, laoreet sapien eu, sagittis lorem. Proin varius, mauris bibendum accumsan maximus, lacus diam pulvinar libero, quis aliquet lacus massa quis metus. Sed vitae mi vitae dolor eleifend consequat et at nisi. Maecenas eleifend arcu ac fringilla accumsan. Curabitur placerat leo ac mollis ultricies. Etiam lectus sem, iaculis imperdiet cursus ut, ornare mollis mauris. Suspendisse potenti. Sed id euismod purus, vitae euismod arcu. Nulla purus dolor, consequat sit amet libero sed, venenatis dapibus justo. Mauris placerat leo in consequat facilisis. Ut vestibulum eros at sem fringilla pharetra. Donec in rutrum sapien, sit amet tincidunt metus.\r\n\r\nAliquam non placerat dolor. Nullam sed nunc condimentum, porta lacus in, porttitor purus. Maecenas nec enim fermentum, hendrerit ex a, tempus felis. Mauris sed diam sollicitudin, lacinia massa in, dapibus ex. Quisque nec odio sed libero pharetra mollis. Vestibulum id sodales mauris. Mauris eget tristique leo. Duis pellentesque vulputate ipsum, ut imperdiet dolor.\r\n\r\nCurabitur magna est, porta eu libero eget, eleifend ornare velit. Duis porttitor, urna quis scelerisque gravida, diam nisi congue nisl, id iaculis odio justo a quam. Nulla luctus, diam sed consectetur vestibulum, tellus dolor gravida orci, sit amet commodo nisl arcu at quam. Praesent at tellus et mauris ullamcorper ultrices in bibendum diam. Aenean a pharetra purus. Donec auctor eleifend scelerisque. Suspendisse ullamcorper ullamcorper finibus. Curabitur metus lacus, rutrum eget sagittis lacinia, lobortis non mi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In in lacus eu ex tempor ultrices. Vestibulum ut nisl ut nibh eleifend pharetra ut sed tortor. Mauris in erat ac justo varius vestibulum et eu risus. Etiam non sollicitudin odio. Suspendisse ac nibh sed diam commodo tincidunt. Ut pulvinar, justo eget consequat ultricies, elit felis iaculis nisl, eu finibus magna magna nec massa.\r\n\r\nMaecenas gravida porttitor lacus, id posuere magna congue quis. Donec vel ante est. Mauris volutpat, nisi dignissim finibus sodales, est ex varius magna, eu efficitur lectus dui id sapien. Suspendisse id hendrerit dolor. Nunc non molestie nulla. Praesent at quam egestas, rutrum turpis nec, scelerisque turpis. Praesent scelerisque ipsum eget nisl tristique, in elementum lorem fermentum. Donec accumsan ante ac ante tempor iaculis. Proin risus nisi, dapibus at mollis ut, pharetra ut mauris. Donec feugiat massa eu odio mattis, sollicitudin consequat nulla cursus.\r\n\r\nMorbi egestas, quam non mattis scelerisque, turpis urna laoreet tortor, ac vehicula ex mauris quis lectus. Sed vehicula nunc eros, at efficitur augue pulvinar et. Phasellus hendrerit, nisl eu tristique mollis, sapien nibh viverra nulla, et aliquam leo est vitae elit. Morbi ornare luctus sapien sed aliquet. Maecenas a metus quam. Fusce a placerat justo. Pellentesque gravida sapien fringilla purus vehicula aliquet. Praesent viverra arcu id erat tempus, eget tempus metus pretium. Curabitur maximus condimentum tincidunt. Aenean ac libero vel ipsum placerat convallis. In et eleifend nunc. Pellentesque sit amet purus mollis nunc blandit hendrerit. Nulla vitae dignissim nulla. Vivamus eget metus quis ipsum accumsan eleifend et et nisl. Integer a dui purus.',
         'general_news_photo.jpg',
-        1
+        'Product Updates',
+        '2024-12-06'
     ),
     (
         2,
@@ -1284,7 +1282,8 @@ VALUES (
         'Don\'t miss out on our weekend sale! Save big on your favorite products. Hurry, offer ends soon!',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis tortor id tempor hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Praesent finibus diam erat, eget ultrices ante congue a. Proin sed tellus aliquet, laoreet sapien eu, sagittis lorem. Proin varius, mauris bibendum accumsan maximus, lacus diam pulvinar libero, quis aliquet lacus massa quis metus. Sed vitae mi vitae dolor eleifend consequat et at nisi. Maecenas eleifend arcu ac fringilla accumsan. Curabitur placerat leo ac mollis ultricies. Etiam lectus sem, iaculis imperdiet cursus ut, ornare mollis mauris. Suspendisse potenti. Sed id euismod purus, vitae euismod arcu. Nulla purus dolor, consequat sit amet libero sed, venenatis dapibus justo. Mauris placerat leo in consequat facilisis. Ut vestibulum eros at sem fringilla pharetra. Donec in rutrum sapien, sit amet tincidunt metus.\r\n\r\nAliquam non placerat dolor. Nullam sed nunc condimentum, porta lacus in, porttitor purus. Maecenas nec enim fermentum, hendrerit ex a, tempus felis. Mauris sed diam sollicitudin, lacinia massa in, dapibus ex. Quisque nec odio sed libero pharetra mollis. Vestibulum id sodales mauris. Mauris eget tristique leo. Duis pellentesque vulputate ipsum, ut imperdiet dolor.\r\n\r\nCurabitur magna est, porta eu libero eget, eleifend ornare velit. Duis porttitor, urna quis scelerisque gravida, diam nisi congue nisl, id iaculis odio justo a quam. Nulla luctus, diam sed consectetur vestibulum, tellus dolor gravida orci, sit amet commodo nisl arcu at quam. Praesent at tellus et mauris ullamcorper ultrices in bibendum diam. Aenean a pharetra purus. Donec auctor eleifend scelerisque. Suspendisse ullamcorper ullamcorper finibus. Curabitur metus lacus, rutrum eget sagittis lacinia, lobortis non mi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In in lacus eu ex tempor ultrices. Vestibulum ut nisl ut nibh eleifend pharetra ut sed tortor. Mauris in erat ac justo varius vestibulum et eu risus. Etiam non sollicitudin odio. Suspendisse ac nibh sed diam commodo tincidunt. Ut pulvinar, justo eget consequat ultricies, elit felis iaculis nisl, eu finibus magna magna nec massa.\r\n\r\nMaecenas gravida porttitor lacus, id posuere magna congue quis. Donec vel ante est. Mauris volutpat, nisi dignissim finibus sodales, est ex varius magna, eu efficitur lectus dui id sapien. Suspendisse id hendrerit dolor. Nunc non molestie nulla. Praesent at quam egestas, rutrum turpis nec, scelerisque turpis. Praesent scelerisque ipsum eget nisl tristique, in elementum lorem fermentum. Donec accumsan ante ac ante tempor iaculis. Proin risus nisi, dapibus at mollis ut, pharetra ut mauris. Donec feugiat massa eu odio mattis, sollicitudin consequat nulla cursus.\r\n\r\nMorbi egestas, quam non mattis scelerisque, turpis urna laoreet tortor, ac vehicula ex mauris quis lectus. Sed vehicula nunc eros, at efficitur augue pulvinar et. Phasellus hendrerit, nisl eu tristique mollis, sapien nibh viverra nulla, et aliquam leo est vitae elit. Morbi ornare luctus sapien sed aliquet. Maecenas a metus quam. Fusce a placerat justo. Pellentesque gravida sapien fringilla purus vehicula aliquet. Praesent viverra arcu id erat tempus, eget tempus metus pretium. Curabitur maximus condimentum tincidunt. Aenean ac libero vel ipsum placerat convallis. In et eleifend nunc. Pellentesque sit amet purus mollis nunc blandit hendrerit. Nulla vitae dignissim nulla. Vivamus eget metus quis ipsum accumsan eleifend et et nisl. Integer a dui purus.',
         'general_news_photo.jpg',
-        2
+        'Promotions & Discounts',
+        '2024-12-06'
     ),
     (
         3,
@@ -1292,7 +1291,8 @@ VALUES (
         'Learn how we\'re working towards a greener future with eco-friendly packaging and sustainable sourcing.',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis tortor id tempor hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Praesent finibus diam erat, eget ultrices ante congue a. Proin sed tellus aliquet, laoreet sapien eu, sagittis lorem. Proin varius, mauris bibendum accumsan maximus, lacus diam pulvinar libero, quis aliquet lacus massa quis metus. Sed vitae mi vitae dolor eleifend consequat et at nisi. Maecenas eleifend arcu ac fringilla accumsan. Curabitur placerat leo ac mollis ultricies. Etiam lectus sem, iaculis imperdiet cursus ut, ornare mollis mauris. Suspendisse potenti. Sed id euismod purus, vitae euismod arcu. Nulla purus dolor, consequat sit amet libero sed, venenatis dapibus justo. Mauris placerat leo in consequat facilisis. Ut vestibulum eros at sem fringilla pharetra. Donec in rutrum sapien, sit amet tincidunt metus.\r\n\r\nAliquam non placerat dolor. Nullam sed nunc condimentum, porta lacus in, porttitor purus. Maecenas nec enim fermentum, hendrerit ex a, tempus felis. Mauris sed diam sollicitudin, lacinia massa in, dapibus ex. Quisque nec odio sed libero pharetra mollis. Vestibulum id sodales mauris. Mauris eget tristique leo. Duis pellentesque vulputate ipsum, ut imperdiet dolor.\r\n\r\nCurabitur magna est, porta eu libero eget, eleifend ornare velit. Duis porttitor, urna quis scelerisque gravida, diam nisi congue nisl, id iaculis odio justo a quam. Nulla luctus, diam sed consectetur vestibulum, tellus dolor gravida orci, sit amet commodo nisl arcu at quam. Praesent at tellus et mauris ullamcorper ultrices in bibendum diam. Aenean a pharetra purus. Donec auctor eleifend scelerisque. Suspendisse ullamcorper ullamcorper finibus. Curabitur metus lacus, rutrum eget sagittis lacinia, lobortis non mi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In in lacus eu ex tempor ultrices. Vestibulum ut nisl ut nibh eleifend pharetra ut sed tortor. Mauris in erat ac justo varius vestibulum et eu risus. Etiam non sollicitudin odio. Suspendisse ac nibh sed diam commodo tincidunt. Ut pulvinar, justo eget consequat ultricies, elit felis iaculis nisl, eu finibus magna magna nec massa.\r\n\r\nMaecenas gravida porttitor lacus, id posuere magna congue quis. Donec vel ante est. Mauris volutpat, nisi dignissim finibus sodales, est ex varius magna, eu efficitur lectus dui id sapien. Suspendisse id hendrerit dolor. Nunc non molestie nulla. Praesent at quam egestas, rutrum turpis nec, scelerisque turpis. Praesent scelerisque ipsum eget nisl tristique, in elementum lorem fermentum. Donec accumsan ante ac ante tempor iaculis. Proin risus nisi, dapibus at mollis ut, pharetra ut mauris. Donec feugiat massa eu odio mattis, sollicitudin consequat nulla cursus.\r\n\r\nMorbi egestas, quam non mattis scelerisque, turpis urna laoreet tortor, ac vehicula ex mauris quis lectus. Sed vehicula nunc eros, at efficitur augue pulvinar et. Phasellus hendrerit, nisl eu tristique mollis, sapien nibh viverra nulla, et aliquam leo est vitae elit. Morbi ornare luctus sapien sed aliquet. Maecenas a metus quam. Fusce a placerat justo. Pellentesque gravida sapien fringilla purus vehicula aliquet. Praesent viverra arcu id erat tempus, eget tempus metus pretium. Curabitur maximus condimentum tincidunt. Aenean ac libero vel ipsum placerat convallis. In et eleifend nunc. Pellentesque sit amet purus mollis nunc blandit hendrerit. Nulla vitae dignissim nulla. Vivamus eget metus quis ipsum accumsan eleifend et et nisl. Integer a dui purus.',
         'general_news_photo.jpg',
-        3
+        'About Our Company',
+        '2024-12-06'
     ),
     (
         4,
@@ -1300,7 +1300,224 @@ VALUES (
         'Check out the products our customers love the most. Find your next favorite from our top picks!',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis tortor id tempor hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Praesent finibus diam erat, eget ultrices ante congue a. Proin sed tellus aliquet, laoreet sapien eu, sagittis lorem. Proin varius, mauris bibendum accumsan maximus, lacus diam pulvinar libero, quis aliquet lacus massa quis metus. Sed vitae mi vitae dolor eleifend consequat et at nisi. Maecenas eleifend arcu ac fringilla accumsan. Curabitur placerat leo ac mollis ultricies. Etiam lectus sem, iaculis imperdiet cursus ut, ornare mollis mauris. Suspendisse potenti. Sed id euismod purus, vitae euismod arcu. Nulla purus dolor, consequat sit amet libero sed, venenatis dapibus justo. Mauris placerat leo in consequat facilisis. Ut vestibulum eros at sem fringilla pharetra. Donec in rutrum sapien, sit amet tincidunt metus.\r\n\r\nAliquam non placerat dolor. Nullam sed nunc condimentum, porta lacus in, porttitor purus. Maecenas nec enim fermentum, hendrerit ex a, tempus felis. Mauris sed diam sollicitudin, lacinia massa in, dapibus ex. Quisque nec odio sed libero pharetra mollis. Vestibulum id sodales mauris. Mauris eget tristique leo. Duis pellentesque vulputate ipsum, ut imperdiet dolor.\r\n\r\nCurabitur magna est, porta eu libero eget, eleifend ornare velit. Duis porttitor, urna quis scelerisque gravida, diam nisi congue nisl, id iaculis odio justo a quam. Nulla luctus, diam sed consectetur vestibulum, tellus dolor gravida orci, sit amet commodo nisl arcu at quam. Praesent at tellus et mauris ullamcorper ultrices in bibendum diam. Aenean a pharetra purus. Donec auctor eleifend scelerisque. Suspendisse ullamcorper ullamcorper finibus. Curabitur metus lacus, rutrum eget sagittis lacinia, lobortis non mi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In in lacus eu ex tempor ultrices. Vestibulum ut nisl ut nibh eleifend pharetra ut sed tortor. Mauris in erat ac justo varius vestibulum et eu risus. Etiam non sollicitudin odio. Suspendisse ac nibh sed diam commodo tincidunt. Ut pulvinar, justo eget consequat ultricies, elit felis iaculis nisl, eu finibus magna magna nec massa.\r\n\r\nMaecenas gravida porttitor lacus, id posuere magna congue quis. Donec vel ante est. Mauris volutpat, nisi dignissim finibus sodales, est ex varius magna, eu efficitur lectus dui id sapien. Suspendisse id hendrerit dolor. Nunc non molestie nulla. Praesent at quam egestas, rutrum turpis nec, scelerisque turpis. Praesent scelerisque ipsum eget nisl tristique, in elementum lorem fermentum. Donec accumsan ante ac ante tempor iaculis. Proin risus nisi, dapibus at mollis ut, pharetra ut mauris. Donec feugiat massa eu odio mattis, sollicitudin consequat nulla cursus.\r\n\r\nMorbi egestas, quam non mattis scelerisque, turpis urna laoreet tortor, ac vehicula ex mauris quis lectus. Sed vehicula nunc eros, at efficitur augue pulvinar et. Phasellus hendrerit, nisl eu tristique mollis, sapien nibh viverra nulla, et aliquam leo est vitae elit. Morbi ornare luctus sapien sed aliquet. Maecenas a metus quam. Fusce a placerat justo. Pellentesque gravida sapien fringilla purus vehicula aliquet. Praesent viverra arcu id erat tempus, eget tempus metus pretium. Curabitur maximus condimentum tincidunt. Aenean ac libero vel ipsum placerat convallis. In et eleifend nunc. Pellentesque sit amet purus mollis nunc blandit hendrerit. Nulla vitae dignissim nulla. Vivamus eget metus quis ipsum accumsan eleifend et et nisl. Integer a dui purus.',
         'general_news_photo.jpg',
-        4
+        'Customer Spotlights',
+        '2024-12-06'
+    ),
+    (
+        5,
+        'New Product Launched!',
+        'Introducing our latest innovation.',
+        'We are thrilled to unveil our newest product, designed to revolutionize your experience.',
+        'general_news_photo.jpg',
+        'Product Updates',
+        '2024-12-07'
+    ),
+    (
+        6,
+        'Year-End Sale!',
+        'Massive discounts across all categories.',
+        'Enjoy up to 50% off on selected items during our year-end sale!',
+        'general_news_photo.jpg',
+        'Promotions & Discount',
+        '2024-12-07'
+    ),
+    (
+        7,
+        'Company Milestone',
+        'We hit 1 million customers!',
+        'Thanks to you, we have reached 1 million happy customers. Join us in celebration.',
+        'general_news_photo.jpg',
+        'About Our Company',
+        '2024-12-07'
+    ),
+    (
+        8,
+        'Customer Spotlight: Jane Doe',
+        'A loyal customer shares her story.',
+        'Meet Jane Doe, a valued customer who has been with us for over 5 years.',
+        'general_news_photo.jpg',
+        'Customer Spotlights',
+        '2024-12-07'
+    ),
+    (
+        9,
+        'Seasonal Update',
+        'Spring Collection is here!',
+        'Discover our fresh spring collection, featuring vibrant designs and great offers.',
+        'general_news_photo.jpg',
+        'Product Updates',
+        '2024-12-07'
+    ),
+    (
+        10,
+        'Special Discount for Members',
+        'Exclusive offers for loyalty members.',
+        'Sign up today to enjoy 30% off as a loyalty member.',
+        'general_news_photo.jpg',
+        'Promotions & Discount',
+        '2024-12-07'
+    ),
+    (
+        11,
+        'Our Journey',
+        'Celebrating 10 years of excellence.',
+        'A look back at our incredible journey over the past decade.',
+        'general_news_photo.jpg',
+        'About Our Company',
+        '2024-12-07'
+    ),
+    (
+        12,
+        'Customer Spotlight: John Smith',
+        'Sharing inspiring customer stories.',
+        'John Smith shares how our products have positively impacted his life.',
+        'general_news_photo.jpg',
+        'Customer Spotlights',
+        '2024-12-07'
+    ),
+    (
+        13,
+        'Exciting Upgrade!',
+        'New features for your favorite product.',
+        'We are excited to announce new updates that make our product even better.',
+        'general_news_photo.jpg',
+        'Product Updates',
+        '2024-12-07'
+    ),
+    (
+        14,
+        'Limited Time Offer',
+        'Buy one, get one free!',
+        'Take advantage of our limited-time offer and double your savings.',
+        'general_news_photo.jpg',
+        'Promotions & Discount',
+        '2024-12-07'
+    ),
+    (
+        15,
+        'Meet Our Team',
+        'Behind the scenes at our company.',
+        'Get to know the amazing people who make it all happen.',
+        'general_news_photo.jpg',
+        'About Our Company',
+        '2024-12-07'
+    ),
+    (
+        16,
+        'Customer Spotlight: Sarah Lee',
+        'How Sarah found her perfect match.',
+        'Sarah shares her experience of finding the perfect product with our help.',
+        'general_news_photo.jpg',
+        'Customer Spotlights',
+        '2024-12-07'
+    ),
+    (
+        17,
+        'Big Announcement!',
+        'Expanding our product line.',
+        'We are adding new categories to serve you better.',
+        'general_news_photo.jpg',
+        'Product Updates',
+        '2024-12-07'
+    ),
+    (
+        18,
+        'Flash Sale!',
+        'Hurry, limited time only.',
+        'Grab your favorites at unbeatable prices during our flash sale.',
+        'general_news_photo.jpg',
+        'Promotions & Discount',
+        '2024-12-07'
+    ),
+    (
+        19,
+        'Sustainability Matters',
+        'Our commitment to the planet.',
+        'Learn about our efforts to create a sustainable future.',
+        'general_news_photo.jpg',
+        'About Our Company',
+        '2024-12-07'
+    ),
+    (
+        20,
+        'Customer Spotlight: Alex Kim',
+        'Alex shares his success story.',
+        'Hear how Alex achieved his goals with our support.',
+        'general_news_photo.jpg',
+        'Customer Spotlights',
+        '2024-12-07'
+    ),
+    (
+        21,
+        'Exclusive Launch!',
+        'Be the first to try it.',
+        'Introducing our premium line, now available exclusively online.',
+        'general_news_photo.jpg',
+        'Product Updates',
+        '2024-12-07'
+    ),
+    (
+        22,
+        'Holiday Discounts!',
+        'Celebrate the season with savings.',
+        'Make your holidays brighter with discounts across the store.',
+        'general_news_photo.jpg',
+        'Promotions & Discount',
+        '2024-12-07'
+    ),
+    (
+        23,
+        'Giving Back',
+        'Supporting our community.',
+        'See how we are giving back to the community this year.',
+        'general_news_photo.jpg',
+        'About Our Company',
+        '2024-12-07'
+    ),
+    (
+        24,
+        'Customer Spotlight: Emma Green',
+        'Emma\'s journey with us.',
+        'Emma Green shares how our products have enhanced her lifestyle.',
+        'general_news_photo.jpg',
+        'Customer Spotlights',
+        '2024-12-07'
+    ),
+    (
+        25,
+        'Tech Upgrade!',
+        'Improving our services.',
+        'We have upgraded our technology to better serve your needs.',
+        'general_news_photo.jpg',
+        'Product Updates',
+        '2024-12-07'
+    ),
+    (
+        26,
+        'Mid-Year Sale!',
+        'Half-yearly blowout.',
+        'Save big with our mid-year sale. Discounts up to 40%!',
+        'general_news_photo.jpg',
+        'Promotions & Discount',
+        '2024-12-07'
+    ),
+    (
+        27,
+        'Our Vision',
+        'Looking ahead to the future.',
+        'Discover what lies ahead for our company and how we plan to grow.',
+        'general_news_photo.jpg',
+        'About Our Company',
+        '2024-12-07'
+    ),
+    (
+        28,
+        'Customer Spotlight: Michael Brown',
+        'Michael\'s story of success.',
+        'Learn how Michael found value in our products.',
+        'general_news_photo.jpg',
+        'Customer Spotlights',
+        '2024-12-07'
     );
 
 COMMIT;

@@ -42,3 +42,18 @@
 .red-txt {
     color: red;
 }
+
+.contact-info {
+    text-align: center;
+}
+
+.about-info h2, h3, h4 {
+    text-align: center;
+}
+
+.about-info img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}

@@ -4,7 +4,9 @@ $request = parse_url($request, PHP_URL_PATH);
 require_once 'config/db_connect.php';
 
 $parts = explode('/', $request);
-
+if ($parts[1] !== "news") {
+    setcookie("curpage", -1, strtotime("2000-01-01 00:00:00"), "/");
+}
 switch ($parts[1]) {
     case '':
         require(ROOT_PATH . '/controllers/HomeController.php');
@@ -16,6 +18,16 @@ switch ($parts[1]) {
         $controller = new AboutUsController();
         $controller->index();
         break;
+    case 'news':
+        require(ROOT_PATH . '/controllers/NewsController.php');
+        $controller = new NewsController();
+
+        if (!isset($_COOKIE["curpage"])) {
+            $controller->index(1);
+        } else {
+            $controller->index($_COOKIE["curpage"]);
+        }
+        break;
     case 'view_cart':
         require(ROOT_PATH . '/controllers/CartController.php');
         $cartController = new CartController($conn);
@@ -23,8 +35,7 @@ switch ($parts[1]) {
             $cartController->handleAjaxRequest();
             exit;
         }
-        $cartController->view_cart($_SERVER['REMOTE_ADDR'], $_SESSION['uid'] ?? null);
-        // $controller->v();
+        $cartController->view_cart($_SESSION['uid'] ?? null);
         break;
     case 'store':
         require(ROOT_PATH . '/controllers/StoreController.php');
@@ -63,15 +74,32 @@ switch ($parts[1]) {
                         break;
                 }
             }
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $action = $_GET['action'] ?? null;
+            switch ($action) {
+                case 'addComment':
+                    require(ROOT_PATH . '/controllers/ProductController.php');
+                    $productController = new ProductController($conn);
+                    $productController->addNewComment();
+                    exit;
+                case 'editComment':
+                    require(ROOT_PATH . '/controllers/ProductController.php');
+                    $productController = new ProductController($conn);
+                    $productController->updateComment();
+                    exit;
+                case 'deleteComment':
+                    require(ROOT_PATH . '/controllers/ProductController.php');
+                    $productController = new ProductController($conn);
+                    $productController->deleteComment();
+                    exit;
+                default:
+                    echo var_dump($_POST); // Debugging fallback
+                    exit;
+            }
         }
         break;
     case 'product':
         require('Product.php');
-        break;
-    case 'news':
-        require(ROOT_PATH . '/controllers/HomeController.php');
-        $controller = new HomeController();
-        $controller->news();
         break;
     case 'contact_us':
         require(ROOT_PATH . '/controllers/HomeController.php');
@@ -83,6 +111,36 @@ switch ($parts[1]) {
     case 'admin':
         include_once("admin/index.php");
         break;
+     case 'login':
+            if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])){
+                header('Location: /');
+                echo '<script>console.log("You are already logged in");</script>';
+            }
+            else {
+                echo '<script>console.log("You are not logged in");</script>';
+            }
+            $sender='';
+            if (isset($_SERVER['HTTP_REFERER']))$sender=$_SERVER['HTTP_REFERER'];
+            setcookie('returnPage',$sender,strtotime("+1 day"),"/","","",TRUE);
+            require(ROOT_PATH . '/controllers/userInfoController.php');
+            $controller=new userInfoController($conn);
+            $controller->login_form();
+            break;
+        case 'register':
+            if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])){
+                header('Location: /');
+                echo '<script>console.log("You are already logged in");</script>';
+            }
+            else {
+                echo '<script>console.log("You are not logged in");</script>';
+            }
+            $sender='';
+            if (isset($_SERVER['HTTP_REFERER']))$sender=$_SERVER['HTTP_REFERER'];
+            setcookie('returnPage',$sender,strtotime("+1 day"),"/","","",TRUE);
+            require(ROOT_PATH . '/controllers/userInfoController.php');
+            $controller=new userInfoController($conn);
+            $controller->register_form();
+            break;
     default:
         http_response_code(404);
         echo "404 Not Found";

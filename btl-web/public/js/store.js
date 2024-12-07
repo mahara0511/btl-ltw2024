@@ -155,43 +155,82 @@ function handleAddToCartBtn() {
 
     $('#Modal_alert button').on('click', toggleModal)
 
-    $.ajax({
-      url: '/view_cart',
-      method: 'POST',
-      data: {
-        cart_action: 'addToCart',
-        pid: productId,
-        qty: 1,
-      },
-      success: function (response) {
-        // Show success modal with message
-        var status = 'Error'
-        switch (response.status) {
-          case 'success':
-            status = 'Notification'
-            break
-          case 'warning':
-            status = 'Alert'
-            break
-          default:
-            status = 'Error'
-            break
-        }
+    // Check if the user is logged in
+    const isLoggedIn = !!localStorage.getItem('userSessionId') // Replace with your session check logic
+    if (isLoggedIn) {
+      $.ajax({
+        url: '/view_cart',
+        method: 'POST',
+        data: {
+          cart_action: 'addToCart',
+          pid: productId,
+          qty: 1,
+        },
+        success: function (response) {
+          // Show success modal with message
+          var status = 'Error'
+          switch (response.status) {
+            case 'success':
+              status = 'Notification'
+              break
+            case 'warning':
+              status = 'Alert'
+              break
+            default:
+              status = 'Error'
+              break
+          }
+          showModal(
+            modal,
+            status,
+            response.message || 'An error occurred while updating the cart.'
+          )
+          $('#Modal_alert button').on('click', function () {
+            if (modal.hasClass('fade')) {
+              if (status == 'Notification') location.reload() // Reload to update the cart
+            }
+          })
+        },
+        error: function () {
+          showModal(
+            modal,
+            'Error',
+            'An error occurred while updating the cart.'
+          )
+        },
+      })
+    } else {
+      // User is not logged in, save to local storage
+      let cart = JSON.parse(localStorage.getItem('cart')) || []
+      const cartItem = { pid: productId, qty: 1 }
+
+      // Check if the item is already in the cart
+      const existingItem = cart.find((item) => item.pid === productId)
+      if (existingItem) {
+        showModal(modal, 'Alert', 'Product is already added into the cart!')
+        $('#Modal_alert button').on('click', function () {
+          if (modal.hasClass('fade')) {
+            location.reload() // Reload to update the cart
+          }
+        })
+      } else {
+        cart.push(cartItem) // Add new item
+        // Save updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart))
+
+        // Show a notification that the item was added to localStorage
         showModal(
           modal,
-          status,
-          response.message || 'An error occurred while updating the cart.'
+          'Notification',
+          'Item added to cart (local storage). Please log in to complete the purchase.'
         )
         $('#Modal_alert button').on('click', function () {
           if (modal.hasClass('fade')) {
             location.reload() // Reload to update the cart
           }
         })
-      },
-      error: function () {
-        showModal(modal, 'Error', 'An error occurred while updating the cart.')
-      },
-    })
+      }
+    }
   })
 }
 

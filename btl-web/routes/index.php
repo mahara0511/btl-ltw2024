@@ -23,13 +23,18 @@ $parts = explode('/', $request);
             $controller = new StoreController($conn);
             break;
         case 'news': 
-            require(ROOT_PATH . '/controllers/newsController.php');
+            require(ROOT_PATH . '/controllers/NewsController.php');
             $controller = new NewsController();
-            $controller->index();
+            if (empty($_POST["curpage"])) {
+                $controller->index(1);
+            }
+            else {
+                $controller->index($_POST["curpage"]);
+            }
             break;
         case 'contact_us':
             if (!empty($_POST["desEmail"])) {
-                mail($_POST["desEmail"], $_POST["sbj"], $_POST["message"], );
+                mail($_POST["desEmail"], $_POST["sbj"], $_POST["message"]);
             }
             require(ROOT_PATH . '/controllers/HomeController.php');
             $controller = new HomeController();

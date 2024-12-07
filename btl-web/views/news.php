@@ -4,7 +4,6 @@
     <link type="text/css" rel="stylesheet" href="public/css/aboutUs.css"/>
 
     <div class="bigwrapper">
-
         <div class="about-section">
             <h1 class="about-us-title">Latest News and Updates</h1>
         </div>
@@ -18,6 +17,19 @@
                     </div>
                 </div>
                 <?php else: ?>
+                    <div class="col-md-12">
+                        <form id="backward-form" method="POST" action="news">
+                            <input type="hidden" id="curpage" name="curpage" value=<?php echo $curpage - 1;?>>
+                        </form>
+                        <form id="forward-form" method="POST" action="news">
+                            <input type="hidden" id="curpage" name="curpage" value=<?php echo $curpage + 1;?>>
+                        </form>
+                        <br>
+                        <input form="backward-form" type="submit" id="back-btn" onclick="fetchBack()" class="btn-back-and-forth" value="Back">
+                        <button class="page-num" disabled="true">Page <?php echo $curpage ?> / <?php echo $npage ?></button>
+                        <input form="forward-form" type="submit" id="forth-btn" onclick="fetchNext()" class="btn-back-and-forth" value="Next">
+                        <br>
+                    </div>
                     <?php foreach ($news as $dummy):
                         $news_id = $dummy['id'];
                         $news_title = $dummy['title'];
@@ -163,5 +175,19 @@
         }\n"; ?>
     <?php endif; ?>
     <?php echo "</script>\n"; ?>
+
+    <script>
+        if (<?php echo $curpage; ?> == 1) {
+            btn_back = document.getElementById("back-btn");
+            btn_back.style.backgroundColor =  "gray";
+            btn_back.disabled = true;
+        }
+
+        if (<?php echo $curpage; ?> == <?php echo $npage; ?>) {
+            btn_forth = document.getElementById("forth-btn");
+            btn_forth.style.backgroundColor = "gray";
+            btn_forth.disabled = true;
+        }
+    </script>
 </body>
 </html>

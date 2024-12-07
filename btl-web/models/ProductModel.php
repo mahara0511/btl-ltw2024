@@ -112,7 +112,7 @@ class ProductModel
         }
     }
 
-    public function     deleteComment($commentId)
+    public function deleteComment($commentId)
     {
         try {
             // Start a transaction to ensure atomicity
@@ -159,15 +159,16 @@ class ProductModel
                 $stmtComment->close();
             }
         }
-    public function getNumberOfCategory(){
+    }
+    public function getNumberOfCategory()
+    {
 
-        $query = "SELECT cat_id FROM categories"; 
-        $result = mysqli_query($this->db, $query); 
-        if ($result) 
-            { 
-                // it return number of rows in the table. 
-                return mysqli_num_rows($result);  
-            }
+        $query = "SELECT cat_id FROM categories";
+        $result = mysqli_query($this->db, $query);
+        if ($result) {
+            // it return number of rows in the table. 
+            return mysqli_num_rows($result);
+        }
     }
 
     public function getCategories()

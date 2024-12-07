@@ -53,8 +53,11 @@
             href="/public/adminAsset/css/material-dashboard.css"
             rel="stylesheet"
         />
-        <!-- CSS Just for demo purpose, don't include it in your project -->
-        <!-- <link href="public/adminAsset/demo/demo.css" rel="stylesheet" /> -->
+
+        <link
+            href="/public/adminAsset/css/pagination.css"
+            rel="stylesheet"
+        />
     </head>
 
     <body class="dark-edition">
@@ -86,15 +89,15 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="nav-item <?= $current_path === '/admin/handleUser' ? 'active' : '' ?>">
+                    <li class="nav-item <?= strpos($current_path, '/admin/handleUser') !== false ? 'active' : '' ?>">
                         <a class="nav-link" href="/admin/handleUser">
                             <i class="material-icons">person</i>
                             <p>Handle users</p>
                         </a>
                     </li>
-                        <li class="nav-item <?= $current_path === '/admin/handleProduct' ? 'active' : '' ?>">
+                        <li class="nav-item <?= strpos($current_path, '/admin/handleProduct') !== false ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/handleProduct">
-                                <i class="material-icons">add</i>
+                                <i class="material-icons">store</i>
                                 <p>Handle Products</p>
                             </a>
                         </li>

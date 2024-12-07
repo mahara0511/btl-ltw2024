@@ -16,6 +16,12 @@
             return $result;
         }
 
+        public function getUsersByOffset($offset, $limit) {
+            $query = "SELECT * FROM user_info LIMIT $offset, $limit";
+            $data = mysqli_query($this->db, $query);
+            return $data;
+        }
+
         public function getEmailInfo() {
             $sql = "select * from email_info";
             $result = mysqli_query($this->db, $sql) or die("Query getCategories failed...");
@@ -105,5 +111,6 @@
             }
         }
         
+
     }
 ?>

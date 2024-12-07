@@ -9,61 +9,93 @@ include "layouts/topheader.php";
           <!-- your content here -->
             
             <div class="col-md-14">
-            <div class="card">
-                <div class="card-header card-header-primary">
-                <h4 class="card-title">Users List
-                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#addUserModal">
-                    Add User
-                    </button>
-                    <button type="button" class="btn btn-danger float-right mr-2" id="deleteSelectedBtn">
-                    Delete Selected
-                    </button>
-                </h4>
-                </div>
-                <div class="card-body">
-                <div class="table-responsive ps">
-                    <table class="table table-hover tablesorter">
-                    <thead class="text-primary">
-                        <tr>
-                        <th><input type="checkbox" id="selectAllCheckbox"></th>
-                        <th>ID</th>
-                        <th>FirstName</th>
-                        <th>LastName</th>
-                        <th>Email</th>
-                        <th>Contact</th>
-                        <th>Address</th>
-                        <th>District</th>
-                        <th>Province</th>
-                        <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                        while(list($user_id,$first_name,$last_name,$email,$password,$phone,$address, $district, $province)=mysqli_fetch_array($all_users)) { 
-                            echo "
-                            <tr>
-                            <td><input type='checkbox' class='rowCheckbox' value='$user_id'></td>
-                            <td>$user_id</td>
-                            <td>$first_name</td>
-                            <td>$last_name</td>
-                            <td>$email</td>
-                            <td>$phone</td>
-                            <td>$address</td>
-                            <td>$district</td>
-                            <td>$province</td>
-                            <td>
-                                <button type='button' style='background-color: #007bff' class='btn btn-sm editBtn' data-id='$user_id' data-toggle='modal' data-target='#editUserModal'>Edit</button>
-                            </td>
-                            </tr>";
-                        }
-                        ?>
-                    </tbody>
-                    </table>
-                </div>
-                </div>
+              <div class="card">
+                  <div class="card-header card-header-primary">
+                    <h4 class="card-title">Users List
+                        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#addUserModal">
+                        Add User
+                        </button>
+                        <button type="button" class="btn btn-danger float-right mr-2" id="deleteSelectedBtn">
+                        Delete Selected
+                        </button>
+                    </h4>
+                  </div>
+                  <div class="card-body">
+                  <div class="table-responsive ps">
+                      <table class="table table-hover tablesorter">
+                      <thead class="text-primary">
+                          <tr>
+                          <th><input type="checkbox" id="selectAllCheckbox"></th>
+                          <th>ID</th>
+                          <th>FirstName</th>
+                          <th>LastName</th>
+                          <th>Email</th>
+                          <th>Contact</th>
+                          <th>Address</th>
+                          <th>District</th>
+                          <th>Province</th>
+                          <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <?php 
+                          while(list($user_id,$first_name,$last_name,$email,$password,$phone,$address, $district, $province)=mysqli_fetch_array($all_users)) { 
+                              echo "
+                              <tr>
+                              <td><input type='checkbox' class='rowCheckbox' value='$user_id'></td>
+                              <td>$user_id</td>
+                              <td>$first_name</td>
+                              <td>$last_name</td>
+                              <td>$email</td>
+                              <td>$phone</td>
+                              <td>$address</td>
+                              <td>$district</td>
+                              <td>$province</td>
+                              <td>
+                                  <button type='button' style='background-color: #007bff' class='btn btn-sm editBtn' data-id='$user_id' data-toggle='modal' data-target='#editUserModal'>Edit</button>
+                              </td>
+                              </tr>";
+                          }
+                          ?>
+                      </tbody>
+                      </table>
+                  </div>
+                  </div>
+              </div>
+
+              <nav>
+                      
+                  <ul class="pagination">
+                      <?php if ($page > 1): ?>
+                          <li class="page-item">
+                              <a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a>
+                          </li>
+                      <?php else: ?>
+                          <li class="page-item disabled">
+                              <a class="page-link" href="#">Previous</a>
+                          </li>
+                      <?php endif; ?>
+
+                      <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                          <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
+                              <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                          </li>
+                      <?php endfor; ?>
+
+                      <?php if ($page < $totalPages): ?>
+                          <li class="page-item">
+                              <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
+                          </li>
+                      <?php else: ?>
+                          <li class="page-item disabled">
+                              <a class="page-link" href="#">Next</a>
+                          </li>
+                      <?php endif; ?>
+                  </ul>
+
+              </nav>
             </div>
-            </div>
-          
+                        
             </div>
 
             <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
@@ -225,87 +257,94 @@ include "layouts/topheader.php";
     // Add User
 
     document.getElementById('addUserForm').addEventListener('submit', function (e) {
-      const firstName = document.getElementById('first_name').value.trim();
-      const lastName = document.getElementById('last_name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const city = document.getElementById('city').value.trim();
-      const country = document.getElementById('country').value.trim();
+    e.preventDefault(); // Ngăn việc gửi form mặc định
 
-      let errors = [];
+    // Lấy giá trị từ các trường input
+    const firstName = document.getElementById('first_name').value.trim();
+    const lastName = document.getElementById('last_name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const district = document.getElementById('district').value.trim();
+    const province = document.getElementById('province').value.trim();
 
-      // Kiểm tra các trường không được để trống
-      if (!firstName) errors.push("First Name is required.");
-      if (!lastName) errors.push("Last Name is required.");
-      if (!email) errors.push("Email is required.");
-      if (!password) errors.push("Password is required.");
-      if (!phone) errors.push("Phone number is required.");
-      if (!city) errors.push("City is required.");
-      if (!country) errors.push("Address is required.");
+    let errors = [];
 
-      // Kiểm tra email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (email && !emailRegex.test(email)) {
-          errors.push("Invalid email format.");
-      }
+    // Kiểm tra các trường không được để trống
+    if (!firstName) errors.push("First Name is required.");
+    if (!lastName) errors.push("Last Name is required.");
+    if (!email) errors.push("Email is required.");
+    if (!password) errors.push("Password is required.");
+    if (!phone) errors.push("Phone number is required.");
+    if (!address) errors.push("Address is required.");
+    if (!district) errors.push("District is required.");
+    if (!province) errors.push("Province is required.");
 
-      // Kiểm tra số điện thoại (chỉ chứa số)
-      const phoneRegex = /^[0-9]+$/;
-      if (phone && !phoneRegex.test(phone)) {
-          errors.push("Phone number must contain only digits.");
-      }
+    // Kiểm tra email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) {
+        errors.push("Invalid email format.");
+    }
 
-      // Hiển thị lỗi và ngăn gửi form nếu có lỗi
-      if (errors.length > 0) {
-          e.preventDefault();
-          alert(errors.join("\n"));
-      }
-    });
+    // Kiểm tra số điện thoại (chỉ chứa số)
+    const phoneRegex = /^[0-9]+$/;
+    if (phone && !phoneRegex.test(phone)) {
+        errors.push("Phone number must contain only digits.");
+    }
 
+    // Nếu có lỗi, hiển thị thông báo lỗi
+    if (errors.length > 0) {
+        Swal.fire({
+            title: 'Error',
+            text: errors.join("\n"),
+            icon: 'error',
+            confirmButtonText: 'Try again',
+        });
+        return; // Ngừng xử lý tiếp tục
+    }
 
-    document.getElementById('addUserForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Ngăn gửi form mặc định
-
-        const formData = new FormData(this);
-        fetch('http://localhost/admin/handleUser/add', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-              Swal.fire({
+    // Nếu không có lỗi, gửi dữ liệu form qua fetch
+    const formData = new FormData(this);
+    fetch('http://localhost/admin/handleUser/add', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
                 title: 'Inserted successfully!',
                 text: data.message,
                 icon: 'success',
                 confirmButtonText: 'YES',
-              }).then(response => {
+            }).then(response => {
                 if(response.isConfirmed) {
-                  location.reload();
+                    location.reload();
+                    document.getElementById('addUserForm').reset();
                 }
-              })
-                // Tải lại danh sách người dùng
-                
-            } else {
-              Swal.fire({
+            });
+        } else {
+            Swal.fire({
                 title: 'Error',
                 text: data.message,
                 icon: 'error',
                 confirmButtonText: 'Try again',
-              });
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            Swal.fire({
-                title: 'Error',
-                text: 'An error occured!',
-                icon: 'error',
-                confirmButtonText: 'Try again',
-              });
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            title: 'Error',
+            text: 'An error occured!',
+            icon: 'error',
+            confirmButtonText: 'Try again',
         });
     });
+});
+
+
     
 
     // Select All Checkbox

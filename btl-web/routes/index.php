@@ -112,6 +112,36 @@ switch ($parts[1]) {
     case 'admin':
         include_once("admin.php");
         break;
+     case 'login':
+            if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])){
+                header('Location: /');
+                echo '<script>console.log("You are already logged in");</script>';
+            }
+            else {
+                echo '<script>console.log("You are not logged in");</script>';
+            }
+            $sender='';
+            if (isset($_SERVER['HTTP_REFERER']))$sender=$_SERVER['HTTP_REFERER'];
+            setcookie('returnPage',$sender,strtotime("+1 day"),"/","","",TRUE);
+            require(ROOT_PATH . '/controllers/userInfoController.php');
+            $controller=new userInfoController($conn);
+            $controller->login_form();
+            break;
+        case 'register':
+            if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])){
+                header('Location: /');
+                echo '<script>console.log("You are already logged in");</script>';
+            }
+            else {
+                echo '<script>console.log("You are not logged in");</script>';
+            }
+            $sender='';
+            if (isset($_SERVER['HTTP_REFERER']))$sender=$_SERVER['HTTP_REFERER'];
+            setcookie('returnPage',$sender,strtotime("+1 day"),"/","","",TRUE);
+            require(ROOT_PATH . '/controllers/userInfoController.php');
+            $controller=new userInfoController($conn);
+            $controller->register_form();
+            break;
     default:
         http_response_code(404);
         echo "404 Not Found";

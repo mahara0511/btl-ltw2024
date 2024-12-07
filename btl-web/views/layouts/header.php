@@ -164,8 +164,8 @@ if (!isset($_SESSION)) {
                 </ul>
                 <ul class="header-links pull-right">
                     <li><a href="#"><i class="fa fa-inr"></i> INR</a></li>
-                    <!-- <li><?php
-                    include "db.php";
+                    <li><?php
+                    include ROOT_PATH. "/config/db.php";
                     if (isset($_SESSION["uid"])) {
                         $sql = "SELECT first_name FROM user_info WHERE user_id='$_SESSION[uid]'";
                         $query = mysqli_query($con, $sql);
@@ -186,7 +186,7 @@ if (!isset($_SESSION)) {
                                 <div class="dropdownn">
                                   <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> My Account</a>
 								  <div class="dropdownn-content">
-								  	<a href="admin/login.php" ><i class="fa fa-user" aria-hidden="true" ></i>Admin</a>
+								  	<a href="admin/login" ><i class="fa fa-user" aria-hidden="true" ></i>Admin</a>
                                     <a href="" data-toggle="modal" data-target="#Modal_login"><i class="fa fa-sign-in" aria-hidden="true" ></i>Login</a>
                                     <a href="" data-toggle="modal" data-target="#Modal_register"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a>
                                     
@@ -196,7 +196,7 @@ if (!isset($_SESSION)) {
                     }
                     ?>
 
-                    </li> -->
+                    </li>
                 </ul>
 
             </div>
@@ -279,7 +279,7 @@ if (!isset($_SESSION)) {
     <nav id='navigation'>
         <!-- container -->
         <div class="container" id="get_category_home">
-                    
+
         </div>
         <!-- responsive-nav -->
         <!-- /container -->
@@ -300,7 +300,7 @@ if (!isset($_SESSION)) {
                 <div class="modal-body">
                     <?php
                     include "login_form.php";
-                    
+
                     ?>
 
                 </div>

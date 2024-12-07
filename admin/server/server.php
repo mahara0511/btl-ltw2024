@@ -85,7 +85,7 @@ if (isset($_POST['login_admin'])) {
     $query = "SELECT * FROM admin_info WHERE admin_email='$admin_username' AND admin_password='$password'";
     $results = mysqli_query($db, $query);
     if (mysqli_num_rows($results) == 1) {
-       $_SESSION['admin_email'] = $email;
+      $_SESSION['admin_email'] = $email;
       $_SESSION['admin_name'] = $admin_username;
       $_SESSION['success'] = "You are now logged in";
       header('location: ./admin/');

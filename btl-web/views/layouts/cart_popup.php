@@ -95,7 +95,9 @@
 
 </script> -->
 
-<div class="dropdown">
+
+
+<!-- <div class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
         <i class="fa fa-shopping-cart"></i>
         <span>Your Cart</span>
@@ -103,9 +105,100 @@
     </a>
     <div class="cart-dropdown">
         <div class="cart-list" id="cart_product">
+            <div class="product-widget">
+                <div class="product-img">
+                    <img src="product_images/' . $product_image . '" alt="">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name"><a href="#">' . $product_title . '</a></h3>
+                    <h4 class="product-price"><span class="qty">' . $n . '</span>$' . $product_price . '</h4>
+                </div>
+            </div>
+            <div class="cart-summary">
+                <small class="qty">' . $n . ' Item(s) selected</small>
+                <h5>$' . $total_price . '</h5>
+            </div>
         </div>
         <div class="cart-btns">
             <a href="cart.php" style="width:100%;"><i class="fa fa-edit"></i> edit cart</a>
+        </div>
+    </div>
+</div> -->
+
+<!-- <script src="https://unpkg.com/@popperjs/core@2"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script> -->
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown').on('click', function (e) {
+            e.stopPropagation();
+            $(this).toggleClass('open');
+            $(this).find('.dropdown-toggle').attr('aria-expanded', $(this).hasClass('open'));
+        });
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.dropdown').length) {
+                $('.dropdown').removeClass('open');
+                $('.dropdown-toggle').attr('aria-expanded', 'false');
+            }
+        });
+    });
+</script>
+
+
+<?php
+require_once(ROOT_PATH . '/controllers/CartController.php');
+require(ROOT_PATH . '/config/db_connect.php');
+$cartController = new CartController($conn);
+?>
+
+
+<div class="dropdown">
+    <?php
+    $cart_data = $cartController->view_cart_dropdown($_SERVER['REMOTE_ADDR'], $_SESSION['uid'] ?? null);
+    $cart_items = $cart_data['cart_items'];
+    $total_price = $cart_data['total_price'];
+    ?>
+    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+        <i class="fa fa-shopping-cart"></i>
+        <span>Your Cart</span>
+        <div class="badge qty">
+            <?= count($cart_items ?? []); ?>
+        </div>
+    </a>
+    <div class="cart-dropdown">
+        <div class="cart-list" id="cart_product">
+            <?php if (!empty($cart_items)): ?>
+                <?php foreach ($cart_items as $item): ?>
+                    <div class="product-widget"
+                        onclick="window.location.href='/store?product_id=<?php echo $item['product_id']; ?>'">
+                        <div class="product-img">
+                            <img src="<?= 'product_images/' . htmlspecialchars($item['product_image']); ?>"
+                                alt="<?= htmlspecialchars($item['product_title']); ?>">
+                        </div>
+                        <div class="product-body">
+                            <h3 class="product-name"><a
+                                    href="/store?product_id=<?= $item['product_id'] ?>"><?= htmlspecialchars($item['product_title']); ?></a>
+                            </h3>
+                            <h4 class="product-price">
+                                <span class="qty"><?= $item['qty']; ?></span> x $<?= round($item['product_price']); ?>
+                            </h4>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                <div class="cart-summary">
+                    <small class="qty"><?= count(value: $cart_items) . " Item(s) in cart" ?></small>
+                    <h5>Total price : <?= "$ $total_price " ?></h5>
+                </div>
+            <?php else: ?>
+                <div class="alert alert-warning m-auto " role="alert">
+                    Your cart is empty.
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="cart-btns">
+            <a href="/view_cart" style="width:100%;"><i class="fa fa-edit"></i> edit cart</a>
         </div>
     </div>
 </div>

@@ -1,8 +1,4 @@
 <?php
-session_start(); 
-?>
-
-<?php
     include ROOT_PATH."/views/layouts/header.php";
 
     include "body.php";

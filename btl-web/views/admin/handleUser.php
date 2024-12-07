@@ -63,36 +63,48 @@ include "layouts/topheader.php";
                   </div>
               </div>
 
-              <nav>
-                      
-                  <ul class="pagination">
-                      <?php if ($page > 1): ?>
-                          <li class="page-item">
-                              <a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a>
-                          </li>
-                      <?php else: ?>
-                          <li class="page-item disabled">
-                              <a class="page-link" href="#">Previous</a>
-                          </li>
-                      <?php endif; ?>
+              <nav>                      
+                <ul class="pagination">
+                    <?php
+                    // Số trang muốn hiển thị
+                    $maxPagesToShow = 10;
 
-                      <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                          <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-                              <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                          </li>
-                      <?php endfor; ?>
+                    // Tìm trang bắt đầu và trang kết thúc để hiển thị
+                    $startPage = max(1, $page - floor($maxPagesToShow / 2));
+                    $endPage = min($totalPages, $startPage + $maxPagesToShow - 1);
 
-                      <?php if ($page < $totalPages): ?>
-                          <li class="page-item">
-                              <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
-                          </li>
-                      <?php else: ?>
-                          <li class="page-item disabled">
-                              <a class="page-link" href="#">Next</a>
-                          </li>
-                      <?php endif; ?>
-                  </ul>
+                    // Điều chỉnh lại nếu $endPage bị lệch so với tổng số trang
+                    if ($endPage - $startPage + 1 < $maxPagesToShow) {
+                        $startPage = max(1, $endPage - $maxPagesToShow + 1);
+                    }
+                    ?>
 
+                    <?php if ($page > 1): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Previous</a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
+                        <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
+                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <?php if ($page < $totalPages): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
               </nav>
             </div>
                         

@@ -65,34 +65,48 @@ include "layouts/topheader.php";
               </div>
 
               <nav>
-                      
-                  <ul class="pagination">
-                      <?php if ($page > 1): ?>
-                          <li class="page-item">
-                              <a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a>
-                          </li>
-                      <?php else: ?>
-                          <li class="page-item disabled">
-                              <a class="page-link" href="#">Previous</a>
-                          </li>
-                      <?php endif; ?>
+              <!-- Pagination -->
+              <ul class="pagination">
+                  <?php
+                  // Số trang muốn hiển thị
+                  $maxPagesToShow = 10;
 
-                      <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                          <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-                              <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                          </li>
-                      <?php endfor; ?>
+                  // Tìm trang bắt đầu và trang kết thúc để hiển thị
+                  $startPage = max(1, $page - floor($maxPagesToShow / 2));
+                  $endPage = min($totalPages, $startPage + $maxPagesToShow - 1);
 
-                      <?php if ($page < $totalPages): ?>
-                          <li class="page-item">
-                              <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
-                          </li>
-                      <?php else: ?>
-                          <li class="page-item disabled">
-                              <a class="page-link" href="#">Next</a>
-                          </li>
-                      <?php endif; ?>
-                  </ul>
+                  // Điều chỉnh lại nếu $endPage bị lệch so với tổng số trang
+                  if ($endPage - $startPage + 1 < $maxPagesToShow) {
+                      $startPage = max(1, $endPage - $maxPagesToShow + 1);
+                  }
+                  ?>
+
+                  <?php if ($page > 1): ?>
+                      <li class="page-item">
+                          <a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a>
+                      </li>
+                  <?php else: ?>
+                      <li class="page-item disabled">
+                          <a class="page-link" href="#">Previous</a>
+                      </li>
+                  <?php endif; ?>
+
+                  <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
+                      <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
+                          <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                      </li>
+                  <?php endfor; ?>
+
+                  <?php if ($page < $totalPages): ?>
+                      <li class="page-item">
+                          <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
+                      </li>
+                  <?php else: ?>
+                      <li class="page-item disabled">
+                          <a class="page-link" href="#">Next</a>
+                      </li>
+                  <?php endif; ?>
+              </ul>
 
               </nav>
             </div>
@@ -110,18 +124,18 @@ include "layouts/topheader.php";
                         </div>
                         <div class="modal-body">
                             <form id="editProductForm" method="post">
-                                <input type="hidden" name="id" id="editProductId">
+                                <input style="padding-left: 10px;" type="hidden" name="id" id="editProductId">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating">Title</label>
-                                            <input type="text" id="editTitle" value="1" name="title" class="form-control" required>
+                                            <input style="padding-left: 10px;" type="text" id="editTitle" value="1" name="title" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating">Category</label>
-                                            <select name="category" id="category" class="form-control" required>
+                                            <select style="padding-left: 10px;" name="category" id="category" class="form-control" required>
                                                 <option value="" disabled selected>Select a category</option>
                                                 <?php foreach ($categories as $category): ?>
                                                     <option value="<?= htmlspecialchars($category['cat_id']) ?>">
@@ -136,7 +150,7 @@ include "layouts/topheader.php";
                                     <div class="col-md-6">
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating">Brand</label>
-                                            <select name="brand" id="brand" class="form-control" required>
+                                            <select style="padding-left: 10px;" name="brand" id="brand" class="form-control" required>
                                               <option disabled value="" selected>Select a brand</option>
                                               <?php foreach ($brands as $brand): ?>
                                                   <option style="padding-left: 10px" value="<?= htmlspecialchars($brand['brand_id']) ?>">
@@ -149,7 +163,7 @@ include "layouts/topheader.php";
                                     <div class="col-md-6">
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating">Price</label>
-                                            <input type="number" id="editPrice" value="1" name="price" class="form-control" required step="0.01" min="0.01" required>
+                                            <input style="padding-left: 10px;" type="number" id="editPrice" value="1" name="price" class="form-control" required step="0.01" min="0.01" required>
                                         </div>
                                     </div>
                                 </div>
@@ -157,13 +171,13 @@ include "layouts/topheader.php";
                                     <div class="col-md-6">
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating">Sale</label>
-                                            <input type="number" id="editSale" value="1" name="sale" class="form-control" required step="0.01" min="0.01" required>
+                                            <input style="padding-left: 10px;" type="number" id="editSale" value="1" name="sale" class="form-control" required step="0.01" min="0.01" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating">Image URL</label>
-                                            <input type="text" id="editImg" value="1" name="img" class="form-control">
+                                            <input style="padding-left: 10px;" type="text" id="editImg" value="1" name="img" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +185,7 @@ include "layouts/topheader.php";
                                     <div class="col-md-12">
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating">Description</label>
-                                            <input type="text" id="editDesc" value="1" name="desc" class="form-control">
+                                            <input style="padding-left: 10px;" type="text" id="editDesc" value="1" name="desc" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -199,13 +213,13 @@ include "layouts/topheader.php";
                                   <div class="col-md-6">
                                       <div class="form-group bmd-form-group">
                                           <label class="bmd-label-floating">Title</label>
-                                          <input type="text" style="color: #000;" id="title" name="title" class="form-control" required>
+                                          <input style="padding-left: 10px;"  type="text" style="color: #000;" id="title" name="title" class="form-control" required>
                                       </div>
                                   </div>
                                   <div class="col-md-6">
                                       <div class="form-group bmd-form-group">
                                           <label class="bmd-label-floating">Category</label>
-                                          <select style="padding: 10px; color: #495057; background-color: #fff; font-size: 16px; width: 100%;" name="category" id="category" class="form-control" required>
+                                          <select style="padding-left: 10px;" name="category" id="category" class="form-control" required>
                                                 <option value="" disabled selected>Select a category</option>
                                                 <?php foreach ($categories as $category): ?>
                                                     <option value="<?= htmlspecialchars($category['cat_id']) ?>">
@@ -233,7 +247,7 @@ include "layouts/topheader.php";
                                   <div class="col-md-6">
                                       <div class="form-group bmd-form-group">
                                           <label class="bmd-label-floating">Price</label>
-                                          <input type="number" style="color: #000;" name="price" id="price" class="form-control" required step="0.01" min="0.01" required>
+                                          <input style="padding-left: 10px;" type="number" style="color: #000;" name="price" id="price" class="form-control" required step="0.01" min="0.01" required>
                                       </div>
                                   </div>
                               </div>
@@ -241,13 +255,13 @@ include "layouts/topheader.php";
                                   <div class="col-md-6">
                                       <div class="form-group bmd-form-group">
                                           <label class="bmd-label-floating">Sale</label>
-                                          <input type="number" style="color: #000;" name="sale" id="sale" class="form-control" required step="0.01" min="0.01" required>
+                                          <input style="padding-left: 10px;" type="number" style="color: #000;" name="sale" id="sale" class="form-control" required step="0.01" min="0.01" required>
                                       </div>
                                   </div>
                                   <div class="col-md-6">
                                       <div class="form-group bmd-form-group">
                                           <label class="bmd-label-floating">Image URL</label>
-                                          <input type="text" style="color: #000;" name="img" id="image" class="form-control" required>
+                                          <input style="padding-left: 10px;" type="text" style="color: #000;" name="img" id="image" class="form-control" required>
                                       </div>
                                   </div>
                               </div>
@@ -255,7 +269,7 @@ include "layouts/topheader.php";
                                   <div class="col-md-12">
                                       <div class="form-group bmd-form-group">
                                           <label class="bmd-label-floating">Description</label>
-                                          <input type="text" style="color: #000;" name="desc" id="description" class="form-control" required>
+                                          <input style="padding-left: 10px;" type="text" style="color: #000;" name="desc" id="description" class="form-control" required>
                                       </div>
                                       
                                   </div>

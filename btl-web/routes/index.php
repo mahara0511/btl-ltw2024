@@ -102,6 +102,9 @@ switch ($parts[1]) {
         break;
     case 'view_brand':
         break;
+    case 'admin':
+        include_once("admin.php");
+        break;
     default:
         http_response_code(404);
         echo "404 Not Found";

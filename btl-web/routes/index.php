@@ -35,8 +35,7 @@ switch ($parts[1]) {
             $cartController->handleAjaxRequest();
             exit;
         }
-        $cartController->view_cart($_SERVER['REMOTE_ADDR'], $_SESSION['uid'] ?? null);
-        // $controller->v();
+        $cartController->view_cart($_SESSION['uid'] ?? null);
         break;
     case 'store':
         require(ROOT_PATH . '/controllers/StoreController.php');

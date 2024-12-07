@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $('#Modal_alert button').on('click', function () {
           if (modal.hasClass('fade')) {
-            location.reload() // Reload to update the cart
+            if (status == 'Notification') location.reload() // Reload to update the cart
           }
         })
       },

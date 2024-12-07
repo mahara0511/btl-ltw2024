@@ -1,5 +1,6 @@
 <?php
 require_once ROOT_PATH . "/views/layouts/header.php";
+$_SESSION["uid"] = 2;
 ?>
 
 <?php
@@ -249,8 +250,8 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                                     </div>
 
                                     <?php
-                                    // if (isset($_SESSION['uid']) && $_SESSION['uid'] == $comment['user_id']):
-                                    if ($comment['user_id'] == 1):
+                                    if (isset($_SESSION['uid']) && $_SESSION['uid'] == $comment['user_id']):
+                                        // if ($comment['user_id'] == 1):
                                         ?>
                                         <div class="dropdown">
                                             <button class="dropdown-toggle" type="button">
@@ -270,7 +271,7 @@ $_SESSION['product_id'] = $product_detail['product_id'];
 
                                 <!-- Nested Replies (initially hidden for depth 0) -->
                                 <div class="nested-replies" id="nested-replies-<?php echo $comment['cmt_id']; ?>"
-                                    style="display:<?php echo ($indent == 0 ? 'none' : 'display'); ?>; <?php echo ($indent == 0 ? 'max-height: 50vh; overflow-y: scroll' : ''); ?>">
+                                    style="display:<?php echo ($indent == 0 ? 'none' : 'display'); ?>; <?php echo ($indent == 0 ? 'max-height: 50vh; overflow-y: auto' : ''); ?>">
 
                                     <?php if ($indent > 0): ?>
                                         <!-- Reply Form (Hidden by default) -->

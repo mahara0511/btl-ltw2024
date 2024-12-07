@@ -35,6 +35,8 @@ class AdminController
             header('location: /admin');
             exit;
         }       
+
+        
         $email = '';
         $errors = array();
         if (isset($_POST['login_admin'])) {

@@ -11,7 +11,7 @@ class NewsModel extends Model {
 
     public function getNewsData($start, $len)
     {
-        $stmt = $this->db->prepare("SELECT * FROM news ORDER BY id desc LIMIT $len");
+        $stmt = $this->db->prepare("SELECT * FROM news ORDER BY id desc LIMIT $len OFFSET $start");
         $stmt->execute();
         $result = $stmt->get_result();
         $news_data = $result->fetch_all(MYSQLI_ASSOC);

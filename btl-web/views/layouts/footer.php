@@ -12,7 +12,7 @@
                         <ul class="footer-links">
                             <li><a href="#"><i class="fa fa-map-marker"></i>Ho Chi Minh city, Viet Nam</a></li>
                             <li><a href="#"><i class="fa fa-phone"></i>0905.xxx.yyy</a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i>laptrinhweb@gmail.com</a></li>
+                            <li><a href="contact_us"><i class="fa fa-envelope-o"></i>laptrinhweb@gmail.com</a></li>
                         </ul>
                     </div>
                 </div>

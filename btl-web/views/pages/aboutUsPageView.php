@@ -23,18 +23,66 @@
                             <img src="public/img/member-list/member1.jpg" alt="name" class="member-img">
                         </div>
     
-                        <div class="text-center col col-three s-col-full mt-16">
-                            <p class="member-name">Sarah</p>
-                            <img src="public/img/member-list/member1.jpg" alt="name" class="member-img">
+
+        <h2 class= "our-team-title" style="text-align:center">Our Team</h2>
+        <div class="container about-content">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="public/img/img_avatar3.png" alt="Khanh" style="width:100%">
+                        <div class="wrapper">
+                            <h2>Nguyen Minh Khanh</h2>
+                            <p class="person-title">CEO & Founder</p>
+                            <form action="contact_us" method="POST">
+                                <input type="hidden" id="dummy" name="dummy" value="abcxyz">
+                                <input type="hidden" id="name" name="name" value="Nguyen Minh Khanh">
+                                <input type="hidden" id="email" name="email" value="khanh.nguyenminh0101@hcmut.edu.vn">
+                                <input type="hidden" id="pos" name="pos" value="CEO & Founder">
+                                <input type="hidden" id="img" name="img" value="img_avatar3.png">
+                                <input type="hidden" id="about" name="about" value="Some text about Khanh lorem ipsum.">
+                                <p><input type="submit" class="button" value="Contact"></p>
+                            </form>
+                            <!-- <p><button class="button" onclick="location.href = 'contact_us'">Contact</button></p> -->
                         </div>
-    
-                        <div class="text-center col col-three s-col-full mt-16">
-                            <p class="member-name">Mike</p>
-                            <img src="public/img/member-list/member1.jpg" alt="name" class="member-img">
+                    </div>
+                </div>
+        
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="public/img/img_avatar3.png" alt="Tuan" style="width:100%">
+                        <div class="wrapper">
+                            <h2>Nguyen Truyen Tuan</h2>
+                            <p class="person-title">Art Director</p>
+                            <form action="contact_us" method="POST">
+                                <input type="hidden" id="dummy" name="dummy" value="abcxyz">
+                                <input type="hidden" id="name" name="name" value="Nguyen Truyen Tuan">
+                                <input type="hidden" id="email" name="email" value="tuan.nguyenkhmtk22@hcmut.edu.vn">
+                                <input type="hidden" id="pos" name="pos" value="Art Director">
+                                <input type="hidden" id="img" name="img" value="img_avatar3.png">
+                                <input type="hidden" id="about" name="about" value="Some text about Tuan lorem ipsum.">
+                                <p><input type="submit" class="button" value="Contact"></p>
+                            </form>
+
                         </div>
                         <div class="clear"></div>
                     </div>
                 </div>
+
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="public/img/img_avatar3.png" alt="Anh" style="width:100%">
+                        <div class="wrapper">
+                            <h2>Tran Nhu Mai Anh</h2>
+                            <p class="person-title">Designer</p>
+                            <form action="contact_us" method="POST">
+                                <input type="hidden" id="dummy" name="dummy" value="abcxyz">
+                                <input type="hidden" id="name" name="name" value="Tran Nhu Mai Anh">
+                                <input type="hidden" id="pos" name="pos" value="Designer">
+                                <input type="hidden" id="img" name="img" value="img_avatar3.png">
+                                <input type="hidden" id="about" name="about" value="Some text about Anh lorem ipsum.">
+                                <input type="hidden" id="email" name="email" value="anh.tran2004@hcmut.edu.vn">
+                                <p><input type="submit" class="button" value="Contact"></p>
+                            </form>
             </div>
             
 
@@ -70,6 +118,7 @@
                                 <div class="place-desc">Praesent tincidunt sed tellus ut rutrum sed vitae justo.</div>
                                 <button class="place-ticket-btn js-place-ticket-btn s-full-width ">See Map</button>
                             </div>
+
                         </div>
                         
                         <div class="col col-three s-col-full mt-16">
@@ -84,12 +133,24 @@
 
                         <div class="clear"></div>
                     </div>
-            
-                <div class="modal js-modal">
-                    <div class="modal-container">
-                        <div class="modal-close js-modal-close">
-                            <i class="close-btn ti-close"></i>
-                            
+                </div>
+    
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="public/img/img_avatar3.png" alt="Vinh" style="width:100%">
+                        <div class="wrapper">
+                            <h2>Le Ngoc Vinh</h2>
+                            <p class="person-title">CIO</p>
+                            <form action="contact_us" method="POST">
+                                <input type="hidden" id="dummy" name="dummy" value="abcxyz">
+                                <input type="hidden" id="name" name="name" value="Le Ngoc Vinh">
+                                <input type="hidden" id="email" name="email" value="vinh.lengoc@hcmut.edu.vn">
+                                <input type="hidden" id="pos" name="pos" value="CIO">
+                                <input type="hidden" id="img" name="img" value="img_avatar3.png">
+                                <input type="hidden" id="about" name="about" value="Some text about Vinh lorem ipsum.">
+                                <p><input type="submit" class="button" value="Contact"></p>
+                            </form>
+
                         </div>
                         <div class="clear"></div>
                         <header class="modal-header">
@@ -158,7 +219,7 @@
             }
         }
     </script>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         $('.block2-btn-addcart').each(function(){
             var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
             $(this).on('click', function(){
@@ -172,6 +233,6 @@
                 swal(nameProduct, "is added to wishlist !", "success");
             });
         });
-    </script>
+    </script> -->
 </body>
 </html>

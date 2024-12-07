@@ -230,8 +230,6 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                                     <?php echo htmlspecialchars($comment['content']); ?>
                                 </div>
 
-
-
                                 <div class="comment-actions">
                                     <div class="reply-group">
                                         <button class="reply-btn" data-comment-id="<?php echo $comment['cmt_id']; ?>">Reply</button>
@@ -251,8 +249,8 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                                     </div>
 
                                     <?php
-                                    if (isset($_SESSION['uid']) && $_SESSION['uid'] == $comment['user_id']):
-                                        // if ($comment['user_id'] == 1):
+                                    // if (isset($_SESSION['uid']) && $_SESSION['uid'] == $comment['user_id']):
+                                    if ($comment['user_id'] == 1):
                                         ?>
                                         <div class="dropdown">
                                             <button class="dropdown-toggle" type="button">
@@ -457,7 +455,5 @@ $_SESSION['product_id'] = $product_detail['product_id'];
 
 <!-- FOOTER -->
 <?php
-// include "newslettter.php";
-// include "footer.php";
-
+require_once ROOT_PATH . "/views/layouts/footer.php";
 ?>

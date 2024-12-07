@@ -5,7 +5,6 @@
   padding-top: 24px;
   padding-bottom: 40px;
   border-top: 2px solid #d10024;
-  /* width: 90%; */
 }
 
 .comments-list {
@@ -67,6 +66,20 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+.comment-actions .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.comment-actions .dropdown-menu {
+  position: absolute;
+  top: -300%; /* Position above the button */
+  left: auto;
+  right: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
 .comment-actions button {

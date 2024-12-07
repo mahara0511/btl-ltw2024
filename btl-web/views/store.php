@@ -154,7 +154,11 @@ require_once ROOT_PATH . "/views/layouts/header.php";
                         </div>
                         <div id="get_product_home">
                             <!-- product widget -->
-                            <?php foreach ($top_products as $product): ?>
+                            <?php foreach ($top_products as $product):
+                                $new_price = round($product['product_price']);
+                                $sale = $product['product_sale'];
+                                $old_price = round($new_price * (100 + $sale) / 100);
+                                ?>
                                 <div class='product-widget'
                                     onclick="window.location.href='/store?product_id=<?php echo $product['product_id']; ?>'">
                                     <a href=<?php echo "'/store?product_id=" . $product['product_id'] . "'" ?>>
@@ -170,8 +174,8 @@ require_once ROOT_PATH . "/views/layouts/header.php";
                                                 </a>
                                             </h3>
                                             <h4 class='product-price'>
-                                                <?php echo "$" . $product['product_price'] ?>
-                                                <del class='product-old-price'>$990.00</del>
+                                                $<?= $new_price ?>
+                                                <del class='product-old-price'>$<?= $old_price ?></del>
                                             </h4>
                                         </div>
                                     </a>
@@ -229,12 +233,11 @@ require_once ROOT_PATH . "/views/layouts/header.php";
                             <?php foreach ($products as $product):
                                 $new_price = round($product['product_price']);
                                 $sale = $product['product_sale'];
-                                $old_price = $new_price * (100 + $sale) / 100;
+                                $old_price = round($new_price * (100 + $sale) / 100);
                                 ?>
 
                                 <div class='col-md-4 col-xs-6'>
-                                    <div class='product'
-                                        onclick="window.location.href='/store?product_id=<?php echo $product['product_id']; ?>'">
+                                    <div class='product'>
                                         <a href=<?php echo "'/store?product_id=" . $product['product_id'] . "'" ?>>
                                             <div class='product-img'>
                                                 <img src=<?php echo "'product_images/" . $product['product_image'] . "'" ?>
@@ -245,7 +248,8 @@ require_once ROOT_PATH . "/views/layouts/header.php";
                                                 </div>
                                             </div>
                                         </a>
-                                        <div class='product-body'>
+                                        <div class='product-body'
+                                            onclick="window.location.href='/store?product_id=<?php echo $product['product_id']; ?>'">
                                             <p class='product-category'><?php echo $product['cat_title']; ?></p>
                                             <div class='product-name header-cart-item-name'>
                                                 <a href=<?php echo "'/store?product_id=" . $product['product_id'] . "'" ?>>
@@ -300,3 +304,7 @@ require_once ROOT_PATH . "/views/layouts/header.php";
         <!-- /container -->
     </div>
 </div>
+
+<?php
+require_once ROOT_PATH . "/views/layouts/footer.php";
+?>

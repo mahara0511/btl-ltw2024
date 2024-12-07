@@ -1,169 +1,20 @@
-<!-- <style>
-    .cart-popup {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-    }
-
-    #cart-popup-btn {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-    }
-
-    .cart-content {
-        position: absolute;
-        top: 40px;
-        right: 0;
-        background: white;
-        border: 1px solid #ccc;
-        padding: 10px;
-        width: 300px;
-    }
-
-    .cart-content ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .cart-content li {
-        border-bottom: 1px solid #ccc;
-        padding: 5px 0;
-    }
-
-    .hidden {
-        display: none;
-    }
-</style> -->
-
-<!-- <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-        const cartBtn = document.getElementById("cart-popup-btn");
-        const cartContent = document.getElementById("cart-content");
-        const cartCount = document.getElementById("cart-count");
-        const cartItems = document.getElementById("cart-items");
-
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        // Toggle cart content visibility
-        cartBtn.addEventListener("click", () => {
-            cartContent.classList.toggle("hidden");
-            displayCartItems();
-        });
-
-        // Update cart count
-        function updateCartCount() {
-            cartCount.textContent = cart.length;
-        }
-
-        // Display cart items
-        function displayCartItems() {
-            cartItems.innerHTML = ""; // Clear previous items
-            cart.forEach((item, index) => {
-                const li = document.createElement("li");
-                li.innerHTML = `
-                ${item.title} (x${item.quantity}) - $${item.price}
-                <button data-index="${index}" class="remove-btn">Remove</button>
-            `;
-                cartItems.appendChild(li);
-            });
-
-            // Remove items from the cart
-            document.querySelectorAll(".remove-btn").forEach(button => {
-                button.addEventListener("click", (e) => {
-                    const index = e.target.dataset.index;
-                    cart.splice(index, 1);
-                    saveCart();
-                    updateCartCount();
-                    displayCartItems();
-                });
-            });
-        }
-
-        // Save cart to localStorage
-        function saveCart() {
-            localStorage.setItem("cart", JSON.stringify(cart));
-        }
-
-        // Initialize cart count
-        updateCartCount();
-    });
-
-</script> -->
-
-
-
-<!-- <div class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-        <i class="fa fa-shopping-cart"></i>
-        <span>Your Cart</span>
-        <div class="badge qty">0</div>
-    </a>
-    <div class="cart-dropdown">
-        <div class="cart-list" id="cart_product">
-            <div class="product-widget">
-                <div class="product-img">
-                    <img src="product_images/' . $product_image . '" alt="">
-                </div>
-                <div class="product-body">
-                    <h3 class="product-name"><a href="#">' . $product_title . '</a></h3>
-                    <h4 class="product-price"><span class="qty">' . $n . '</span>$' . $product_price . '</h4>
-                </div>
-            </div>
-            <div class="cart-summary">
-                <small class="qty">' . $n . ' Item(s) selected</small>
-                <h5>$' . $total_price . '</h5>
-            </div>
-        </div>
-        <div class="cart-btns">
-            <a href="cart.php" style="width:100%;"><i class="fa fa-edit"></i> edit cart</a>
-        </div>
-    </div>
-</div> -->
-
-<!-- <script src="https://unpkg.com/@popperjs/core@2"></script> -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script> -->
-
-<script>
-    $(document).ready(function () {
-        $('.dropdown').on('click', function (e) {
-            e.stopPropagation();
-            $(this).toggleClass('open');
-            $(this).find('.dropdown-toggle').attr('aria-expanded', $(this).hasClass('open'));
-        });
-        $(document).on('click', function (e) {
-            if (!$(e.target).closest('.dropdown').length) {
-                $('.dropdown').removeClass('open');
-                $('.dropdown-toggle').attr('aria-expanded', 'false');
-            }
-        });
-    });
-</script>
-
-
 <?php
 require_once(ROOT_PATH . '/controllers/CartController.php');
 require(ROOT_PATH . '/config/db_connect.php');
 $cartController = new CartController($conn);
 ?>
 
-
 <div class="dropdown">
     <?php
-    $cart_data = $cartController->view_cart_dropdown($_SERVER['REMOTE_ADDR'], $_SESSION['uid'] ?? null);
-    $cart_items = $cart_data['cart_items'];
-    $total_price = $cart_data['total_price'];
+    // Get cart data for logged-in user
+    $cart_data = isset($_SESSION['uid']) ? $cartController->view_cart_dropdown($_SESSION['uid']) : [];
+    $cart_items = $cart_data['cart_items'] ?? null;
+    $total_price = $cart_data['total_price'] ?? 0;
     ?>
     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
         <i class="fa fa-shopping-cart"></i>
         <span>Your Cart</span>
-        <div class="badge qty">
+        <div class="badge qty" id="cartItemCount">
             <?= count($cart_items ?? []); ?>
         </div>
     </a>
@@ -188,8 +39,8 @@ $cartController = new CartController($conn);
                     </div>
                 <?php endforeach; ?>
                 <div class="cart-summary">
-                    <small class="qty"><?= count(value: $cart_items) . " Item(s) in cart" ?></small>
-                    <h5>Total price : <?= "$ $total_price " ?></h5>
+                    <small class="qty"><?= count($cart_items) . " Item(s) in cart" ?></small>
+                    <h5>Total price : $<?= round($total_price, 2) ?></h5>
                 </div>
             <?php else: ?>
                 <div class="alert alert-warning m-auto " role="alert">
@@ -202,3 +53,59 @@ $cartController = new CartController($conn);
         </div>
     </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.dropdown').on('click', function (e) {
+            e.stopPropagation();
+            $(this).toggleClass('open');
+            $(this).find('.dropdown-toggle').attr('aria-expanded', $(this).hasClass('open'));
+        });
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.dropdown').length) {
+                $('.dropdown').removeClass('open');
+                $('.dropdown-toggle').attr('aria-expanded', 'false');
+            }
+        });
+    });
+
+    // If user does not login already, load cart in local storage
+    // Else call $cartController in below
+    // If user is logged in, display server-side cart
+    if (!<?= isset($_SESSION['uid']) ? 'true' : 'false' ?>) {
+        // User is not logged in, load cart from localStorage
+        let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        let totalPrice = 0;
+        console.log(cartItems)
+        // Populate cart    
+        if (cartItems.length > 0) {
+            cartItems.forEach(item => {
+                totalPrice += item.qty * item.product_price;
+                $('#cart_product').append(`
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="product_images/${item.product_image}" alt="${item.product_title}">
+                            </div>
+                            <div class="product-body">
+                                <h3 class="product-name"><a href="/store?product_id=${item.product_id}">${item.product_title}</a></h3>
+                                <h4 class="product-price"><span class="qty">${item.qty}</span> x $${item.product_price}</h4>
+                            </div>
+                        </div>
+                    `);
+            });
+
+            $('#cartItemCount').text(cartItems.length);
+            $('.cart-summary').html(`
+                    <small class="qty">${cartItems.length} Item(s) in cart</small>
+                    <h5>Total price: $${totalPrice.toFixed(2)}</h5>
+                `);
+        } else {
+            $('#cart_product').html('<div class="alert alert-warning m-auto" role="alert">Your cart is empty.</div>');
+        }
+    }
+
+</script>

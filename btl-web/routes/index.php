@@ -3,7 +3,9 @@ $request = $_SERVER['REQUEST_URI'];
 $request = parse_url($request, PHP_URL_PATH);
 
 $parts = explode('/', $request);
-
+    if ($parts[1] !== "news") {
+        setcookie("curpage", -1, strtotime("2000-01-01 00:00:00"), "/");
+    }
     switch ($parts[1]) {
         case '':
             require(ROOT_PATH . '/controllers/HomeController.php');
@@ -31,13 +33,6 @@ $parts = explode('/', $request);
             } else {
                 $controller->index($_COOKIE["curpage"]);
             }
-
-            // if (empty($_POST["curpage"])) {
-            //     $controller->index(1);
-            // }
-            // else {
-            //     $controller->index($_POST["curpage"]);
-            // }
             break;
         case 'contact_us':
             if (!empty($_POST["desEmail"])) {

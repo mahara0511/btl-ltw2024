@@ -18,20 +18,9 @@
                 </div>
                 <?php else: ?>
                     <div class="col-md-12">
-                        <!-- <form id="backward-form" method="POST" action="news">
-                            <input type="hidden" id="curpage" name="curpage" value=<?php echo $curpage - 1;?>>
-                        </form>
-                        <form id="forward-form" method="POST" action="news">
-                            <input type="hidden" id="curpage" name="curpage" value=<?php echo $curpage + 1;?>>
-                        </form>
                         <br>
-                        <input form="backward-form" type="submit" id="back-btn" onclick="fetchBack()" class="btn-back-and-forth" value="Back"> -->
-                        <!-- <form id="newspaging" action="news"></form> -->
-                        <!-- <input type="submit" form="newspaging" id="back-btn" onclick="setSessionCookie(<?php echo ($curpage - 1); ?>)" class="btn-back-and-forth" value="Back"> -->
                         <button id="back-btn" onclick="setSessionCookie(<?php echo ($curpage - 1); ?>)" class="btn-back-and-forth">Back</button>
                         <button class="page-num" disabled="true">Page <?php echo $curpage ?> / <?php echo $npage ?></button>
-                        <!-- <input form="forward-form" type="submit" id="forth-btn" onclick="fetchNext()" class="btn-back-and-forth" value="Next"> -->
-                        <!-- <input type="submit" form="newspaging" id="forth-btn" onclick="setSessionCookie(<?php echo ($curpage + 1); ?>)" class="btn-back-and-forth" value="Next"> -->
                         <button id="front-btn" onclick="setSessionCookie(<?php echo ($curpage + 1); ?>)" class="btn-back-and-forth">Forth</button>
                         <br>
                     </div>
@@ -65,6 +54,9 @@
                         </a>
                     <?php endforeach; ?>
                 <?php endif; ?>
+                <div class="col-md-12">
+                    <br>
+                </div>
             </section>
 
             <section class="news-content" id="news-content">

@@ -227,15 +227,14 @@ require_once ROOT_PATH . "/views/layouts/header.php";
                             <!--Here we get product jquery Ajax Request-->
 
                             <?php foreach ($products as $product):
-                                $new_price = $product['product_price'];
-                                $product['sale'] = rand(0, 75);
-                                $sale = $product['sale'];
-                                $old_price = $new_price * (100 + $product['sale']) / 100;
+                                $new_price = round($product['product_price']);
+                                $sale = $product['product_sale'];
+                                $old_price = $new_price * (100 + $sale) / 100;
                                 ?>
-                                <!-- <?php echo $product['product_title'] . " - " . $product['product_price'] . "$ - " . $product['product_desc']; ?> -->
 
                                 <div class='col-md-4 col-xs-6'>
-                                    <div class='product'>
+                                    <div class='product'
+                                        onclick="window.location.href='/store?product_id=<?php echo $product['product_id']; ?>'">
                                         <a href=<?php echo "'/store?product_id=" . $product['product_id'] . "'" ?>>
                                             <div class='product-img'>
                                                 <img src=<?php echo "'product_images/" . $product['product_image'] . "'" ?>

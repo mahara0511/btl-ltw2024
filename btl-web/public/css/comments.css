@@ -1,0 +1,148 @@
+.comments-section {
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+  padding-top: 24px;
+  padding-bottom: 40px;
+  border-top: 2px solid #d10024;
+  /* width: 90%; */
+}
+
+.comments-list {
+  max-height: 75vh;
+  overflow-y: auto;
+}
+.comment {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.comment .comment {
+  margin-top: 12px;
+}
+
+.comment {
+  margin-bottom: 10px;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.comment-header .comment-user {
+  font-weight: bold;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.comment .comment-header,
+.comment .comment-body {
+  margin-left: 14px;
+  margin-right: 10px;
+}
+
+.comment .comment-body textarea {
+  width: 100%;
+}
+
+.comment-body {
+  margin-bottom: 10px;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.comment-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 0;
+  padding-right: 12px;
+  padding-bottom: 12px;
+}
+
+.comment-actions .reply-group {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.comment-actions button {
+  border: 0px;
+  color: blue;
+  background-color: #f9f9f9;
+  margin-left: 10px;
+}
+
+.comment-actions .dropdown button {
+  color: #000;
+}
+
+.comment-actions button.no-replies {
+  color: gray !important;
+  cursor: not-allowed !important;
+}
+
+.comment-actions button:hover {
+  border: 0px;
+  color: #d10024;
+}
+
+.comment-actions .dropdown-menu button {
+  margin: 0;
+  padding: 10px 0px;
+  width: 100%;
+  /* display: flex; */
+}
+
+.reply-form {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}
+
+.reply-form .reply-to {
+  color: #d10024;
+  display: flex;
+  justify-content: space-between;
+}
+
+.reply-form .reply-to .close-reply-btn {
+  color: #000;
+  font-size: 21px;
+  border: 0px;
+}
+
+.reply-form textarea,
+.new-comment-form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.new-comment-form {
+  margin-top: 24px;
+}
+
+@media screen and (max-width: 1242px) {
+  .comments-section {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 1201px) {
+  .comments-section {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1042px) {
+  .comments-section {
+    width: 95%;
+  }
+}

@@ -81,14 +81,14 @@ $total_price = $data['total_price'] ?? 0;
                                             <input type="hidden" name="" value=<?php echo "'" . $item['id'] . "'"; ?> />
                                             <td data-th="Price">
                                                 <input type="text" class="form-control price text-center"
-                                                    value="$<?= $item['product_price']; ?>" readonly="readonly">
+                                                    value="$<?= round($item['product_price']); ?>" readonly="readonly">
                                             </td>
                                             <td data-th="Quantity">
                                                 <input type="number" class="form-control qty" name="qty[]"
                                                     value="<?= $item['qty']; ?>" min="1">
                                             </td>
                                             <td data-th="Subtotal" class="text-center">
-                                                $<?= $item['qty'] * $item['product_price']; ?>
+                                                $<?= $item['qty'] * round($item['product_price']); ?>
                                             </td>
                                             <td class="actions" data-th="">
                                                 <div class="btn-group">

@@ -63,6 +63,28 @@ switch ($parts[1]) {
                         break;
                 }
             }
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $action = $_GET['action'] ?? null;
+            switch ($action) {
+                case 'addComment':
+                    require(ROOT_PATH . '/controllers/ProductController.php');
+                    $productController = new ProductController($conn);
+                    $productController->addNewComment();
+                    exit;
+                case 'editComment':
+                    require(ROOT_PATH . '/controllers/ProductController.php');
+                    $productController = new ProductController($conn);
+                    $productController->updateComment();
+                    exit;
+                case 'deleteComment':
+                    require(ROOT_PATH . '/controllers/ProductController.php');
+                    $productController = new ProductController($conn);
+                    $productController->deleteComment();
+                    exit;
+                default:
+                    echo var_dump($_POST); // Debugging fallback
+                    exit;
+            }
         }
         break;
     case 'product':

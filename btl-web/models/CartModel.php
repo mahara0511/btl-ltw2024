@@ -25,9 +25,8 @@ class CartModel
                 "SELECT a.product_id, a.product_title, a.product_price, a.product_image, b.id, b.qty 
              FROM products a 
              JOIN cart b ON a.product_id = b.p_id 
-             WHERE b.ip_add = ? AND b.user_id < 0"
+             WHERE b.user_id = 1"
             );
-            $stmt->bind_param("s", $ip_add);
         }
 
         $stmt->execute();

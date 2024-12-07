@@ -150,6 +150,7 @@ ALTER TABLE `categories` ADD PRIMARY KEY (`cat_id`);
 ALTER TABLE `products` ADD PRIMARY KEY (`product_id`);
 
 ALTER TABLE `user_info` ADD PRIMARY KEY (`user_id`);
+ALTER TABLE `user_info` ADD UNIQUE (`email`);
 
 ALTER TABLE `cart` ADD PRIMARY KEY (`id`);
 

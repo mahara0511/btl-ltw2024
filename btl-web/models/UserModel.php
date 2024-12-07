@@ -44,6 +44,66 @@
             // Kiểm tra số hàng bị ảnh hưởng
             return $stmt->affected_rows > 0;
         }
+
+        public function addUser($firstName, $lastName, $email, $password, $phone, $address, $district, $province) {
+            // Chuẩn bị câu lệnh SQL
+            $stmt = $this->db->prepare('INSERT INTO user_info (first_name, last_name, email, password, mobile, address, district, province) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+            
+            // Kiểm tra nếu câu lệnh không được chuẩn bị thành công
+            if (!$stmt) {
+                echo json_encode(['success' => false, 'message' => 'Error preparing statement: ' . $this->db->error]);
+                return false;
+            }
+        
+            // Liên kết tham số và thực thi câu lệnh
+            $stmt->bind_param('ssssssss', $firstName, $lastName, $email, $password, $phone, $address, $district, $province);
+        
+            // Thực thi câu lệnh
+            if ($stmt->execute()) {
+                echo json_encode(['success' => true, 'message' => 'Inserted Successfully']);
+                $stmt->close();
+                return true;
+            } else {
+                // Kiểm tra lỗi 1062 (Duplicate entry) cho email
+                if ($this->db->errno == 1062) {
+                    echo json_encode(['success' => false, 'message' => 'Email already exists']);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Failed to insert user: ' . $this->db->error]);
+                }
+                $stmt->close();
+                return false;
+            }
+        }        
+
+        public function editUser($user_id, $firstName,$lastName,$email,$phone,$address,$district,$province) {
+            // Chuẩn bị câu lệnh SQL
+            $stmt = $this->db->prepare('UPDATE user_info SET first_name = ?, last_name = ?, email = ?, mobile = ?, address = ?, district = ?, province = ? WHERE user_id = ?');
+            
+            // Kiểm tra nếu câu lệnh không được chuẩn bị thành công
+            if (!$stmt) {
+                echo json_encode(['success' => false, 'message' => 'Error preparing statement: ' . $this->db->error]);
+                return false;
+            }
+        
+            // Liên kết tham số và thực thi câu lệnh
+            $stmt->bind_param('sssssssi', $firstName, $lastName, $email, $phone, $address, $district, $province, $user_id);
+        
+            // Thực thi câu lệnh
+            if ($stmt->execute()) {
+                echo json_encode(['success' => true, 'message' => 'Update Successfully']);
+                $stmt->close();
+                return true;
+            } else {
+                // Kiểm tra lỗi 1062 (Duplicate entry) cho email
+                if ($this->db->errno == 1062) {
+                    echo json_encode(['success' => false, 'message' => 'Email already exists']);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Failed to insert user: ' . $this->db->error]);
+                }
+                $stmt->close();
+                return false;
+            }
+        }
         
     }
 ?>

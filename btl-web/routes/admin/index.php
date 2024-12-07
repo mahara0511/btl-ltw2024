@@ -11,17 +11,11 @@
                 $controller->login();
                 break;
             case 'handleUser': 
-                $controller->handleUser();
+                include('handleUser.php');
                 break;
-            case 'handleUserDelete': 
-                $controller->handleUserDelete();
-                break;
-            case 'handleUserEdit': 
-                $controller->handleUserEdit();
-                break;
-            case 'handleUserAdd': 
-                $controller->handleUserAdd();
-                break; 
+            case 'handleProduct': 
+                include('handleProduct.php');
+                break;  
             default:
                 http_response_code(404);
                 echo "404 Not Found";

@@ -82,5 +82,11 @@ class ProductModel
         $row = mysqli_fetch_array($query);
         return $row['count_items'] ?? 0;
     }
+
+    public function getAllProduct() {
+        $sql = "SELECT * FROM products";
+        $result = mysqli_query($this->db, $sql) or die("Query getCategories failed...");
+        return $result; 
+    }
 }
 ?>

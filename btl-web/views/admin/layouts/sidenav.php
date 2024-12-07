@@ -92,10 +92,10 @@
                             <p>Handle users</p>
                         </a>
                     </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="add_products">
+                        <li class="nav-item <?= $current_path === '/admin/handleProduct' ? 'active' : '' ?>">
+                            <a class="nav-link" href="/admin/handleProduct">
                                 <i class="material-icons">add</i>
-                                <p>Add Products</p>
+                                <p>Handle Products</p>
                             </a>
                         </li>
                         <li class="nav-item">

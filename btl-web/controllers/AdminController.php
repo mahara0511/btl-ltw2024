@@ -31,11 +31,10 @@ class AdminController
     }
 
     public function login() {
-        
-        if (isset($_SESSION['admin']) && $_SESSION['admin'] === TRUE) {
-            header('location: /admin/'); // Chuyển hướng đến trang admin
-            exit();
-        }
+        if(isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
+            header('location: /admin');
+            exit;
+        }       
         $email = '';
         $errors = array();
         if (isset($_POST['login_admin'])) {
@@ -73,16 +72,9 @@ class AdminController
     } 
 
     public function isLogin() {
-        if (!isset($_SESSION['admin'])) {
-            // Nếu là yêu cầu API, trả về lỗi JSON thay vì chuyển hướng
-            if ($_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
-                echo json_encode(['success' => false, 'message' => 'Unauthorized access.']);
-                exit;
-            } else {
-                // Chuyển hướng cho các yêu cầu từ trình duyệt
-                header('location: /admin');
-                exit;
-            }
+        if (!isset($_SESSION['admin']) || !$_SESSION['admin'] === TRUE) {
+            header('location: /admin/login'); // Chuyển hướng đến trang admin
+            exit();
         }
     }
 
@@ -156,29 +148,138 @@ class AdminController
     }
     
     public function handleUserEdit() {
-        $data = json_decode(file_get_contents("php://input"), true);
+        if($_SERVER['REQUEST_METHOD'] == "POST") {
+            $user_id = htmlspecialchars(trim($_POST['user_id']));
+            $firstName = htmlspecialchars(trim($_POST['first_name']));
+            $lastName = htmlspecialchars(trim($_POST['last_name']));
+            $email = htmlspecialchars(trim($_POST['email']));
+            $phone = htmlspecialchars(trim($_POST['phone']));
+            $address = htmlspecialchars(trim($_POST['address']));
+            $district = htmlspecialchars(trim($_POST['district']));
+            $province = htmlspecialchars(trim($_POST['province']));
+            header('Content-type: application/json');
+    
+            if (empty($user_id) || empty($firstName) || empty($lastName) || empty($email) || empty($phone) || empty($address) || empty($district) || empty($province)) {
+                echo json_encode(['success' => false, 'message' => 'Missing Value']);
+                exit;
+                return;
+            }  
+            $this->userModel->editUser($user_id, $firstName,$lastName,$email,$phone,$address,$district,$province);
+
+        }
+
+
+
     }
 
     public function handleUserAdd() {
-        if($_REQUEST["REQUEST_METHOD"] == "POST") {
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+
             $firstName = htmlspecialchars(trim($_POST['first_name']));
             $lastName = htmlspecialchars(trim($_POST['last_name']));
             $email = htmlspecialchars(trim($_POST['email']));
             $password = htmlspecialchars(trim($_POST['password']));
             $phone = htmlspecialchars(trim($_POST['phone']));
-            $city = htmlspecialchars(trim($_POST['city']));
-            $country = htmlspecialchars(trim($_POST['country']));
-        
-            // Kiểm tra dữ liệu đã làm sạch
-            if (empty($firstName)) {
-                echo "First Name is required.";
-            } else {
-                echo "First Name: " . $firstName;
+            $address = htmlspecialchars(trim($_POST['address']));
+            $district = htmlspecialchars(trim($_POST['district']));
+            $province = htmlspecialchars(trim($_POST['province']));
+
+            header('Content-type: application/json');
+            if (empty($firstName) || empty($lastName) || empty($email) || empty($password) || empty($phone) || empty($address) || empty($district) || empty($province)) {
+                echo json_encode(['success' => false, 'message' => 'Missing Value']);
+                exit;
+                return;
             }
+            $password = md5($password);
+            $this->userModel->addUser($firstName,$lastName,$email,$password,$phone,$address,$district,$province);
+            exit;
+        }
+    }
+
+
+    public function handleProduct() {
+        $this->isLogin();
+
+        $all_users = $this->productModel->getAllProduct();
+        include_once 'views/admin/handleProduct.php';
+    }
+
+    public function handleProductDelete() {
+        // Đọc dữ liệu JSON từ request
+        $data = json_decode(file_get_contents("php://input"), true);
+    
+        // Kiểm tra dữ liệu đầu vào
+        if (!isset($data['user_ids']) || !is_array($data['user_ids']) || count($data['user_ids']) === 0) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'No user IDs provided.']);
+            exit;
+        }
+    
+        // Chuyển ID sang mảng số nguyên
+        $user_ids = array_map('intval', $data['user_ids']);
+    
+        // Gọi phương thức xóa
+        $results = $this->userModel->deleteUsers($user_ids);
+    
+        // Trả về phản hồi
+        header('Content-Type: application/json');
+        if ($results) {
+            echo json_encode(['success' => true, 'message' => 'Deleted Successfully.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Deleted Failed.']);
+        }
+        exit;
+    }
+    
+    public function handleProductEdit() {
+        if($_SERVER['REQUEST_METHOD'] == "POST") {
+            $user_id = htmlspecialchars(trim($_POST['user_id']));
+            $firstName = htmlspecialchars(trim($_POST['first_name']));
+            $lastName = htmlspecialchars(trim($_POST['last_name']));
+            $email = htmlspecialchars(trim($_POST['email']));
+            $phone = htmlspecialchars(trim($_POST['phone']));
+            $address = htmlspecialchars(trim($_POST['address']));
+            $district = htmlspecialchars(trim($_POST['district']));
+            $province = htmlspecialchars(trim($_POST['province']));
+            header('Content-type: application/json');
+    
+            if (empty($user_id) || empty($firstName) || empty($lastName) || empty($email) || empty($phone) || empty($address) || empty($district) || empty($province)) {
+                echo json_encode(['success' => false, 'message' => 'Missing Value']);
+                exit;
+                return;
+            }  
+            $this->userModel->editUser($user_id, $firstName,$lastName,$email,$phone,$address,$district,$province);
+
         }
 
-        
+
+
     }
+
+    public function handleProductAdd() {
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            $firstName = htmlspecialchars(trim($_POST['first_name']));
+            $lastName = htmlspecialchars(trim($_POST['last_name']));
+            $email = htmlspecialchars(trim($_POST['email']));
+            $password = htmlspecialchars(trim($_POST['password']));
+            $phone = htmlspecialchars(trim($_POST['phone']));
+            $address = htmlspecialchars(trim($_POST['address']));
+            $district = htmlspecialchars(trim($_POST['district']));
+            $province = htmlspecialchars(trim($_POST['province']));
+
+            header('Content-type: application/json');
+            if (empty($firstName) || empty($lastName) || empty($email) || empty($password) || empty($phone) || empty($address) || empty($district) || empty($province)) {
+                echo json_encode(['success' => false, 'message' => 'Missing Value']);
+                exit;
+                return;
+            }
+            $password = md5($password);
+            $this->userModel->addUser($firstName,$lastName,$email,$password,$phone,$address,$district,$province);
+            exit;
+        }
+    }
+    
 
 }
 

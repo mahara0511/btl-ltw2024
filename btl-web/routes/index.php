@@ -81,7 +81,7 @@ switch ($parts[1]) {
     case 'view_brand':
         break;
     case 'admin':
-        include_once("admin.php");
+        include_once("admin/index.php");
         break;
     default:
         http_response_code(404);

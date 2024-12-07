@@ -1,21 +1,6 @@
 <?php
 include "layouts/sidenav.php";
 include "layouts/topheader.php";
-if(isset($_POST['btn_save']))
-{
-$first_name=$_POST['first_name'];
-$last_name=$_POST['last_name'];
-$email=$_POST['email'];
-$user_password=$_POST['password'];
-$mobile=$_POST['phone'];
-$address1=$_POST['city'];
-$address2=$_POST['country'];
-
-mysqli_query($con,"insert into user_info(first_name, last_name,email,password,mobile,address1,address2) values ('$first_name','$last_name','$email','$user_password','$mobile','$address1','$address2')") 
-			or die ("Query 1 is inncorrect........"); 
-mysqli_close($con);
-}
-
 
 ?>
       <!-- End Navbar -->
@@ -45,16 +30,16 @@ mysqli_close($con);
                         <th>FirstName</th>
                         <th>LastName</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Contact</th>
                         <th>Address</th>
-                        <th>City</th>
+                        <th>District</th>
+                        <th>Province</th>
                         <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
-                        while(list($user_id,$first_name,$last_name,$email,$password,$phone,$address1,$address2)=mysqli_fetch_array($all_users)) { 
+                        while(list($user_id,$first_name,$last_name,$email,$password,$phone,$address, $district, $province)=mysqli_fetch_array($all_users)) { 
                             echo "
                             <tr>
                             <td><input type='checkbox' class='rowCheckbox' value='$user_id'></td>
@@ -62,10 +47,10 @@ mysqli_close($con);
                             <td>$first_name</td>
                             <td>$last_name</td>
                             <td>$email</td>
-                            <td>$password</td>
                             <td>$phone</td>
-                            <td>$address1</td>
-                            <td>$address2</td>
+                            <td>$address</td>
+                            <td>$district</td>
+                            <td>$province</td>
                             <td>
                                 <button type='button' style='background-color: #007bff' class='btn btn-sm editBtn' data-id='$user_id' data-toggle='modal' data-target='#editUserModal'>Edit</button>
                             </td>
@@ -92,19 +77,19 @@ mysqli_close($con);
                 </div>
                 <div class="modal-body">
                     <form id="editUserForm" method="post">
-                    <input type="hidden" name="user_id" id="editUserId">
+                    <input type="hidden" style="color: #000;" name="user_id" id="editUserId">
                     <div class="row">
                       
                       <div class="col-md-6">
                         <div class="form-group bmd-form-group">
                           <label class="bmd-label-floating">First Name</label>
-                          <input type="text" id="editFirstName" name="first_name" class="form-control" required>
+                          <input type="text" id="editFirstName" style="color: #000;" value="1" name="first_name" class="form-control" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group bmd-form-group">
                           <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" name="last_name" id="editLastName"  class="form-control" required>
+                          <input type="text" style="color: #000;" value="1" name="last_name" id="editLastName"  class="form-control" required>
                         </div>
                       </div>
                     </div>
@@ -112,29 +97,35 @@ mysqli_close($con);
                       <div class="col-md-6">
                         <div class="form-group bmd-form-group">
                           <label class="bmd-label-floating">Email</label>
-                          <input type="email" name="email" id="editEmail" class="form-control" required>
+                          <input type="email" style="color: #000;" value="1" name="email" id="editEmail" class="form-control" required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                          <label class="bmd-label-floating">Phone Number</label>
+                          <input type="text" id="editPhone" style="color: #000;" value="1" name="phone" class="form-control" required>
                         </div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">phone number</label>
-                          <input type="text" id="editPhone" name="phone" class="form-control" required>
+                          <label class="bmd-label-floating">Address</label>
+                          <input type="text" style="color: #000;" value="1" name="address" id="editAddress" class="form-control" required>
                         </div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">City</label>
-                          <input type="text" name="city" id="editCity"  class="form-control" required>
+                          <label class="bmd-label-floating">District</label>
+                          <input type="text" style="color: #000;" value="1" name="district" id="editDistrict"  class="form-control" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">Address</label>
-                          <input type="text" name="country" id="editAddress" class="form-control" required>
+                          <label class="bmd-label-floating">Province</label>
+                          <input type="text" style="color: #000;" value="1" name="province" id="editProvince" class="form-control" required>
                         </div>
                       </div>
                       
@@ -164,13 +155,13 @@ mysqli_close($con);
                         <div class="col-md-6">
                           <div class="form-group bmd-form-group">
                             <label class="bmd-label-floating">First Name</label>
-                            <input type="text" id="first_name" name="first_name" class="form-control" required>
+                            <input type="text" style="color: #000;" id="first_name" name="first_name" class="form-control" required>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group bmd-form-group">
                             <label class="bmd-label-floating">Last Name</label>
-                            <input type="text" name="last_name" id="last_name"  class="form-control" required>
+                            <input type="text" style="color: #000;" name="last_name" id="last_name"  class="form-control" required>
                           </div>
                         </div>
                       </div>
@@ -178,35 +169,41 @@ mysqli_close($con);
                         <div class="col-md-6">
                           <div class="form-group bmd-form-group">
                             <label class="bmd-label-floating">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" required>
+                            <input type="email" style="color: #000;" name="email" id="email" class="form-control" required>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group bmd-form-group">
                             <label class="bmd-label-floating">Password</label>
-                            <input type="password" id="password" name="password" class="form-control" required>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group bmd-form-group">
-                            <label class="bmd-label-floating">phone number</label>
-                            <input type="text" id="phone" name="phone" class="form-control" required>
+                            <input type="password" id="password" style="color: #000;" name="password" class="form-control" required>
                           </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group bmd-form-group">
-                            <label class="bmd-label-floating">City</label>
-                            <input type="text" name="city" id="city"  class="form-control" required>
+                            <label class="bmd-label-floating">Phone Number</label>
+                            <input type="text" id="phone" style="color: #000;" name="phone" class="form-control" required>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group bmd-form-group">
                             <label class="bmd-label-floating">Address</label>
-                            <input type="text" name="country" id="country" class="form-control" required>
+                            <input type="text" style="color: #000;" name="address" id="address" class="form-control" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">District</label>
+                            <input type="text" style="color: #000;" name="district" id="district"  class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">Province</label>
+                            <input type="text" style="color: #000;" name="province" id="province" class="form-control" required>
                           </div>
                         </div>
                         
@@ -271,8 +268,7 @@ mysqli_close($con);
         event.preventDefault(); // Ngăn gửi form mặc định
 
         const formData = new FormData(this);
-        
-        fetch('http://localhost/admin/handleUserAdd', {
+        fetch('http://localhost/admin/handleUser/add', {
             method: 'POST',
             body: formData
         })
@@ -281,7 +277,7 @@ mysqli_close($con);
             if (data.success) {
               Swal.fire({
                 title: 'Inserted successfully!',
-                text: 'Press the button to reload the table',
+                text: data.message,
                 icon: 'success',
                 confirmButtonText: 'YES',
               }).then(response => {
@@ -294,7 +290,7 @@ mysqli_close($con);
             } else {
               Swal.fire({
                 title: 'Error',
-                text: 'Inserted Failed!',
+                text: data.message,
                 icon: 'error',
                 confirmButtonText: 'Try again',
               });
@@ -302,7 +298,12 @@ mysqli_close($con);
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred.');
+            Swal.fire({
+                title: 'Error',
+                text: 'An error occured!',
+                icon: 'error',
+                confirmButtonText: 'Try again',
+              });
         });
     });
     
@@ -335,7 +336,7 @@ mysqli_close($con);
           })
           .then((result) => {
               if(result.isConfirmed) {
-                fetch('http://localhost/admin/handleUserDelete', {
+                fetch('http://localhost/admin/handleUser/delete', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -383,49 +384,114 @@ mysqli_close($con);
     });
 
 
-    // Populate Edit Modal
-    $('editUserForm').click (function (event) {
-        event.preventDefault(); // Ngăn gửi form mặc định
+    document.querySelectorAll('.editBtn').forEach(button => {
+        button.addEventListener('click', function () {
+            // Get user data from data attributes
+            const userId = this.getAttribute('data-id');
+            const row = this.closest('tr');
+            const firstName = row.cells[2].textContent;
+            const lastName = row.cells[3].textContent;
+            const email = row.cells[4].textContent;
+            const phone = row.cells[5].textContent;
+            const address = row.cells[6].textContent;
+            const district = row.cells[7].textContent;
+            const province = row.cells[8].textContent;
+
+            // Set values in the modal form
+            document.getElementById('editUserId').value = userId;
+            document.getElementById('editFirstName').value = firstName;
+            document.getElementById('editLastName').value = lastName;
+            document.getElementById('editEmail').value = email;
+            document.getElementById('editPhone').value = phone;
+            document.getElementById('editAddress').value = address;
+            document.getElementById('editDistrict').value = district;
+            document.getElementById('editProvince').value = province;
+        });
+    });
+
+
+    document.getElementById('editUserForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        const userId = document.getElementById('editUserId').value;
+        const firstName = document.getElementById('editFirstName').value.trim();
+        const lastName = document.getElementById('editLastName').value.trim();
+        const email = document.getElementById('editEmail').value.trim();
+        const phone = document.getElementById('editPhone').value.trim();
+        const address = document.getElementById('editAddress').value.trim();
+        const district = document.getElementById('editDistrict').value.trim();
+        const province = document.getElementById('editProvince').value.trim();
+
+        let errors = [];
+
+        // Validate required fields
+        if (!firstName) errors.push("First Name is required.");
+        if (!lastName) errors.push("Last Name is required.");
+        if (!email) errors.push("Email is required.");
+        if (!phone) errors.push("Phone number is required.");
+        if (!address) errors.push("Address is required.");
+        if (!district) errors.push("District is required.");
+        if (!province) errors.push("Province is required.");
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email && !emailRegex.test(email)) {
+            errors.push("Invalid email format.");
+        }
+
+        // Validate phone number (only digits)
+        const phoneRegex = /^[0-9]+$/;
+        if (phone && !phoneRegex.test(phone)) {
+            errors.push("Phone number must contain only digits.");
+        }
+
+        // If there are validation errors, show them and prevent form submission
+        if (errors.length > 0) {
+            alert(errors.join("\n"));
+            return;
+        }
 
         const formData = new FormData(this);
-        
-        fetch('http://localhost/admin/handleUserEdit', {
+        // formData.forEach((value, key) => {
+        //     console.log(key, value);
+        // });
+        fetch('http://localhost/admin/handleUser/edit', {
             method: 'POST',
             body: formData
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-              Swal.fire({
-                title: 'Inserted successfully!',
-                text: 'Press the button to reload the table',
-                icon: 'success',
-                confirmButtonText: 'YES',
-              }).then(response => {
-                if(response.isConfirmed) {
-                  location.reload();
-                }
-              })
+                Swal.fire({
+                    title: 'Updated successfully!',
+                    text: data.message,
+                    icon: 'success',
+                    confirmButtonText: 'Yes',
+                }).then((response) => {
+                    if (response.isConfirmed) {
+                        location.reload(); // Reload the page to show updated data
+                    }
+                });
             } else {
-              Swal.fire({
-                  title: 'Error',
-                  text: 'Error editing users.',
-                  icon: 'error',
-                  confirmButtonText: 'Try again',
-              });
+                console.log(data.message);
+                Swal.fire({
+                    title: 'Error',
+                    text: data.message,
+                    icon: 'error',
+                    confirmButtonText: 'Try again',
+                });
             }
         })
         .catch(error => {
             console.error('Error:', error);
             Swal.fire({
-                  title: 'Error',
-                  text: 'Error editing users.',
-                  icon: 'error',
-                  confirmButtonText: 'Try again',
-              });
+                title: 'Error',
+                text: 'An error occurred while updating the user.',
+                icon: 'error',
+                confirmButtonText: 'Try again',
+            });
         });
     });
-
 </script>
 <?php
 include "layouts/footer.php";

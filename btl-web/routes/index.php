@@ -4,11 +4,10 @@ $request = parse_url($request, PHP_URL_PATH);
 require_once 'config/db_connect.php';
 
 $parts = explode('/', $request);
-
+if ($parts[1] !== "news") {
+    setcookie("curpage", -1, strtotime("2000-01-01 00:00:00"), "/");
+}
 switch ($parts[1]) {
-    if ($parts[1] !== "news") {
-        setcookie("curpage", -1, strtotime("2000-01-01 00:00:00"), "/");
-    }
     case '':
         require(ROOT_PATH . '/controllers/HomeController.php');
         $controller = new HomeController();
@@ -19,16 +18,16 @@ switch ($parts[1]) {
         $controller = new AboutUsController();
         $controller->index();
         break;
-     case 'news': 
-            require(ROOT_PATH . '/controllers/NewsController.php');
-            $controller = new NewsController();
+    case 'news':
+        require(ROOT_PATH . '/controllers/NewsController.php');
+        $controller = new NewsController();
 
-            if(!isset($_COOKIE["curpage"])) {
-                $controller->index(1);
-            } else {
-                $controller->index($_COOKIE["curpage"]);
-            }
-            break;
+        if (!isset($_COOKIE["curpage"])) {
+            $controller->index(1);
+        } else {
+            $controller->index($_COOKIE["curpage"]);
+        }
+        break;
     case 'view_cart':
         require(ROOT_PATH . '/controllers/CartController.php');
         $cartController = new CartController($conn);
@@ -102,11 +101,6 @@ switch ($parts[1]) {
         break;
     case 'product':
         require('Product.php');
-        break;
-    case 'news':
-        require(ROOT_PATH . '/controllers/HomeController.php');
-        $controller = new HomeController();
-        $controller->news();
         break;
     case 'contact_us':
         require(ROOT_PATH . '/controllers/HomeController.php');

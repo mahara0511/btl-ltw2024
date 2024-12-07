@@ -18,16 +18,21 @@
                 </div>
                 <?php else: ?>
                     <div class="col-md-12">
-                        <form id="backward-form" method="POST" action="news">
+                        <!-- <form id="backward-form" method="POST" action="news">
                             <input type="hidden" id="curpage" name="curpage" value=<?php echo $curpage - 1;?>>
                         </form>
                         <form id="forward-form" method="POST" action="news">
                             <input type="hidden" id="curpage" name="curpage" value=<?php echo $curpage + 1;?>>
                         </form>
                         <br>
-                        <input form="backward-form" type="submit" id="back-btn" onclick="fetchBack()" class="btn-back-and-forth" value="Back">
+                        <input form="backward-form" type="submit" id="back-btn" onclick="fetchBack()" class="btn-back-and-forth" value="Back"> -->
+                        <!-- <form id="newspaging" action="news"></form> -->
+                        <!-- <input type="submit" form="newspaging" id="back-btn" onclick="setSessionCookie(<?php echo ($curpage - 1); ?>)" class="btn-back-and-forth" value="Back"> -->
+                        <button id="back-btn" onclick="setSessionCookie(<?php echo ($curpage - 1); ?>)" class="btn-back-and-forth">Back</button>
                         <button class="page-num" disabled="true">Page <?php echo $curpage ?> / <?php echo $npage ?></button>
-                        <input form="forward-form" type="submit" id="forth-btn" onclick="fetchNext()" class="btn-back-and-forth" value="Next">
+                        <!-- <input form="forward-form" type="submit" id="forth-btn" onclick="fetchNext()" class="btn-back-and-forth" value="Next"> -->
+                        <!-- <input type="submit" form="newspaging" id="forth-btn" onclick="setSessionCookie(<?php echo ($curpage + 1); ?>)" class="btn-back-and-forth" value="Next"> -->
+                        <button id="front-btn" onclick="setSessionCookie(<?php echo ($curpage + 1); ?>)" class="btn-back-and-forth">Forth</button>
                         <br>
                     </div>
                     <?php foreach ($news as $dummy):
@@ -187,6 +192,13 @@
             btn_forth = document.getElementById("forth-btn");
             btn_forth.style.backgroundColor = "gray";
             btn_forth.disabled = true;
+        }
+    </script>
+
+    <script>
+        function setSessionCookie(value) {
+            document.cookie = "curpage=" + value + "; path=/";  // No expiration date, so it's a session cookie
+            window.location.href = "news";
         }
     </script>
 </body>

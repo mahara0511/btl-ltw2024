@@ -25,12 +25,19 @@ $parts = explode('/', $request);
         case 'news': 
             require(ROOT_PATH . '/controllers/NewsController.php');
             $controller = new NewsController();
-            if (empty($_POST["curpage"])) {
+
+            if(!isset($_COOKIE["curpage"])) {
                 $controller->index(1);
+            } else {
+                $controller->index($_COOKIE["curpage"]);
             }
-            else {
-                $controller->index($_POST["curpage"]);
-            }
+
+            // if (empty($_POST["curpage"])) {
+            //     $controller->index(1);
+            // }
+            // else {
+            //     $controller->index($_POST["curpage"]);
+            // }
             break;
         case 'contact_us':
             if (!empty($_POST["desEmail"])) {

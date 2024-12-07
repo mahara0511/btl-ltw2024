@@ -182,13 +182,13 @@ $cartController = new CartController($conn);
                                     href="/store?product_id=<?= $item['product_id'] ?>"><?= htmlspecialchars($item['product_title']); ?></a>
                             </h3>
                             <h4 class="product-price">
-                                <span class="qty"><?= $item['qty']; ?></span> x $<?= $item['product_price']; ?>
+                                <span class="qty"><?= $item['qty']; ?></span> x $<?= round($item['product_price']); ?>
                             </h4>
                         </div>
                     </div>
                 <?php endforeach; ?>
                 <div class="cart-summary">
-                    <small class="qty"><?= count($cart_items) . " Item(s) in cart" ?></small>
+                    <small class="qty"><?= count(value: $cart_items) . " Item(s) in cart" ?></small>
                     <h5>Total price : <?= "$ $total_price " ?></h5>
                 </div>
             <?php else: ?>

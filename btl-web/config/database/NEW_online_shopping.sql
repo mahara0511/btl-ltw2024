@@ -1,5 +1,5 @@
 -- Active: 1727756928890@@127.0.0.1@3306@onlineshop
-CREATE DATABASE onlineshop DEFAULT CHARACTER SET = 'utf8mb4';
+-- CREATE DATABASE onlineshop DEFAULT CHARACTER SET = 'utf8mb4';
 
 -- Table structure for table `brands`
 CREATE TABLE `brands` (
@@ -20,7 +20,7 @@ CREATE TABLE `products` (
     `product_brand` INT(100) NOT NULL,
     `product_title` VARCHAR(255) NOT NULL,
     `product_price` DECIMAL(10, 2) NOT NULL,
-    `product_sale` DECIMAL(3, 2) NOT NULL,
+    `product_sale` INT(4) NOT NULL,
     `product_desc` TEXT NOT NULL,
     `product_image` TEXT NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
@@ -983,7 +983,7 @@ VALUES (
         'john.doe@example.com',
         MD5('password123'),
         '9876543210',
-        '123 Main Street, New York, NY',
+        '123 Main Street',
         'New York',
         'NY'
     ),
@@ -993,7 +993,7 @@ VALUES (
         'jane.smith@example.com',
         MD5('password123'),
         '9876543211',
-        '456 Oak Avenue, Los Angeles, CA',
+        '456 Oak Avenue',
         'Los Angeles',
         'CA'
     ),
@@ -1003,7 +1003,7 @@ VALUES (
         'alice.johnson@example.com',
         MD5('password123'),
         '9876543212',
-        '789 Pine Road, San Francisco, CA',
+        '789 Pine Road',
         'San Francisco',
         'CA'
     ),
@@ -1013,7 +1013,7 @@ VALUES (
         'bob.brown@example.com',
         MD5('password123'),
         '9876543213',
-        '101 Maple Lane, Chicago, IL',
+        '101 Maple Lane',
         'Chicago',
         'IL'
     ),
@@ -1023,7 +1023,7 @@ VALUES (
         'charlie.williams@example.com',
         MD5('password123'),
         '9876543214',
-        '202 Birch Street, Houston, TX',
+        '202 Birch Street',
         'Houston',
         'TX'
     ),
@@ -1033,7 +1033,7 @@ VALUES (
         'david.jones@example.com',
         MD5('password123'),
         '9876543215',
-        '303 Cedar Drive, Phoenix, AZ',
+        '303 Cedar Drive',
         'Phoenix',
         'AZ'
     ),
@@ -1043,7 +1043,7 @@ VALUES (
         'eva.miller@example.com',
         MD5('password123'),
         '9876543216',
-        '404 Elm Boulevard, Philadelphia, PA',
+        '404 Elm Boulevard',
         'Philadelphia',
         'PA'
     ),
@@ -1053,7 +1053,7 @@ VALUES (
         'frank.davis@example.com',
         MD5('password123'),
         '9876543217',
-        '505 Pine Circle, San Antonio, TX',
+        '505 Pine Circle',
         'San Antonio',
         'TX'
     ),
@@ -1063,7 +1063,7 @@ VALUES (
         'grace.garcia@example.com',
         MD5('password123'),
         '9876543218',
-        '606 Oak Avenue, San Diego, CA',
+        '606 Oak Avenue',
         'San Diego',
         'CA'
     ),
@@ -1073,7 +1073,7 @@ VALUES (
         'henry.martinez@example.com',
         MD5('password123'),
         '9876543219',
-        '707 Maple Street, Dallas, TX',
+        '707 Maple Street',
         'Dallas',
         'TX'
     ),
@@ -1083,7 +1083,7 @@ VALUES (
         'isabel.hernandez@example.com',
         MD5('password123'),
         '9876543220',
-        '808 Birch Lane, Austin, TX',
+        '808 Birch Lane',
         'Austin',
         'TX'
     ),
@@ -1093,7 +1093,7 @@ VALUES (
         'jack.lopez@example.com',
         MD5('password123'),
         '9876543221',
-        '909 Cedar Street, Jacksonville, FL',
+        '909 Cedar Street',
         'Jacksonville',
         'FL'
     ),
@@ -1103,7 +1103,7 @@ VALUES (
         'karen.gonzalez@example.com',
         MD5('password123'),
         '9876543222',
-        '1001 Elm Avenue, Fort Worth, TX',
+        '1001 Elm Avenue',
         'Fort Worth',
         'TX'
     ),
@@ -1113,7 +1113,7 @@ VALUES (
         'louis.wilson@example.com',
         MD5('password123'),
         '9876543223',
-        '1102 Pine Road, Columbus, OH',
+        '1102 Pine Road',
         'Columbus',
         'OH'
     ),
@@ -1123,7 +1123,7 @@ VALUES (
         'maria.taylor@example.com',
         MD5('password123'),
         '9876543224',
-        '1203 Oak Boulevard, Charlotte, NC',
+        '1203 Oak Boulevard',
         'Charlotte',
         'NC'
     ),
@@ -1133,7 +1133,7 @@ VALUES (
         'nina.anderson@example.com',
         MD5('password123'),
         '9876543225',
-        '1304 Maple Drive, Detroit, MI',
+        '1304 Maple Drive',
         'Detroit',
         'MI'
     ),
@@ -1143,7 +1143,7 @@ VALUES (
         'oscar.thomas@example.com',
         MD5('password123'),
         '9876543226',
-        '1405 Birch Circle, Boston, MA',
+        '1405 Birch Circle',
         'Boston',
         'MA'
     ),
@@ -1153,7 +1153,7 @@ VALUES (
         'paul.jackson@example.com',
         MD5('password123'),
         '9876543227',
-        '1506 Cedar Lane, Seattle, WA',
+        '1506 Cedar Lane',
         'Seattle',
         'WA'
     ),
@@ -1163,7 +1163,7 @@ VALUES (
         'quincy.white@example.com',
         MD5('password123'),
         '9876543228',
-        '1607 Elm Road, Denver, CO',
+        '1607 Elm Road',
         'Denver',
         'CO'
     ),
@@ -1173,7 +1173,7 @@ VALUES (
         'rita.harris@example.com',
         MD5('password123'),
         '9876543229',
-        '1708 Pine Boulevard, Portland, OR',
+        '1708 Pine Boulevard',
         'Portland',
         'OR'
     );

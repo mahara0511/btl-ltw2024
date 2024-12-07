@@ -16,6 +16,10 @@ $_SESSION['product_id'] = $product_detail['product_id'];
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 
+<!-- CSS for Comments Styling -->
+<link rel="stylesheet" href="public/css/comments.css">
+
+
 <!-- Modal -->
 <div class="modal fade" id="Modal_alert" tabindex="-1" role="dialog" aria-labelledby="ModalAlertLabel"
     aria-hidden="true" style="height: 500px;">
@@ -94,16 +98,15 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                     </div>
                     <div>
                         <h3 class="product-price">
-                            <?php echo "$" . $product_detail['product_price'] ?>
+                            <?php echo "$" . round($product_detail['product_price']) ?>
                             <del class="product-old-price">
-                                <?php echo "$" . $product_detail['product_price'] * (100 + $product_detail['sale']) / 100 ?>
+                                <?php echo "$" . round($product_detail['product_price'] * (100 + $product_detail['product_sale']) / 100) ?>
                             </del>
                         </h3>
                         <span class="product-available">In Stock</span>
                     </div>
                     <p style="margin: 20px auto; max-height: 200px; overflow-y: auto;">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt ut
+                        <?php echo $product_detail['product_desc'] ?>
 
                     </p>
 
@@ -181,8 +184,178 @@ $_SESSION['product_id'] = $product_detail['product_id'];
 
         </div>
         <!-- /row -->
+
+        <div class="row comments-section comments-div">
+            <h3>Comments (<?php echo count($comments); ?>)</h3>
+
+            <!-- Comments Display -->
+            <div class="comments-list">
+                <?php function displayComments($comments, $productId, $parentId = null, $indent = 0)
+                {
+                    // Define the maximum depth level
+                    $maxDepth = 1;
+
+                    // Count replies for depth 0 comments
+                    $replyCounts = [];
+                    if ($indent === 0) {
+                        foreach ($comments as $comment) {
+                            if ($comment['parent_id'] !== null) {
+                                $rootCommentId = findRootCommentId($comments, $comment['parent_id']);
+                                $replyCounts[$rootCommentId] = ($replyCounts[$rootCommentId] ?? 0) + 1;
+                            }
+                        }
+                    }
+                    ?>
+                    <?php foreach ($comments as $comment): ?>
+                        <?php if ($comment['parent_id'] === $parentId): ?>
+                            <div class="comment" style="margin-left: <?php echo ($indent > $maxDepth ? 0 : 40); ?>px;">
+                                <div class="comment-header">
+                                    <span class="comment-user">
+                                        <span style="margin-right: 10px;"><i class="fa-solid fa-user"></i></span>
+                                        <?php echo $comment['commenter_first_name'] . ' ' . $comment['commenter_last_name']; ?>
+                                        <?php if (!empty($comment['parent_id'])): ?>
+                                            <i class="fa-solid fa-caret-right"></i>
+                                            <span>
+                                                @
+                                                <?php echo $comment['parent_first_name'] . ' ' . $comment['parent_last_name']; ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </span>
+                                    <span class="comment-date">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <?php echo $comment['cmt_date']; ?>
+                                    </span>
+                                </div>
+                                <div class="comment-body">
+                                    <?php echo htmlspecialchars($comment['content']); ?>
+                                </div>
+
+
+
+                                <div class="comment-actions">
+                                    <div class="reply-group">
+                                        <button class="reply-btn" data-comment-id="<?php echo $comment['cmt_id']; ?>">Reply</button>
+                                        <?php if ($indent === 0): ?>
+                                            <div class="comment-replies">
+                                                <?php if (isset($replyCounts[$comment['cmt_id']]) && $replyCounts[$comment['cmt_id']] > 0): ?>
+                                                    <button class="see-replies-btn" data-comment-id="<?php echo $comment['cmt_id']; ?>"
+                                                        data-count-replies="<?php echo $replyCounts[$comment['cmt_id']]; ?>">
+                                                        See replies (<?php echo $replyCounts[$comment['cmt_id']]; ?>)
+                                                    </button>
+                                                <?php else: ?>
+                                                    <button class="no-replies">No replies</button>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                    </div>
+
+                                    <?php
+                                    if (isset($_SESSION['uid']) && $_SESSION['uid'] == $comment['user_id']):
+                                        // if ($comment['user_id'] == 1):
+                                        ?>
+                                        <div class="dropdown">
+                                            <button class="dropdown-toggle" type="button">
+                                                <i class="fa-solid fa-gear"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <button class="edit-comment" data-comment-id="<?php echo $comment['cmt_id']; ?>">
+                                                    <i class="fa-solid fa-edit"></i> Edit
+                                                </button>
+                                                <button class="delete-comment" data-comment-id="<?php echo $comment['cmt_id']; ?>">
+                                                    <i class="fa-solid fa-trash"></i> Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+
+                                <!-- Nested Replies (initially hidden for depth 0) -->
+                                <div class="nested-replies" id="nested-replies-<?php echo $comment['cmt_id']; ?>"
+                                    style="display:<?php echo ($indent == 0 ? 'none' : 'display'); ?>; <?php echo ($indent == 0 ? 'max-height: 50vh; overflow-y: scroll' : ''); ?>">
+
+                                    <?php if ($indent > 0): ?>
+                                        <!-- Reply Form (Hidden by default) -->
+                                        <div class="reply-form" id="reply-form-<?php echo $comment['cmt_id']; ?>" style="display:none;">
+                                            <div class="reply-to">
+                                                <p>
+                                                    Reply to @
+                                                    <?= $comment['commenter_first_name'] . ' ' . $comment['commenter_last_name']; ?>
+                                                </p>
+                                                <button class="close-reply-btn">&times;</button>
+                                            </div>
+                                            <form class="reply-form-submit" data-comment-id="<?php echo $comment['cmt_id']; ?>">
+                                                <span class="comment-message"></span>
+                                                <input type="hidden" name="parent_id" value="<?php echo $comment['cmt_id']; ?>">
+                                                <input type="hidden" name="p_id" value="<?php echo $productId; ?>">
+                                                <textarea name="content" placeholder="Write a reply..." required></textarea>
+                                                <button class="btn btn-primary" type="submit">Post Reply</button>
+                                            </form>
+                                        </div>
+                                    <?php endif ?>
+                                    <?php displayComments($comments, $productId, $comment['cmt_id'], $indent + 1); ?>
+                                </div>
+
+                                <?php if ($indent === 0): ?>
+                                    <!-- Reply Form (Hidden by default) -->
+                                    <div class="reply-form" id="reply-form-<?php echo $comment['cmt_id']; ?>" style="display:none;">
+                                        <div class="reply-to">
+                                            <p>
+                                                Reply to @
+                                                <?= $comment['commenter_first_name'] . ' ' . $comment['commenter_last_name']; ?>
+                                            </p>
+                                            <button class="close-reply-btn">&times;</button>
+                                        </div>
+                                        <form class="reply-form-submit" data-comment-id="<?php echo $comment['cmt_id']; ?>">
+                                            <span class="comment-message"></span>
+                                            <input type="hidden" name="parent_id" value="<?php echo $comment['cmt_id']; ?>">
+                                            <input type="hidden" name="p_id" value="<?php echo $productId; ?>">
+                                            <textarea name="content" placeholder="Write a reply..." required></textarea>
+                                            <button class="btn btn-primary" type="submit">Post Reply</button>
+                                        </form>
+                                    </div>
+                                <?php endif ?>
+
+
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php } ?>
+
+                <?php
+                // Helper function to find the root comment ID
+                function findRootCommentId($comments, $parentId)
+                {
+                    foreach ($comments as $comment) {
+                        if ($comment['cmt_id'] === $parentId) {
+                            return $comment['parent_id'] === null ? $parentId : findRootCommentId($comments, $comment['parent_id']);
+                        }
+                    }
+                    return null;
+                }
+
+                // Use the product ID from the existing PHP code
+                $productId = $product_detail['product_id'];
+                displayComments($comments, $productId);
+                ?>
+            </div>
+
+            <!-- New Comment Form -->
+            <div class="new-comment-form">
+                <h4>Add your new comment</h4>
+                <span class="comment-message"></span>
+                <form>
+                    <input type="hidden" name="p_id" value="<?php echo $product_detail['product_id']; ?>">
+                    <textarea name="content" placeholder="Write your comment..." required></textarea>
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                </form>
+            </div>
+
+            <!-- /Comments -->
+
+        </div>
+        <!-- /container -->
     </div>
-    <!-- /container -->
 </div>
 <!-- /SECTION -->
 
@@ -205,10 +378,9 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                 </div>
             <?php else: ?>
                 <?php foreach ($related_products as $related_product):
-                    $new_price = $related_product['product_price'];
-                    $related_product['sale'] = rand(0, 75);
-                    $sale = $related_product['sale'];
-                    $old_price = $new_price * (100 + $related_product['sale']) / 100;
+                    $new_price = round($related_product['product_price']);
+                    $sale = $related_product['product_sale'];
+                    $old_price = $new_price * (100 + $sale) / 100;
                     ?>
                     <div class='col-md-3 col-xs-6 w-100'>
                         <div class='product'>
@@ -217,7 +389,7 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                                     <img src=<?php echo "'product_images/" . $related_product['product_image'] . "'" ?>
                                         alt=<?php echo "'" . $related_product['product_title'] . "'" ?>>
                                     <div class='product-label'>
-                                        <span class='sale'><?php echo $related_product['sale'] . "%" ?></span>
+                                        <span class='sale'><?php echo $sale . "%" ?></span>
                                         <span class='new'>NEW</span>
                                     </div>
                                 </div>

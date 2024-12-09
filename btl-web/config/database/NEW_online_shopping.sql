@@ -1,6 +1,14 @@
 -- Active: 1727756928890@@127.0.0.1@3306@onlineshop
 -- CREATE DATABASE onlineshop DEFAULT CHARACTER SET = 'utf8mb4';
 
+-- Table about_info
+CREATE TABLE about_info(
+	about_id INT AUTO_INCREMENT primary KEY,
+    phone_num TEXT,
+    email TEXT,
+    location TEXT
+);
+
 -- Table structure for table `brands`
 CREATE TABLE `brands` (
     `brand_id` INT(100) NOT NULL,
@@ -232,6 +240,8 @@ ALTER TABLE `comments`
 ADD CONSTRAINT `fk_comments_parent` FOREIGN KEY (`parent_id`) REFERENCES `comments` (`cmt_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- INSERT DATA ------------------------------------------------------------------
+INSERT INTO `about_info` (`about_id`, `phone_num`, `email`, `location`) VALUES (NULL, '0905.xxx.yyy', 'laptrinhweb@gmail.com', 'Ho Chi Minh city, Viet Nam');
+
 INSERT INTO
     `brands` (`brand_id`, `brand_title`)
 VALUES (1, 'HP'),

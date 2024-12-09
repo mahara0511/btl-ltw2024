@@ -10,9 +10,9 @@
                         <h3 class="footer-title">About Us</h3>
                         <p>This is our Assignment Project</p>
                         <ul class="footer-links">
-                            <li><a href="#"><i class="fa fa-map-marker"></i>Ho Chi Minh city, Viet Nam</a></li>
-                            <li><a href="#"><i class="fa fa-phone"></i>0905.xxx.yyy</a></li>
-                            <li><a href="contact_us"><i class="fa fa-envelope-o"></i>laptrinhweb@gmail.com</a></li>
+                            <li><a href="#"><i class="fa fa-map-marker"></i><?php echo $about['location'] ?></a></li>
+                            <li><a href="#"><i class="fa fa-phone"></i><?php echo $about['phone_num'] ?></a></li>
+                            <li><a href="contact_us"><i class="fa fa-envelope-o"></i><?php echo $about['email'] ?></a></li>
                         </ul>
                     </div>
                 </div>

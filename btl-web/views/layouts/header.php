@@ -2,7 +2,13 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-if (array_key_exists('logout', $_POST)){
+if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION['admin']){
+    unset($_SESSION['admin']);
+    unset($_SESSION['admin_name']);
+    session_destroy();
+    header('Location: /admin');
+    exit();
+} else if (array_key_exists('logout', $_POST)){
     require_once ROOT_PATH."/controllers/userInfoController.php";
     unset($_POST['logout']);
     userInfoController::logout();
@@ -158,19 +164,28 @@ if (array_key_exists('logout', $_POST)){
 
 <body>
     <!-- HEADER -->
+
+    <?php 
+        $conn = new mysqli('localhost', 'root', '', 'onlineshop');
+        $stmt = $conn->prepare("SELECT * FROM about_info");
+        $stmt->execute();
+        $result = $stmt->get_result(); 
+        $about = $result->fetch_assoc();   
+        $stmt->close();
+    ?>
     <header>
         <!-- TOP HEADER -->
         <div id="top-header">
             <div class="container">
                 <ul class="header-links pull-left">
-                    <li><a href="#"><i class="fa fa-phone"></i> 0905.xxx.yyy</a></li>
-                    <li><a href="#"><i class="fa fa-envelope-o"></i> laptrinhweb@gmail.com</a></li>
-                    <li><a href="#"><i class="fa fa-map-marker"></i>Ho Chi Minh city, Viet Nam</a></li>
+                    <li><a href="#"><i class="fa fa-phone"></i> <?php echo $about['phone_num'] ?></a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> <?php echo $about['email'] ?></a></li>
+                    <li><a href="#"><i class="fa fa-map-marker"></i><?php echo $about['location'] ?></a></li>
                 </ul>
                 <ul class="header-links pull-right">
                     <li><a href="#"><i class="fa fa-inr"></i> INR</a></li>
                     <li><?php
-                    include ROOT_PATH. "/config/db.php";
+                    include_once ROOT_PATH. "/config/db.php";
                     if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])) {
                         if (!isset($_SESSION["uid"])){
                             $_SESSION["uid"] = $_COOKIE["uid"];
@@ -197,8 +212,27 @@ if (array_key_exists('logout', $_POST)){
                                     
                                   </div>
                                 </div>';
-
-                    } else {
+                    
+                    } else if(isset($_SESSION['admin']) && $_SESSION['admin']) {
+                        echo '
+                               <div class="dropdownn">
+                                  <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> HI ' . $_SESSION["admin_name"]. '</a>
+                                  <div class="dropdownn-content">
+                                    <a href="/admin" ><i class="fa fa-user-circle" aria-hidden="true" ></i>Go to admin</a>
+                                    
+                                    <form method="post"  class="inline dropdown">
+                                        <input type="hidden" name="logout" value="logout">
+                                        <button type="submit" name="submit_param" value="submit_value" class="link-button">
+                                            <i class="fa fa-sign-in" aria-hidden="true"></i>Log out
+                                            
+                                         </button>
+                                    </form>
+                                    
+                                    
+                                  </div>
+                                </div>';
+                    } 
+                    else {
                         echo '
                                 <div class="dropdownn">
                                   <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> My Account</a>

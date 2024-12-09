@@ -4,19 +4,21 @@ require_once 'models/AdminInfoModel.php';
 require_once 'models/UserModel.php';
 require_once 'models/ProductModel.php';
 require_once 'models/OrderModel.php';
-
+require_once 'models/AboutInfoModel.php';
 class AdminController
 {
     private $model;
     private $userModel;
     private $productModel;
     private $orderModel;
+    private $aboutInfoModel;
     public function __construct($db)
     {
         $this->model = new AdminInfoModel($db);
         $this->userModel = new UserModel();
         $this->productModel = new ProductModel($db);
         $this->orderModel = new OrderModel($db);
+        $this->aboutInfoModel= new AboutInfoModel();
     }
 
     public function getAdmin($admin_id)
@@ -52,6 +54,7 @@ class AdminController
         
             if (count($errors) == 0) {
                 $password = md5($password);
+                echo $password;
                 $results = $this->model->login($admin_username, $password, $errors);
 
                 if ($results->num_rows === 1) {
@@ -113,6 +116,19 @@ class AdminController
         $subcribers = $this->userModel->getEmailInfo();
 
         include_once 'views/admin/index/index.php';
+    }
+
+    public function getAboutInfo() {
+        $data = $this->aboutInfoModel->getAboutInfo();
+        header("Content-type: application/json");
+        echo json_encode($data);
+        exit;
+    }
+
+    public function editAboutInfo() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->aboutInfoModel->editAboutInfo($_POST['phone'], $_POST['email'], $_POST['location']);
+        }
     }
 
     public function handleUser() {

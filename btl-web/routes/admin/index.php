@@ -16,9 +16,12 @@
             case 'handleProduct': 
                 include('handleProduct.php');
                 break;  
+            case 'aboutInfo':
+                include('aboutInfo.php');
+                break;
             default:
                 http_response_code(404);
-                echo "404 Not Found";
+                echo "404 Not Found admin index";
                 break;
         }
     } else {

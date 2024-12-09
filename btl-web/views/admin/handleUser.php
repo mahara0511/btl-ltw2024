@@ -111,75 +111,75 @@ include "layouts/topheader.php";
             </div>
 
             <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="editUserForm" method="post">
-                    <input type="hidden" style="color: #000;" name="user_id" id="editUserId">
-                    <div class="row">
-                      
-                      <div class="col-md-6">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">First Name</label>
-                          <input type="text" id="editFirstName" style="color: #000;" value="1" name="first_name" class="form-control" required>
+              <div class="modal-dialog modal-lg modal-dialog-centered">
+                  <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="editUserForm" method="post">
+                      <input type="hidden" style="color: #000;" name="user_id" id="editUserId">
+                      <div class="row">
+                        
+                        <div class="col-md-6">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">First Name</label>
+                            <input type="text" id="editFirstName" style="color: #000;" value="1" name="first_name" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">Last Name</label>
+                            <input type="text" style="color: #000;" value="1" name="last_name" id="editLastName"  class="form-control" required>
+                          </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">Last Name</label>
-                          <input type="text" style="color: #000;" value="1" name="last_name" id="editLastName"  class="form-control" required>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">Email</label>
+                            <input type="email" style="color: #000;" value="1" name="email" id="editEmail" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">Phone Number</label>
+                            <input type="text" id="editPhone" style="color: #000;" value="1" name="phone" class="form-control" required>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">Email</label>
-                          <input type="email" style="color: #000;" value="1" name="email" id="editEmail" class="form-control" required>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">Address</label>
+                            <input type="text" style="color: #000;" value="1" name="address" id="editAddress" class="form-control" required>
+                          </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">Phone Number</label>
-                          <input type="text" id="editPhone" style="color: #000;" value="1" name="phone" class="form-control" required>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">District</label>
+                            <input type="text" style="color: #000;" value="1" name="district" id="editDistrict"  class="form-control" required>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">Address</label>
-                          <input type="text" style="color: #000;" value="1" name="address" id="editAddress" class="form-control" required>
+                        <div class="col-md-6">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">Province</label>
+                            <input type="text" style="color: #000;" value="1" name="province" id="editProvince" class="form-control" required>
+                          </div>
                         </div>
+                        
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">District</label>
-                          <input type="text" style="color: #000;" value="1" name="district" id="editDistrict"  class="form-control" required>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">Province</label>
-                          <input type="text" style="color: #000;" value="1" name="province" id="editProvince" class="form-control" required>
-                        </div>
-                      </div>
-                      
-                    </div>
 
-                    <button type="submit" style="background-color: #007bff; float: right;" class="btn">Save</button>
-                    </form>
-                </div>
-                </div>
-            </div>
+                      <button type="submit" style="background-color: #007bff; float: right;" class="btn">Save</button>
+                      </form>
+                  </div>
+                  </div>
+              </div>
             </div>
 
           <div class="col-md-12">

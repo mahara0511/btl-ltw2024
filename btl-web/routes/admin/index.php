@@ -19,6 +19,9 @@
             case 'aboutInfo':
                 include('aboutInfo.php');
                 break;
+            case 'sales': {
+                $controller->handleSale();
+            }
             default:
                 http_response_code(404);
                 echo "404 Not Found admin index";

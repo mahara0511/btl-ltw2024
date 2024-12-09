@@ -158,6 +158,8 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
         .glyphicon-chevron-right:before {
             content: "\f054"
         }
+
+
     </style>
 
 </head>
@@ -166,8 +168,8 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
     <!-- HEADER -->
 
     <?php 
-        $conn = new mysqli('localhost', 'root', '', 'onlineshop');
-        $stmt = $conn->prepare("SELECT * FROM about_info");
+        $con = new mysqli('localhost', 'root', '', 'onlineshop');
+        $stmt = $con->prepare("SELECT * FROM about_info");
         $stmt->execute();
         $result = $stmt->get_result(); 
         $about = $result->fetch_assoc();   
@@ -330,7 +332,25 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
     <nav id='navigation'>
         <!-- container -->
         <div class="container" id="get_category_home">
-
+            <?php 
+                $current_page = $_SERVER['REQUEST_URI'];
+                echo "
+                				<!-- responsive-nav -->
+				<div id='responsive-nav'>
+					<!-- NAV -->
+					<ul class='main-nav nav navbar-nav'>
+						<li class='" . ($current_page == '/' ? 'active' : '') . "'><a href='/'>Home</a></li>
+						<li class='" . ($current_page == '/store' ? 'active' : '') . "'><a href='/store '>Products</a></li>
+						<li class='" . ($current_page == '/about_us' ? 'active' : '') . "'><a href='/about_us'>About Us</a></li>
+						<li class='" . ($current_page == '/contact_us' ? 'active' : '') . "'><a href='/contact_us'>Contact Us</a></li>
+						<li class='" . ($current_page == '/news' ? 'active' : '') . "'><a href='/news'>News</a></li>
+					</ul>
+					<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+                "
+            
+            ?>
         </div>
         <!-- responsive-nav -->
         <!-- /container -->

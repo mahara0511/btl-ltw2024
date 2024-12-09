@@ -44,12 +44,15 @@
 	
 		<!-- container -->
 		<div class="container">
-		
+			<div class="section-title">
+				<h3 class="title">Colection</h3>
+			</div>
 			<!-- row -->
 			<div class="row">
 				<!-- shop -->
 				<div class="col-md-4 col-xs-6">
-					<a href="product.php?p=78">
+					
+					<a href="store?p=78">
 						<div class="shop">
 							<div class="shop-img">
 								<img src="public/img/shop01.png" alt="">
@@ -65,14 +68,14 @@
 
 				<!-- shop -->
 				<div class="col-md-4 col-xs-6">
-					<a href="product.php?p=72">
+					<a href="store?p=72">
 						<div class="shop">
 							<div class="shop-img">
 								<img src="public/img/shop03.png" alt="">
 							</div>
 							<div class="shop-body">
 								<h3>Accessories<br>Collection</h3>
-								<a href="product.php?p=72" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="store?p=72" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</a>
@@ -81,14 +84,14 @@
 
 				<!-- shop -->
 				<div class="col-md-4 col-xs-6">
-					<a href="product.php?p=79">
+					<a href="store?p=79">
 						<div class="shop">
 							<div class="shop-img">
 								<img src="public/img/shop02.png" alt="">
 							</div>
 							<div class="shop-body">
 								<h3>Cameras<br>Collection</h3>
-								<a href="product.php?p=79" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="store?p=79" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</a>
@@ -142,7 +145,7 @@
 
 				echo "	
 					<div class='product'>
-						<a href='product.php?p=$pro_id'><div class='product-img'>
+						<a href='store?p=$pro_id'><div class='product-img'>
 							<img src='public/product_images/$pro_image' style='max-height: 170px;' alt=''>
 							<div class='product-label'>
 								<span class='sale'>-30%</span>
@@ -151,7 +154,7 @@
 						</div></a>
 						<div class='product-body'>
 							<p class='product-category'>$cat_name</p>
-							<h3 class='product-name header-cart-item-name'><a href='product.php?p=$pro_id'>$pro_title</a></h3>
+							<h3 class='product-name header-cart-item-name'><a href='store?p=$pro_id'>$pro_title</a></h3>
 							<h4 class='product-price header-cart-item-info'>$pro_price<del class='product-old-price'>$990.00</del></h4>
 							<div class='product-rating'>
 								<i class='fa fa-star'></i>
@@ -254,14 +257,6 @@
 				<div class="col-md-12">
 					<div class="section-title">
 						<h3 class="title">Top selling</h3>
-						<div class="section-nav">
-							<ul class="section-tab-nav tab-nav">
-								<li class="active"><a data-toggle="tab" href="#tab2">Formals</a></li>
-								<li><a data-toggle="tab" href="#tab2">Shirts</a></li>
-								<li><a data-toggle="tab" href="#tab2">T-Shirts</a></li>
-								<li><a data-toggle="tab" href="#tab2">Pants</a></li>
-							</ul>
-						</div>
 					</div>
 				</div>
 				<!-- /section title -->
@@ -287,7 +282,7 @@
 
 					echo "
 						<div class='product'>
-							<a href='product.php?p=$pro_id'><div class='product-img'>
+							<a href='store?p=$pro_id'><div class='product-img'>
 								<img src='public/product_images/$pro_image' style='max-height: 170px;' alt=''>
 								<div class='product-label'>
 									<span class='sale'>-30%</span>
@@ -296,7 +291,7 @@
 							</div></a>
 							<div class='product-body'>
 								<p class='product-category'>$cat_name</p>
-								<h3 class='product-name header-cart-item-name'><a href='product.php?p=$pro_id'>$pro_title</a></h3>
+								<h3 class='product-name header-cart-item-name'><a href='store?p=$pro_id'>$pro_title</a></h3>
 								<h4 class='product-price header-cart-item-info'>$pro_price<del class='product-old-price'>$990.00</del></h4>
 								<div class='product-rating'>
 									<i class='fa fa-star'></i>

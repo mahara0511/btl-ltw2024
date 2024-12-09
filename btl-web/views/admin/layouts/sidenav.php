@@ -92,35 +92,31 @@
                     <li class="nav-item <?= strpos($current_path, '/admin/handleUser') !== false ? 'active' : '' ?>">
                         <a class="nav-link" href="/admin/handleUser">
                             <i class="material-icons">person</i>
-                            <p>Handle users</p>
+                            <p>Manange users</p>
                         </a>
                     </li>
                         <li class="nav-item <?= strpos($current_path, '/admin/handleProduct') !== false ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/handleProduct">
                                 <i class="material-icons">store</i>
-                                <p>Handle Products</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="products_list.php">
-                                <i class="material-icons">list</i>
-                                <p>Product List</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="manageuser.php">
-                                <i class="material-icons">person</i>
-                                <p>Manage users</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="activity.php">
-                                <i class="material-icons">timeline</i>
-                                <p>Activities</p>
+                                <p>Manage Products</p>
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item <?= strpos($current_path, '/admin/news') !== false ? 'active' : '' ?>">
+                            <a class="nav-link" href="/admin/news">
+                                <i class="material-icons">library_books</i>
+                                <p>News</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item <?= strpos($current_path, '/admin/image') !== false ? 'active' : '' ?>">
+                                <a class="nav-link" href="/admin/image">
+                                <i class="material-icons">image</i>
+                                <p>Image</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item <?= strpos($current_path, '/admin/setting') !== false ? 'active' : '' ?>">
                             <a class="nav-link" href="profile.php">
                                 <icons-image
                                     _ngcontent-aye-c22=""
@@ -132,19 +128,6 @@
                                     ></icons-image
                                 >
                                 <p>setting</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="salesofday.php">
-                                <i class="material-icons">library_books</i>
-                                <p>sales</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="../../chat/login.php">
-                                <i class="material-icons">notifications</i>
-                                <p>Discussion</p>
                             </a>
                         </li>
                         <!-- <li class="nav-item active-pro ">

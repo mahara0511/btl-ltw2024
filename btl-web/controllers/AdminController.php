@@ -340,6 +340,10 @@ class AdminController
         $all_products = $this->productModel->getProductByOffset($offset, $limit);
         include_once 'views/admin/handleProduct.php';
     }
+
+    public function handleSale() {
+        include('views/admin/sales.php');
+    }
 }
 
 ?>

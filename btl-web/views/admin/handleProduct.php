@@ -35,7 +35,6 @@ $page1=($page*10)-10;
 } 
 include "layouts/sidenav.php";
 include "layouts/topheader.php";
-
 ?>
       <!-- End Navbar -->
       <div class="content">

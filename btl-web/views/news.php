@@ -37,7 +37,7 @@
                             <div class="col-md-4">
                                 <div class="card">
                                     <?php echo "<script>console.log($news_image)</script>" ?>
-                                    <img src="public/img/<?php echo $news_image ?>" alt="News Image" style="width:100%">
+                                    <img src="public/img/<?php echo $news_image ?>" alt="News Image" style="width:100%; height:32vh;">
                                     <div class="wrapper">
                                         <div class="news-title">
                                             <p><?php echo $news_title ?></p>

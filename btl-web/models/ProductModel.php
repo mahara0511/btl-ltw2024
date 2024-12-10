@@ -227,58 +227,43 @@ class ProductModel
         return $row['total_count'];
     }
 
-    public function deleteProduct($ids) {
-        // Tạo chuỗi dấu hỏi cho truy vấn
-        $placeholders = implode(',', array_fill(0, count($ids), '?'));
-
-        // Chuẩn bị câu truy vấn
-        $stmt = $this->db->prepare("DELETE FROM products WHERE product_id IN ($placeholders)");
-        if (!$stmt) {
-            die("Prepare failed: " . $this->db->error); // In ra lỗi của MySQL
-        }
-        $boundQuery = "DELETE FROM user_info WHERE user_id IN ($placeholders)";
-        foreach ($ids as $value) {
-            $boundQuery = preg_replace('/\?/', "'" . intval($value) . "'", $boundQuery, 1);
-        }  
-
-        $types = str_repeat('i', count($ids)); // 'i' cho kiểu số nguyên
-        $stmt->bind_param($types, ...$ids);
-        
-        // Thực thi câu truy vấn
+    public function deleteProduct($product_id) {
+        // Delete product image
+        $query = "SELECT product_image FROM products WHERE product_id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("i", $product_id);
         $stmt->execute();
-        // Kiểm tra số hàng bị ảnh hưởng
-        return $stmt->affected_rows > 0;
+        $result = $stmt->get_result();
+        $picture = $result->fetch_assoc()['product_image'];
+        $path = ROOT_PATH."/public/product_images/$picture";
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+        // Delete product
+        $query = "DELETE FROM products WHERE product_id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("i", $product_id);
+        return $stmt->execute();
     }
 
-    public function addProduct($cat, $brand, $title, $price, $sale, $desc, $img) {
-        // Chuẩn bị câu lệnh SQL
-        $stmt = $this->db->prepare('INSERT INTO products (product_cat, product_brand, product_title, product_price, product_sale, product_desc, product_image) VALUES (?, ?, ?, ?, ?, ?, ?)');
-        
-        // Kiểm tra nếu câu lệnh không được chuẩn bị thành công
-        if (!$stmt) {
-            echo json_encode(['success' => false, 'message' => 'Error preparing statement: ' . $this->db->error]);
-            return false;
-        }
+    public function addProduct($data, $imagePath) {
+        $query = "INSERT INTO products (product_cat, product_brand, product_title, product_price, product_desc, product_image, product_sale) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param(
+            "iisdsss",
+            $data['product_type'],
+            $data['brand'],
+            $data['product_name'],
+            $data['price'],
+            $data['details'],
+            $imagePath,
+            $data['sale']
+        );
+        return $stmt->execute();
+    }
     
-        // Liên kết tham số và thực thi câu lệnh
-        $stmt->bind_param('sssssss', $cat, $brand, $title, $price, $sale, $desc, $img);
-    
-        // Thực thi câu lệnh
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true, 'message' => 'Inserted Successfully']);
-            $stmt->close();
-            return true;
-        } else {
-            // Kiểm tra lỗi 1062 (Duplicate entry) cho email
-            if ($this->db->errno == 1062) {
-                echo json_encode(['success' => false, 'message' => 'Email already exists']);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Failed to insert product: ' . $this->db->error]);
-            }
-            $stmt->close();
-            return false;
-        }
-    }        
 
     public function editProduct($cat, $brand, $title, $price, $sale, $desc, $img, $id) {
         // Chuẩn bị câu lệnh SQL

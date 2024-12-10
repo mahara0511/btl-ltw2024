@@ -225,29 +225,15 @@ class AdminController
     }
 
     public function handleProductDelete() {
-        // Đọc dữ liệu JSON từ request
-        $data = json_decode(file_get_contents("php://input"), true);
-    
-        // Kiểm tra dữ liệu đầu vào
-        if (!isset($data['ids']) || !is_array($data['ids']) || count($data['ids']) === 0) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'No user IDs provided.']);
-            exit;
+        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['product_id'])) {
+            $this->productModel->deleteProduct($_GET['product_id']);
         }
-    
-        // Chuyển ID sang mảng số nguyên
-        $ids = array_map('intval', $data['ids']);
-    
-        // Gọi phương thức xóa
-        $results = $this->productModel->deleteProduct($ids);
-    
-        // Trả về phản hồi
-        header('Content-Type: application/json');
-        if ($results) {
-            echo json_encode(['success' => true, 'message' => 'Deleted Successfully.']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Deleted Failed.']);
+        if(isset($_GET['page'])) {
+            $page = $_GET['page'];
+            header("Location: /admin/handleProduct?page=$page");
+            exit;    
         }
+        header("Location: /admin/handleProduct");
         exit;
     }
     
@@ -292,56 +278,45 @@ class AdminController
     
 
     public function handleProductAdd() {
-        // if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        //     // $title = isset($_POST['title']) ? htmlspecialchars(trim($_POST['title'])) : null;
-        //     // $category = isset($_POST['category']) ? htmlspecialchars(trim($_POST['category'])) : null;
-        //     // $brand = isset($_POST['brand']) ? htmlspecialchars(trim($_POST['brand'])) : null;
-        //     // $price = isset($_POST['price']) ? htmlspecialchars(trim($_POST['price'])) : null;
-        //     // $sale = isset($_POST['sale']) ? htmlspecialchars(trim($_POST['sale'])) : null;
-        //     // $description = isset($_POST['desc']) ? htmlspecialchars(trim($_POST['desc'])) : null;
-        //     // $image = isset($_POST['img']) ? htmlspecialchars(trim($_POST['img'])) : null;
-        
-        //     // // Kiểm tra các biến có tồn tại hay không
-        //     // $missingFields = [];
-        
-        //     // if (empty($title)) $missingFields[] = "Title";
-        //     // if (empty($category)) $missingFields[] = "Category";
-        //     // if (empty($brand)) $missingFields[] = "Brand";
-        //     // if (empty($price)) $missingFields[] = "Price";
-        //     // if (empty($sale)) $missingFields[] = "Sale";
-        //     // if (empty($description)) $missingFields[] = "Description";
-        //     // if (empty($image)) $missingFields[] = "Image";
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_save'])) {
+            $productData = [
+                'product_name' => sanitizeInput($_POST['product_name']),
+                'details' => sanitizeInput($_POST['details']),
+                'price' => sanitizeInput($_POST['price']),
+                'product_type' => sanitizeInput($_POST['product_type']),
+                'brand' => sanitizeInput($_POST['brand']),
+                'sale' => sanitizeInput($_POST['sale'])
+            ];
 
-        //     // header('Content-type: application/json');
-        
-        //     // // Nếu có trường nào bị thiếu, trả về lỗi
-        //     // if (!empty($missingFields)) {
-        //     //     echo json_encode([
-        //     //         'success' => false,
-        //     //         'message' => 'Missing fields: ' . implode(', ', $missingFields)
-        //     //     ]);
-        //     //     exit;
-        //     // }
+            // Image handling
+            $pictureName = $_FILES['picture']['name'];
+            $pictureType = $_FILES['picture']['type'];
+            $pictureTmpName = $_FILES['picture']['tmp_name'];
+            $pictureSize = $_FILES['picture']['size'];
 
-        //     // // Gọi hàm chỉnh sửa sản phẩm trong model (dưới đây là ví dụ)
-        //     // $this->productModel->addProduct($category, $brand, $title, $price, $sale, $description, $image);
-            // exit;
-        // }
+            if (
+                in_array($pictureType, ["image/jpeg", "image/jpg", "image/png", "image/gif"]) &&
+                $pictureSize <= 5000000
+            ) {
+                $imagePath = ROOT_PATH."/public/product_images/" . time() . "_" . $pictureName;
+                if (move_uploaded_file($pictureTmpName, $imagePath)) {
+                    $imageName = time() . "_" . $pictureName;
+                    $this->productModel->addProduct($productData, $imageName);
+                    header("Location: /admin/handleProduct");
+                    exit;
+                }
+            }
+        }
+        $categories = $this->productModel->getCategories();
+        $brands = $this->productModel->getBrands();
         include_once 'views/admin/addProduct.php';
     }
     
     public function handleProduct() {
-        $this->isLogin();
-        $this->isLogin();
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = 20; // Số dòng hiển thị trên mỗi trang
-        $offset = ($page - 1) * $limit;
-        $numberOfProduct = $this->productModel->getNumberOFProduct();
-        $totalPages = ceil($numberOfProduct / $limit);
-        $brands = $this->productModel->getBrands();
-        $categories = $this->productModel->getCategories();
-
-        $all_products = $this->productModel->getProductByOffset($offset, $limit);
+        $offset = ($page - 1) * 12;
+        $products = $this->productModel->getProductByOffset($offset, 12);
+        $total = $this->productModel->getNumberOFProduct();
         include_once 'views/admin/handleProduct.php';
     }
 
@@ -350,15 +325,58 @@ class AdminController
     }
 
     public function addNews() {
-
-    }
-
-    public function editNews() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
+            // Lấy dữ liệu từ form
+            $newsData = [
+                'title' => sanitizeInput($_POST['title']),
+                'subtitle' => sanitizeInput($_POST['subtitle']),
+                'content' => sanitizeInput($_POST['content']),
+                'category' => sanitizeInput($_POST['category'])
+            ];
+        
+            // Xử lý ảnh
+            $pictureName = $_FILES['picture']['name'];
+            $pictureType = $_FILES['picture']['type'];
+            $pictureTmpName = $_FILES['picture']['tmp_name'];
+            $pictureSize = $_FILES['picture']['size'];
+        
+            // Kiểm tra loại ảnh và kích thước
+            if (
+                in_array($pictureType, ["image/jpeg", "image/jpg", "image/png", "image/gif"]) &&
+                $pictureSize <= 5000000
+            ) {
+                // Tạo tên file và đường dẫn để lưu ảnh
+                $imagePath = ROOT_PATH . "/public/img/" . time() . "_" . basename($pictureName);
+                if (move_uploaded_file($pictureTmpName, $imagePath)) {
+                    $imageName = time() . "_" . basename($pictureName);
+        
+                    // Gọi model để lưu tin tức vào cơ sở dữ liệu
+                    $this->newsModel->addNews($newsData, $imageName);
+        
+                    // Chuyển hướng về trang quản lý tin tức
+                    header("Location: /admin/news");
+                    exit;
+                } else {
+                    echo "Failed to upload the image.";
+                }
+            } else {
+                echo "Invalid image format or size. Please upload an image less than 5MB (JPEG, PNG, GIF).";
+            }
+        }
         
     }
 
     public function deleteNews() {
-        
+        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+            $this->newsModel->deleteNews($_GET['id']);
+        }
+        if(isset($_GET['page'])) {
+            $page = $_GET['page'];
+            header("Location: /admin/news?page=$page");
+            exit;    
+        }
+        header("Location: /admin/news");
+        exit;
     }
 
     public function news() {
@@ -372,18 +390,6 @@ class AdminController
         $totalRecords = $this->newsModel->len();
         $totalPages = ceil($totalRecords / $perPage);
         include('views/admin/news.php');
-    }
-
-    public function deleteImage() {
-
-    }
-
-    public function addImage() {
-        
-    }
-
-    public function image() {
-        include('views/admin/image.php');
     }
 }
 

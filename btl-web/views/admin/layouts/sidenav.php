@@ -111,13 +111,6 @@
                                 <p>News</p>
                             </a>
                         </li>
-                        
-                        <li class="nav-item <?= strpos($current_path, '/admin/image') !== false ? 'active' : '' ?>">
-                                <a class="nav-link" href="/admin/image">
-                                <i class="material-icons">image</i>
-                                <p>Image</p>
-                            </a>
-                        </li>
 
                         <li class="nav-item <?= strpos($current_path, '/admin/setting') !== false ? 'active' : '' ?>">
                             <a class="nav-link" href="/admin/setting">

@@ -1,41 +1,21 @@
 <?php
-
-include(ROOT_PATH."/config/db.php");
-
-
-if(isset($_POST['btn_save']))
-{
-$product_name=$_POST['product_name'];
-$details=$_POST['details'];
-$price=$_POST['price'];
-$c_price=$_POST['c_price'];
-$product_type=$_POST['product_type'];
-$brand=$_POST['brand'];
-$tags=$_POST['tags'];
-
-//picture coding
-$picture_name=$_FILES['picture']['name'];
-$picture_type=$_FILES['picture']['type'];
-$picture_tmp_name=$_FILES['picture']['tmp_name'];
-$picture_size=$_FILES['picture']['size'];
-
-if($picture_type=="image/jpeg" || $picture_type=="image/jpg" || $picture_type=="image/png" || $picture_type=="image/gif")
-{
-	if($picture_size<=50000000)
-	
-		$pic_name=time()."_".$picture_name;
-		move_uploaded_file($picture_tmp_name,"../product_images/".$pic_name);
-		
-mysqli_query($con,"insert into products (product_cat, product_brand,product_title,product_price, product_desc, product_image,product_keywords) values ('$product_type','$brand','$product_name','$price','$details','$pic_name','$tags')") or die ("query incorrect");
-
- header("location: sumit_form.php?success=1");
-}
-
-mysqli_close($con);
-}
 include "layouts/sidenav.php";
 include "layouts/topheader.php";
 ?>
+    <style>
+        .form-control {
+            color: #fff;
+        }
+
+        .form-control:focus {
+            color: #fff
+        }
+
+        option {
+            background-color: #000;
+            padding-left: 10px;
+        }
+    </style>
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
@@ -78,9 +58,6 @@ include "layouts/topheader.php";
                       </div>
                     </div>
                   </div>
-                 
-                  
-                
               </div>
               
             </div>
@@ -97,28 +74,38 @@ include "layouts/topheader.php";
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Product Category</label>
-                        <input type="number" id="product_type" name="product_type" required="[1-6]" class="form-control">
+                        <select id="product_type" name="product_type" required class="form-control">
+                            <option value="">Select Category</option>
+                            <?php foreach ($categories as $category) { ?>
+                                <option value="<?php echo $category['cat_id']; ?>"><?php echo $category['cat_title']; ?></option>
+                            <?php } ?>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label for="">Product Brand</label>
-                        <input type="number" id="brand" name="brand" required class="form-control">
+                        <select id="brand" name="brand" required class="form-control">
+                            <option value="">Select Brand</option>
+                            <?php foreach ($brands as $brand) { ?>
+                                <option value="<?php echo $brand['brand_id']; ?>"><?php echo $brand['brand_title']; ?></option>
+                            <?php } ?>
+                        </select>
                       </div>
                     </div>
                      
                   
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label>Product Keywords</label>
-                        <input type="text" id="tags" name="tags" required class="form-control" >
+                        <label>Product Sale</label>
+                        <input type="text" id="sale" name="sale" required class="form-control" >
                       </div>
                     </div>
                   </div>
                 
               </div>
               <div class="card-footer">
-                  <button type="submit" id="btn_save" name="btn_save" required class="btn btn-fill btn-primary">Update Product</button>
+                  <button type="submit" id="btn_save" name="btn_save" required class="btn btn-fill btn-primary">Save Product</button>
               </div>
             </div>
           </div>
@@ -127,7 +114,9 @@ include "layouts/topheader.php";
          </form>
           
         </div>
+        <a href="/admin/handleProduct" id="btn_save" name="btn_save" required class="btn btn-fill btn-primary">Back</a>
+                        
       </div>
       <?php
-include "footer.php";
+include "layouts/footer.php";
 ?>

@@ -5,6 +5,7 @@ require_once 'models/UserModel.php';
 require_once 'models/ProductModel.php';
 require_once 'models/OrderModel.php';
 require_once 'models/AboutInfoModel.php';
+require_once 'models/newsModel.php';
 class AdminController
 {
     private $model;
@@ -12,6 +13,7 @@ class AdminController
     private $productModel;
     private $orderModel;
     private $aboutInfoModel;
+    private $newsModel;
     public function __construct($db)
     {
         $this->model = new AdminInfoModel($db);
@@ -19,6 +21,7 @@ class AdminController
         $this->productModel = new ProductModel($db);
         $this->orderModel = new OrderModel($db);
         $this->aboutInfoModel= new AboutInfoModel();
+        $this->newsModel = new NewsModel();
     }
 
     public function getAdmin($admin_id)
@@ -289,41 +292,42 @@ class AdminController
     
 
     public function handleProductAdd() {
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            $title = isset($_POST['title']) ? htmlspecialchars(trim($_POST['title'])) : null;
-            $category = isset($_POST['category']) ? htmlspecialchars(trim($_POST['category'])) : null;
-            $brand = isset($_POST['brand']) ? htmlspecialchars(trim($_POST['brand'])) : null;
-            $price = isset($_POST['price']) ? htmlspecialchars(trim($_POST['price'])) : null;
-            $sale = isset($_POST['sale']) ? htmlspecialchars(trim($_POST['sale'])) : null;
-            $description = isset($_POST['desc']) ? htmlspecialchars(trim($_POST['desc'])) : null;
-            $image = isset($_POST['img']) ? htmlspecialchars(trim($_POST['img'])) : null;
+        // if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        //     // $title = isset($_POST['title']) ? htmlspecialchars(trim($_POST['title'])) : null;
+        //     // $category = isset($_POST['category']) ? htmlspecialchars(trim($_POST['category'])) : null;
+        //     // $brand = isset($_POST['brand']) ? htmlspecialchars(trim($_POST['brand'])) : null;
+        //     // $price = isset($_POST['price']) ? htmlspecialchars(trim($_POST['price'])) : null;
+        //     // $sale = isset($_POST['sale']) ? htmlspecialchars(trim($_POST['sale'])) : null;
+        //     // $description = isset($_POST['desc']) ? htmlspecialchars(trim($_POST['desc'])) : null;
+        //     // $image = isset($_POST['img']) ? htmlspecialchars(trim($_POST['img'])) : null;
         
-            // Kiểm tra các biến có tồn tại hay không
-            $missingFields = [];
+        //     // // Kiểm tra các biến có tồn tại hay không
+        //     // $missingFields = [];
         
-            if (empty($title)) $missingFields[] = "Title";
-            if (empty($category)) $missingFields[] = "Category";
-            if (empty($brand)) $missingFields[] = "Brand";
-            if (empty($price)) $missingFields[] = "Price";
-            if (empty($sale)) $missingFields[] = "Sale";
-            if (empty($description)) $missingFields[] = "Description";
-            if (empty($image)) $missingFields[] = "Image";
+        //     // if (empty($title)) $missingFields[] = "Title";
+        //     // if (empty($category)) $missingFields[] = "Category";
+        //     // if (empty($brand)) $missingFields[] = "Brand";
+        //     // if (empty($price)) $missingFields[] = "Price";
+        //     // if (empty($sale)) $missingFields[] = "Sale";
+        //     // if (empty($description)) $missingFields[] = "Description";
+        //     // if (empty($image)) $missingFields[] = "Image";
 
-            header('Content-type: application/json');
+        //     // header('Content-type: application/json');
         
-            // Nếu có trường nào bị thiếu, trả về lỗi
-            if (!empty($missingFields)) {
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Missing fields: ' . implode(', ', $missingFields)
-                ]);
-                exit;
-            }
+        //     // // Nếu có trường nào bị thiếu, trả về lỗi
+        //     // if (!empty($missingFields)) {
+        //     //     echo json_encode([
+        //     //         'success' => false,
+        //     //         'message' => 'Missing fields: ' . implode(', ', $missingFields)
+        //     //     ]);
+        //     //     exit;
+        //     // }
 
-            // Gọi hàm chỉnh sửa sản phẩm trong model (dưới đây là ví dụ)
-            $this->productModel->addProduct($category, $brand, $title, $price, $sale, $description, $image);
-            exit;
-        }
+        //     // // Gọi hàm chỉnh sửa sản phẩm trong model (dưới đây là ví dụ)
+        //     // $this->productModel->addProduct($category, $brand, $title, $price, $sale, $description, $image);
+            // exit;
+        // }
+        include_once 'views/admin/addProduct.php';
     }
     
     public function handleProduct() {
@@ -341,8 +345,45 @@ class AdminController
         include_once 'views/admin/handleProduct.php';
     }
 
-    public function handleSale() {
-        include('views/admin/sales.php');
+    public function setting() {
+        include('views/admin/setting.php');
+    }
+
+    public function addNews() {
+
+    }
+
+    public function editNews() {
+        
+    }
+
+    public function deleteNews() {
+        
+    }
+
+    public function news() {
+        
+        $perPage = 10; // Số lượng bản ghi mỗi trang
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $start = ($page - 1) * $perPage;
+        // Lấy dữ liệu từ bảng `newsdata`
+        $data = $this->newsModel->getNewsData($start, $perPage);
+        // Lấy tổng số bản ghi
+        $totalRecords = $this->newsModel->len();
+        $totalPages = ceil($totalRecords / $perPage);
+        include('views/admin/news.php');
+    }
+
+    public function deleteImage() {
+
+    }
+
+    public function addImage() {
+        
+    }
+
+    public function image() {
+        include('views/admin/image.php');
     }
 }
 

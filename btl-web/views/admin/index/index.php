@@ -28,10 +28,7 @@ include "activitity.php";
           <button type='button' class='btn btn-success editBtn ' data-toggle='modal' data-target='#editUserModal'>
               Edit About Info
           </button>    
-          <a href="/" class='btn btn-success'>
-              See The website 
-          </a>       
-
+      
           <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editAboutModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg modal-dialog-centered">
                   <div class="modal-content">

@@ -18,5 +18,15 @@ class NewsModel extends Model {
         $stmt->close();
         return $news_data;
     }
+
+    public function getAllNews()
+    {
+        $stmt = $this->db->prepare("SELECT * FROM news ORDER BY id");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $news_data = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $news_data;
+    }
 }
 ?>

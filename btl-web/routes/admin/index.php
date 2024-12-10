@@ -5,7 +5,6 @@
     $controller = new AdminController($con);
         if (count($parts) > 2) {
         $action = $parts[2]; 
-        
         switch ($action) {
             case 'login':
                 $controller->login();
@@ -19,12 +18,19 @@
             case 'aboutInfo':
                 include('aboutInfo.php');
                 break;
-            case 'sales': {
-                $controller->handleSale();
+            case 'news':
+                include('news.php');
+                break;
+            case 'image':
+                include('image.php');
+                break;
+            case 'setting': {
+                $controller->setting();
+                break;
             }
             default:
                 http_response_code(404);
-                echo "404 Not Found admin index";
+                echo "404 Not Found(Admin)";
                 break;
         }
     } else {

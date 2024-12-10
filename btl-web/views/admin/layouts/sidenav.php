@@ -58,6 +58,9 @@
             href="/public/adminAsset/css/pagination.css"
             rel="stylesheet"
         />
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     </head>
 
     <body class="dark-edition">
@@ -117,7 +120,7 @@
                         </li>
 
                         <li class="nav-item <?= strpos($current_path, '/admin/setting') !== false ? 'active' : '' ?>">
-                            <a class="nav-link" href="profile.php">
+                            <a class="nav-link" href="/admin/setting">
                                 <icons-image
                                     _ngcontent-aye-c22=""
                                     _nghost-aye-c19=""
@@ -128,6 +131,21 @@
                                     ></icons-image
                                 >
                                 <p>setting</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">
+                                <icons-image
+                                    _ngcontent-aye-c22=""
+                                    _nghost-aye-c19=""
+                                    ><i
+                                        _ngcontent-aye-c19=""
+                                        class="material-icons icon-image-preview"
+                                        >website</i
+                                    ></icons-image
+                                >
+                                <p>See website</p>
                             </a>
                         </li>
                         <!-- <li class="nav-item active-pro ">

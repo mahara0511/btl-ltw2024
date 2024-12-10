@@ -1,13 +1,6 @@
 <footer class="footer">
   <div class="container-fluid">
     
-    <div class="copyright float-right">
-      &copy;
-      <script>
-        document.write(new Date().getFullYear())
-      </script>, made with <i class="material-icons">favorite</i>made by
-      <a href="" target="_blank">Jeyapratha Puspanathan</a>.
-    </div>
     <!-- your footer here -->
   </div>
 </footer>

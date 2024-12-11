@@ -276,17 +276,21 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
 
                     <!-- SEARCH BAR -->
                     <div class="col-md-6">
-                        <div class="header-search">
+                        <div class="header-search" style="display: flex; position: relative">
                             <!-- <form> -->
                             <!-- <select class="input-select">
                                     <option value="0">All Categories</option>
                                     <option value="1">Men</option>
                                     <option value="1">Women </option>
                                 </select> -->
-                            <!-- <input class="input" id="search" type="text" placeholder="Search here"> -->
-                            <button id="search_btn" class="search-btn" onclick="window.location.href='/store'">Search
+                                
+                            <a class="input" id="search" href="store" style="cursor:pointer ;display: flex; justify-content: center; align-items: center;" type="text" placeholder="">
+                                Search Product
+                                <i class="fa fa-magnifying-glass" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%)"></i>
+                            </a>
+                            <!-- <button id="search_btn" class="search-btn" onclick="window.location.href='/store'">Search
                                 your favorite
-                                products</button>
+                                products</button> -->
                             <!-- </form> -->
                         </div>
                     </div>

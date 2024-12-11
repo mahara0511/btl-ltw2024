@@ -7,7 +7,7 @@ CREATE TABLE about_info(
     phone_num TEXT,
     email TEXT,
     location TEXT
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- Table structure for table `brands`
 CREATE TABLE `brands` (
@@ -138,18 +138,16 @@ VALUES (
 
 -- Table structure for table `email_info`
 CREATE TABLE `email_info` (
-    `email_id` int(100) NOT NULL,
-    `email` text NOT NULL
+    `email_id` int(100) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `email` text NOT NULL UNIQUE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 INSERT INTO
-    `email_info` (`email_id`, `email`)
-VALUES (3, 'admin@gmail.com'),
-    (
-        4,
-        'puneethreddy951@gmail.com'
-    ),
-    (5, 'puneethreddy@gmail.com');
+    `email_info` (`email`)
+VALUES 
+    ('admin@gmail.com'),
+    ('puneethreddy951@gmail.com'),
+    ('puneethreddy@gmail.com');
 
 -- Add PRIMARY KEYS
 ALTER TABLE `brands` ADD PRIMARY KEY (`brand_id`);

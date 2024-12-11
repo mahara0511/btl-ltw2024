@@ -18,8 +18,8 @@
 
         function saveEmail($email){
             try {
-                $stmt = $this->db->prepare("INSERT INTO email_info (email) VALUES (:email)");
-                $stmt->bindParam(':email', $email);
+                $stmt = $this->db->prepare("INSERT INTO email_info (email) VALUES (?)");
+                $stmt->bind_param('s', $email);
     
                 if ($stmt->execute()) {
                     // Phản hồi JSON thành công

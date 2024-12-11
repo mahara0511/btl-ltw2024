@@ -165,7 +165,7 @@ require_once ROOT_PATH . "/views/layouts/header.php";
                                     onclick="window.location.href='/store?product_id=<?php echo $product['product_id']; ?>'">
                                     <a href=<?php echo "'/store?product_id=" . $product['product_id'] . "'" ?>>
                                         <div class='product-img'>
-                                            <img src=<?php echo "'product_images/" . $product['product_image'] . "'" ?>
+                                            <img src=<?php echo "'public/product_images/" . $product['product_image'] . "'" ?>
                                                 alt='' width="60px" height="60px">
                                         </div>
                                         <div class='product-body'>
@@ -242,7 +242,7 @@ require_once ROOT_PATH . "/views/layouts/header.php";
                                     <div class='product'>
                                         <a href=<?php echo "'/store?product_id=" . $product['product_id'] . "'" ?>>
                                             <div class='product-img'>
-                                                <img src=<?php echo "'product_images/" . $product['product_image'] . "'" ?>
+                                                <img src=<?php echo "'public/product_images/" . $product['product_image'] . "'" ?>
                                                     alt=<?php echo "'" . $product['product_title'] . "'" ?>>
                                                 <div class='product-label'>
                                                     <span class='sale'><?php echo $sale . "%" ?></span>

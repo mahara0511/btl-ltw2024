@@ -53,7 +53,7 @@ $_SESSION['product_id'] = $product_detail['product_id'];
             <div class="col-md-5 col-md-push-2">
                 <div id="product-main-img">
                     <div class="product-preview">
-                        <img src=<?php echo "'product_images/" . $product_detail['product_image'] . "'" ?> alt=""
+                        <img src=<?php echo "'public/product_images/" . $product_detail['product_image'] . "'" ?> alt=""
                             height="450px" style="transform: rotate(0deg);">
                     </div>
                 </div>
@@ -63,22 +63,22 @@ $_SESSION['product_id'] = $product_detail['product_id'];
             <div class=" col-md-2 col-md-pull-5">
                 <div id="product-imgs" class="slick-slider">
                     <div class="product-preview">
-                        <img src=<?php echo "'product_images/" . $product_detail['product_image'] . "'" ?> alt=""
+                        <img src=<?php echo "'public/product_images/" . $product_detail['product_image'] . "'" ?> alt=""
                             height="150px" style="transform: rotate(0deg);">
                     </div>
 
                     <div class="product-preview">
-                        <img src=<?php echo "'product_images/" . $product_detail['product_image'] . "'" ?> alt=""
+                        <img src=<?php echo "'public/product_images/" . $product_detail['product_image'] . "'" ?> alt=""
                             height="150px" style="transform: rotate(15deg);">
                     </div>
 
                     <div class="product-preview">
-                        <img src=<?php echo "'product_images/" . $product_detail['product_image'] . "'" ?> alt=""
+                        <img src=<?php echo "'public/product_images/" . $product_detail['product_image'] . "'" ?> alt=""
                             height="150px" style="transform: rotate(-15deg);">
                     </div>
 
                     <div class=" product-preview">
-                        <img src=<?php echo "'product_images/" . $product_detail['product_image'] . "'" ?> alt=""
+                        <img src=<?php echo "'public/product_images/" . $product_detail['product_image'] . "'" ?> alt=""
                             height="150px" style="transform: skewY(15deg) scale(0.9);">
                     </div>
                 </div>
@@ -384,7 +384,7 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                         <div class='product'>
                             <a href=<?php echo "'store?product_id=" . $related_product['product_id'] . "'" ?>>
                                 <div class='product-img'>
-                                    <img src=<?php echo "'product_images/" . $related_product['product_image'] . "'" ?>
+                                    <img src=<?php echo "'public/product_images/" . $related_product['product_image'] . "'" ?>
                                         alt=<?php echo "'" . $related_product['product_title'] . "'" ?>>
                                     <div class='product-label'>
                                         <span class='sale'><?php echo $sale . "%" ?></span>

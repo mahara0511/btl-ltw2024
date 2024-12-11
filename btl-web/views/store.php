@@ -1,7 +1,5 @@
 <?php
 require_once ROOT_PATH . "/views/layouts/header.php";
-$_SESSION['uid'] = 2;
-
 ?>
 
 <?php

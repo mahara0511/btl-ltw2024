@@ -2,8 +2,6 @@
 require_once(ROOT_PATH . '/controllers/CartController.php');
 require(ROOT_PATH . '/config/db_connect.php');
 $cartController = new CartController($conn);
-
-$_SESSION['uid'] = 2;
 ?>
 
 <div class="dropdown">

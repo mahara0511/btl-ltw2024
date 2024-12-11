@@ -2,7 +2,6 @@
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-    $_SESSION['uid'] = 1;
 }
 
 function sanitizeInput($data)

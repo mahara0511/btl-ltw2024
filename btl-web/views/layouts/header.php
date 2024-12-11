@@ -71,6 +71,28 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     <style>
+	   .inline {
+            display: inline;
+        }
+
+        .link-button {
+            background: none;
+            border: none;
+            color: #fff;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+            transition: 0.2s color;
+            font-weight: 500;
+        }
+        .link-button:hover {
+            color: #d10024;
+        }
+        .link-button:active {
+            color:red;
+        }
+
         #navigation {
             background: #FF4E50;
             /* fallback for old browsers */

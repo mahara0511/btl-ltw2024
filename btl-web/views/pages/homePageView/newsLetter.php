@@ -66,7 +66,12 @@ document.getElementById("offer_form").addEventListener("submit", async function 
         const result = await response.json();
 
         if (response.ok) {
-            offerMsg.innerHTML = `<p style='color: green;'>${result.message || "Subscription successful! Thank you for signing up."}</p>`;
+            if(result.status == "success") {
+                offerMsg.innerHTML = `<p style='color: green;'>${result.message || "Subscription successful! Thank you for signing up."}</p>`;
+            } else {
+                offerMsg.innerHTML = `<p style='color: yellow;'>${result.message || "Subscription successful! Thank you for signing up."}</p>`;
+
+            }
         } else {
             offerMsg.innerHTML = `<p style='color: yellow;'>${result.error || "An error occurred."}</p>`;
         }

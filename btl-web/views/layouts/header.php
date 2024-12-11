@@ -11,13 +11,13 @@ if(isset($_SESSION['message']))
 
 
 
-if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION['admin']) {
+if (array_key_exists('logout_admin', $_POST) ) {
     unset($_SESSION['admin']);
     unset($_SESSION['admin_name']);
-    session_destroy();
-    header('Location: /admin');
+    header("location: /admin/login");
     exit();
 } else if (array_key_exists('logout', $_POST)) {
+    echo "tf";
     require_once ROOT_PATH . "/controllers/userInfoController.php";
     unset($_POST['logout']);
     userInfoController::logout();
@@ -259,7 +259,7 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
                                     <a href="/admin" ><i class="fa fa-user-circle" aria-hidden="true" ></i>Go to admin</a>
                                     
                                     <form method="post"  class="inline dropdown">
-                                        <input type="hidden" name="logout" value="logout">
+                                        <input type="hidden" name="logout_admin" value="logout_admin">
                                         <button type="submit" name="submit_param" value="submit_value" class="link-button">
                                             <i class="fa fa-sign-in" aria-hidden="true"></i>Log out
                                             

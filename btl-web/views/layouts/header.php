@@ -20,7 +20,7 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
         exit();
     }
 }
-}
+
 
 ?>
 

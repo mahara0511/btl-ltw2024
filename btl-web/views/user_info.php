@@ -210,6 +210,8 @@ if(isset($_SESSION['message']))
             </div>
         </div>
     </div>
+</div>
+</div>
     <?php include ROOT_PATH."/views/layouts/footer.php"; ?>
 
     <script src="public/js/jquery.min.js"></script>

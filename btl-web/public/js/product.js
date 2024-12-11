@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const parentId = formData.get('parent_id')
         const productId = formData.get('p_id')
 
-        console.log(form)
+        // console.log(form)
         // Make the AJAX request to add a reply
         fetch('/store?action=addComment', {
           method: 'POST',

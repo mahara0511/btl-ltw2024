@@ -156,7 +156,7 @@ function handleAddToCartBtn() {
     $('#Modal_alert button').on('click', toggleModal)
 
     // Check if the user is logged in
-    console.log(isLoggedIn)
+    // console.log(isLoggedIn)
     if (isLoggedIn) {
       $.ajax({
         url: '/view_cart',

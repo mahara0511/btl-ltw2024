@@ -49,10 +49,11 @@ class userInfoController
     }
 
 
-    public static function logout(){
+     public static function logout(){
         if(session_id() == '') {
             session_start();
         }
+        $_SESSION['message'] ="Logout successful!";
         unset($_SESSION["uid"]);
         unset($_SESSION["name"]);
         if (isset($_COOKIE["uid"])){
@@ -61,7 +62,6 @@ class userInfoController
             setcookie('uid');
             setcookie('name');
         }
-        require_once (ROOT_PATH.'/views/layouts/logout_popup.php');
 
     }
     //$password,$email,$address,$district,$rpw,$province,$mobile,$firstname,$lastname)

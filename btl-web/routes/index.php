@@ -118,6 +118,10 @@ switch ($parts[1]) {
     case 'admin':
         include_once("admin/index.php");
         break;
+    case 'subcribe': 
+        require(ROOT_PATH . '/controllers/HomeController.php');
+        $controller = new HomeController();
+        $controller->postEmail();
     case 'login':
         if (isset($_COOKIE["uid"]) || isset($_SESSION["uid"])) {
             header('Location: /');

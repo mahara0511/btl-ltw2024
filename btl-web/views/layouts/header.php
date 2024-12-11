@@ -12,6 +12,14 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
     require_once ROOT_PATH . "/controllers/userInfoController.php";
     unset($_POST['logout']);
     userInfoController::logout();
+     $request = $_SERVER['REQUEST_URI'];
+    $request = parse_url($request, PHP_URL_PATH);
+    $parts = explode('/', $request);
+    if($parts[1]=="user_info"||$parts[1]=="password"){
+        header('Location: /');
+        exit();
+    }
+}
 }
 
 ?>

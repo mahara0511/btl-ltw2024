@@ -2,8 +2,8 @@
 -- CREATE DATABASE onlineshop DEFAULT CHARACTER SET = 'utf8mb4';
 
 -- Table about_info
-CREATE TABLE about_info(
-	about_id INT AUTO_INCREMENT primary KEY,
+CREATE TABLE about_info (
+    about_id INT AUTO_INCREMENT primary KEY,
     phone_num TEXT,
     email TEXT,
     location TEXT
@@ -48,7 +48,6 @@ CREATE TABLE `user_info` (
 
 -- Table structure for table `cart`
 CREATE TABLE `cart` (
-    `id` INT(10) NOT NULL,
     `p_id` INT(100) NOT NULL,
     `user_id` INT(10) NOT NULL,
     `qty` INT(10) NOT NULL
@@ -62,8 +61,8 @@ CREATE TABLE `orders_info` (
     `f_name` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
     `address` VARCHAR(255) NOT NULL,
-    `city` VARCHAR(255) NOT NULL,
-    `state` VARCHAR(255) NOT NULL,
+    `district` VARCHAR(255) NOT NULL,
+    `province` VARCHAR(255) NOT NULL,
     `cardname` VARCHAR(255) NOT NULL,
     `cardnumber` VARCHAR(20) NOT NULL,
     `prod_count` INT(15) DEFAULT NULL,
@@ -72,7 +71,6 @@ CREATE TABLE `orders_info` (
 
 -- Table structure for table `order_products`
 CREATE TABLE `order_products` (
-    `order_pro_id` INT(10) NOT NULL,
     `order_id` INT(11) NOT NULL,
     `product_id` INT(11) NOT NULL,
     `qty` INT(15) DEFAULT NULL,
@@ -159,13 +157,15 @@ ALTER TABLE `categories` ADD PRIMARY KEY (`cat_id`);
 ALTER TABLE `products` ADD PRIMARY KEY (`product_id`);
 
 ALTER TABLE `user_info` ADD PRIMARY KEY (`user_id`);
+
 ALTER TABLE `user_info` ADD UNIQUE (`email`);
 
-ALTER TABLE `cart` ADD PRIMARY KEY (`id`);
+ALTER TABLE `cart` ADD PRIMARY KEY (`p_id`, `user_id`);
 
 ALTER TABLE `orders_info` ADD PRIMARY KEY (`order_id`);
 
-ALTER TABLE `order_products` ADD PRIMARY KEY (`order_pro_id`);
+ALTER TABLE `order_products`
+ADD PRIMARY KEY (`order_id`, `product_id`);
 
 ALTER TABLE `comments` ADD PRIMARY KEY (`cmt_id`);
 
@@ -190,16 +190,8 @@ ALTER TABLE `user_info`
 MODIFY `user_id` INT(10) NOT NULL AUTO_INCREMENT,
 AUTO_INCREMENT = 1;
 
-ALTER TABLE `cart`
-MODIFY `id` INT(10) NOT NULL AUTO_INCREMENT,
-AUTO_INCREMENT = 1;
-
 ALTER TABLE `orders_info`
 MODIFY `order_id` INT(10) NOT NULL AUTO_INCREMENT,
-AUTO_INCREMENT = 1;
-
-ALTER TABLE `order_products`
-MODIFY `order_pro_id` INT(10) NOT NULL AUTO_INCREMENT,
 AUTO_INCREMENT = 1;
 
 ALTER TABLE `comments`
@@ -240,7 +232,19 @@ ALTER TABLE `comments`
 ADD CONSTRAINT `fk_comments_parent` FOREIGN KEY (`parent_id`) REFERENCES `comments` (`cmt_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- INSERT DATA ------------------------------------------------------------------
-INSERT INTO `about_info` (`about_id`, `phone_num`, `email`, `location`) VALUES (NULL, '0905.xxx.yyy', 'laptrinhweb@gmail.com', 'Ho Chi Minh city, Viet Nam');
+INSERT INTO
+    `about_info` (
+        `about_id`,
+        `phone_num`,
+        `email`,
+        `location`
+    )
+VALUES (
+        NULL,
+        '0905.xxx.yyy',
+        'laptrinhweb@gmail.com',
+        'Ho Chi Minh city, Viet Nam'
+    );
 
 INSERT INTO
     `brands` (`brand_id`, `brand_title`)

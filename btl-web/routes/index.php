@@ -148,6 +148,19 @@ switch ($parts[1]) {
         $controller = new userInfoController($conn);
         $controller->register_form();
         break;
+    case 'checkout-form':
+        require(ROOT_PATH . '/controllers/OrderController.php');
+        $controller = new OrderController($conn);
+        $controller->showCheckoutForm();
+        break;
+    case 'place-order':
+        require(ROOT_PATH . '/controllers/OrderController.php');
+        $controller = new OrderController($conn);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->placeOrder();
+            exit;
+        }
+        break;
     default:
         http_response_code(404);
         echo "404 Not Found";

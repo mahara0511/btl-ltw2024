@@ -41,7 +41,7 @@ $total_price = $data['total_price'] ?? 0;
         <div id="cart_checkout">
             <div class="main">
                 <div class="table-responsive">
-                    <form method="post" action="checkout.php">
+                    <form method="post" action="/checkout-form">
                         <table id="cart" class="table table-hover table-condensed">
                             <thead>
                                 <tr>
@@ -72,19 +72,21 @@ $total_price = $data['total_price'] ?? 0;
                                                     <div class="col-sm-8">
                                                         <p
                                                             style="width: 100%; height: 100px; margin-top: 12px; margin-top: 10px; overflow-Y:auto;">
-                                                            <?= htmlspecialchars($item['description'] ?? 'No description available.'); ?>
+                                                            <?= htmlspecialchars($item['product_desc'] ?? 'No description available.'); ?>
                                                         </p>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <input type="hidden" name="product_id[]" value=<?php echo "'" . $item['product_id'] . "'"; ?> />
-                                            <input type="hidden" name="" value=<?php echo "'" . $item['id'] . "'"; ?> />
+                                            <input type="hidden" name="products[<?= $item['product_id'] ?>][product_id]"
+                                                value="<?= $item['product_id'] ?>">
                                             <td data-th="Price">
                                                 <input type="text" class="form-control price text-center"
-                                                    value="$<?= round($item['product_price']); ?>" readonly="readonly">
+                                                    name="products[<?= $item['product_id'] ?>][price]"
+                                                    value="$<?= round($item['product_price']) ?>" readonly="readonly">
                                             </td>
                                             <td data-th="Quantity">
-                                                <input type="number" class="form-control qty" name="qty[]"
+                                                <input type="number" class="form-control qty"
+                                                    name="products[<?= $item['product_id'] ?>][qty]"
                                                     value="<?= $item['qty']; ?>" min="1">
                                             </td>
                                             <td data-th="Subtotal" class="text-center">

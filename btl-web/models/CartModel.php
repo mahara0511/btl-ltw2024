@@ -15,7 +15,7 @@ class CartModel
         }
 
         $stmt = $this->db->prepare(
-            "SELECT a.product_id, a.product_title, a.product_price, a.product_image, b.id, b.qty 
+            "SELECT a.product_id, a.product_title, a.product_price, a.product_image, a.product_desc, b.qty 
              FROM products a 
              JOIN cart b ON a.product_id = b.p_id 
              WHERE b.user_id = ?"
@@ -38,7 +38,7 @@ class CartModel
                 'message' => 'User not logged in. Please log in to save your cart.'
             ];
         }
-        $stmt = $this->db->prepare("SELECT id FROM cart WHERE p_id = ? AND user_id = ?");
+        $stmt = $this->db->prepare("SELECT * FROM cart WHERE p_id = ? AND user_id = ?");
         $stmt->bind_param("ii", $pid, $uid);
         $stmt->execute();
         $result = $stmt->get_result();

@@ -9,6 +9,11 @@ class ProductController
     {
         $this->model = new ProductModel($db);
     }
+
+    public function detailForProduct($product_id)
+    {
+        echo json_encode($this->model->getProductById($product_id));
+    }
     public function view_product_detail($product_id)
     {
         $product_detail = $this->model->getProductById($product_id);

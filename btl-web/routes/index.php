@@ -46,9 +46,16 @@ switch ($parts[1]) {
                 if (is_numeric($_GET['product_id'])) {
                     require(ROOT_PATH . '/controllers/ProductController.php');
                     $productController = new ProductController($conn);
-
                     $product_id = intval($_GET['product_id']);
                     $productController->view_product_detail($product_id);
+                }
+            } else if (isset($_GET['cart_pid'])) {
+                if (is_numeric($_GET['cart_pid'])) {
+                    require(ROOT_PATH . '/controllers/ProductController.php');
+                    $productController = new ProductController($conn);
+                    $product_id = intval($_GET['cart_pid']);
+                    $productController->detailForProduct($product_id);
+                    exit;
                 }
             } else {
                 $action = $_GET['action'] ?? 'view';
@@ -111,36 +118,36 @@ switch ($parts[1]) {
     case 'admin':
         include_once("admin/index.php");
         break;
-     case 'login':
-            if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])){
-                header('Location: /');
-                echo '<script>console.log("You are already logged in");</script>';
-            }
-            else {
-                echo '<script>console.log("You are not logged in");</script>';
-            }
-            $sender='';
-            if (isset($_SERVER['HTTP_REFERER']))$sender=$_SERVER['HTTP_REFERER'];
-            setcookie('returnPage',$sender,strtotime("+1 day"),"/","","",TRUE);
-            require(ROOT_PATH . '/controllers/userInfoController.php');
-            $controller=new userInfoController($conn);
-            $controller->login_form();
-            break;
-        case 'register':
-            if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])){
-                header('Location: /');
-                echo '<script>console.log("You are already logged in");</script>';
-            }
-            else {
-                echo '<script>console.log("You are not logged in");</script>';
-            }
-            $sender='';
-            if (isset($_SERVER['HTTP_REFERER']))$sender=$_SERVER['HTTP_REFERER'];
-            setcookie('returnPage',$sender,strtotime("+1 day"),"/","","",TRUE);
-            require(ROOT_PATH . '/controllers/userInfoController.php');
-            $controller=new userInfoController($conn);
-            $controller->register_form();
-            break;
+    case 'login':
+        if (isset($_COOKIE["uid"]) || isset($_SESSION["uid"])) {
+            header('Location: /');
+            echo '<script>console.log("You are already logged in");</script>';
+        } else {
+            echo '<script>console.log("You are not logged in");</script>';
+        }
+        $sender = '';
+        if (isset($_SERVER['HTTP_REFERER']))
+            $sender = $_SERVER['HTTP_REFERER'];
+        setcookie('returnPage', $sender, strtotime("+1 day"), "/", "", "", TRUE);
+        require(ROOT_PATH . '/controllers/userInfoController.php');
+        $controller = new userInfoController($conn);
+        $controller->login_form();
+        break;
+    case 'register':
+        if (isset($_COOKIE["uid"]) || isset($_SESSION["uid"])) {
+            header('Location: /');
+            echo '<script>console.log("You are already logged in");</script>';
+        } else {
+            echo '<script>console.log("You are not logged in");</script>';
+        }
+        $sender = '';
+        if (isset($_SERVER['HTTP_REFERER']))
+            $sender = $_SERVER['HTTP_REFERER'];
+        setcookie('returnPage', $sender, strtotime("+1 day"), "/", "", "", TRUE);
+        require(ROOT_PATH . '/controllers/userInfoController.php');
+        $controller = new userInfoController($conn);
+        $controller->register_form();
+        break;
     default:
         http_response_code(404);
         echo "404 Not Found";

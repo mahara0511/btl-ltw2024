@@ -1155,6 +1155,7 @@ table#cart tbody td.actions {
   box-shadow: 0px 0px 0px 0px #e4e7ed, 0px 0px 0px 1px #e4e7ed;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
+  cursor: pointer;
 }
 
 .product:hover {

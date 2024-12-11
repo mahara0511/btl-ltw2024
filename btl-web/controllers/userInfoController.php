@@ -15,29 +15,32 @@ class userInfoController
 
     public function login_form(){
         if (array_key_exists('login', $_POST)&&isset($_POST["email"]) && isset($_POST["password"])) {
-                $email = $_POST["email"];
-                $password = $_POST["password"];
-                $checkbox=$_POST["checkbox"];
-                $state=$this->model->login($email,$password,$checkbox);
-                echo '<script>console.log("'.$state['status'].'")</script>';
-                if ($state['status']=='success'){
-                        echo '<script>console.log("thf")</script>';
-                        if (isset($_COOKIE["returnPage"])){
-                            $sender = parse_url($_COOKIE["returnPage"]);
-                            echo $sender['path'];
-                            header ('location:'.$sender['path']);
-                        }
-                        else{
-                            //header ('location: /');
-                            header ('location: /');
-                        }
-                        //TO DO: add code to go back to prev page//
+            $email = $_POST["email"];
+            $password = $_POST["password"];
+            $checkbox=$_POST["checkbox"];
+            $state=$this->model->login($email,$password,$checkbox);
+            echo '<script>console.log("'.$state['status'].'")</script>';
+            if ($state['status']=='success'){
+                echo '<script>console.log("thf")</script>';
+                if (isset($_COOKIE["returnPage"])){
+                    $sender = parse_url($_COOKIE["returnPage"]);
+                    echo $sender['path'];
+                    header ('location:'.$sender['path']);
+                    exit;
                 }
-                else {
-                    $_SESSION['message'] = "Login failed!";
-                    header ('location: /login');
+                else{
+                    //header ('location: /');
+                    header ('location: /');
+                    exit;
+                }
+                //TO DO: add code to go back to prev page//
+            }
+            else {
+                $_SESSION['message'] = "Login failed!";
+                header ('location: /login');
+                exit;
 
-                }
+            }
 
         }
         else{
@@ -46,10 +49,11 @@ class userInfoController
     }
 
 
-    public static function logout(){
+     public static function logout(){
         if(session_id() == '') {
             session_start();
         }
+        $_SESSION['message'] ="Logout successful!";
         unset($_SESSION["uid"]);
         unset($_SESSION["name"]);
         if (isset($_COOKIE["uid"])){
@@ -58,7 +62,6 @@ class userInfoController
             setcookie('uid');
             setcookie('name');
         }
-        require_once (ROOT_PATH.'/views/layouts/logout_popup.php');
 
     }
     //$password,$email,$address,$district,$rpw,$province,$mobile,$firstname,$lastname)
@@ -83,6 +86,7 @@ class userInfoController
                 $_SESSION['message'] = "Registration failed!";
                 //echo $state['ERR'];
                 header ('location: /register');
+                exit;
 
             }
             else if ($state['status']=='success'){
@@ -90,15 +94,18 @@ class userInfoController
                     $sender = parse_url($_COOKIE["returnPage"]);
                     echo $sender['path'];
                     header ('location:'.$sender['path']);
+                    exit;
                 }
                 else{
                     //header ('location: /');
                     header ('location: /');
+                    exit;
                 }
             }
             else if ($state['status']=='exist'){
                 $_SESSION['message'] = "Your email have been already registered!";
                 header ('location: /register');
+                exit;
             }
 
         }
@@ -108,24 +115,59 @@ class userInfoController
     }
 
 
+    public function passManagement()
+    {
+        if (array_key_exists('savePass', $_POST)) {
+            $password = $_POST["password"];
+            $rpw=$_POST["rpw"];
+            $oldpassword=$_POST["oldpassword"];
+            $state=$this->model->passManagement($password,$rpw,$oldpassword);
+            echo '<script>console.log("'.$state['status'].'")</script>';
+            if ($state['status']!='success'){
+                $_SESSION['message']="Update failed. Please try again!";
+            }
+            else{
+                $_SESSION['message']="Update successfully";
+            }
+            header ('location: /user_info');
+            exit;
+            // header ('location: /');
+        }
+        else{
+            $user_info = $this->model->dumpInfo();
+            require (ROOT_PATH.'/views/password.php');
+        }
+    }
+
 
     public function showInfo()
     {
-        $user_info = $this->model->dumpInfo();
-        //echo '<script>console.log("'.$user_info["first_name"].'")</script>';
-        require (ROOT_PATH.'/views/user_info.php');
-        //$this->render('views/cart.php', $data);
-    }
 
-    private function render($view, $data = [])
-    {
-        extract($data); // Extract array keys as variables
-        if (file_exists($view)) {
-            include $view;
-        } else {
-            echo "View not found: $view";
+        if (array_key_exists('save', $_POST)) {
+            $email = $_POST["email"];
+            $address= $_POST["address"];
+            $district=$_POST["district"];
+            $province=$_POST["province"];
+            $mobile=$_POST["mobile"];
+            $firstname=$_POST["firstname"];
+            $lastname=$_POST["lastname"];
+            $state=$this->model->updateInfo($email,$address,$district,$province,$mobile,$firstname,$lastname);
+            echo '<script>console.log("'.$state['status'].'")</script>';
+            if ($state['status']!='success'){
+                $_SESSION['message']="Update failed. Please try again!";
+            }
+
+            header ('location: /user_info');
+            exit;
+        }
+        else{
+            $user_info = $this->model->dumpInfo();
+            //echo '<script>console.log("'.$user_info["first_name"].'")</script>';
+            require (ROOT_PATH.'/views/user_info.php');
+            //$this->render('views/cart.php', $data);
         }
     }
+
 }
 
 ?>

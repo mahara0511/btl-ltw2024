@@ -60,7 +60,7 @@
 <script src="public/js/main.js"></script>
 <script src="public/js/actions.js"></script>
 <script src="public/js/script.js"></script>
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script>
     $('.materialert .close-alert').click(function (){
         $(this).parent().hide('slow');

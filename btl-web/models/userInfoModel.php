@@ -27,7 +27,10 @@ class userInfoModel
         $name = mb_strtolower($name);
         return preg_match("/^[a-z\sàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+$/", $name);
     }
-
+    private function checkMobile($mobile)
+    {
+        return preg_match("/^\d+$/", $mobile);
+    }
     public function login($email, $password, $checkbox)
     {
         $email = mysqli_real_escape_string($this->db, $email);
@@ -35,7 +38,7 @@ class userInfoModel
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !$this->checkPassword($password)) {
             return [
-                'status' => 'success',
+                'status' => 'failed',
                 'IAM' => 'user'
             ];
         }
@@ -53,28 +56,6 @@ class userInfoModel
             if (!empty($checkbox)) {
                 setcookie("uid", $row["user_id"], time() + 7200);
                 setcookie("name", $row["first_name"], time() + 7200);
-            }
-            $ip_add = getenv("REMOTE_ADDR");
-            if (isset($_COOKIE["product_list"])) {
-                $p_list = stripcslashes($_COOKIE["product_list"]);
-                //here we are decoding stored json product list cookie to normal array
-                $product_list = json_decode($p_list, true);
-                for ($i = 0; $i < count($product_list); $i++) {
-                    //After getting user id from database here we are checking user cart item if there is already product is listed or not
-                    $verify_cart = "SELECT id FROM cart WHERE user_id = $_SESSION[uid] AND p_id = " . $product_list[$i];
-                    $result = mysqli_query($this->db, $verify_cart);
-                    if (mysqli_num_rows($result) < 1) {
-                        //if user is adding first time product into cart we will update user_id into database table with valid id
-                        $update_cart = "UPDATE cart SET user_id = '$_SESSION[uid]' WHERE ip_add = '$ip_add' AND user_id = -1";
-                        mysqli_query($this->db, $update_cart);
-                    } else {
-                        //if already that product is available into database table we will delete that record
-                        $delete_existing_product = "DELETE FROM cart WHERE user_id = -1 AND ip_add = '$ip_add' AND p_id = " . $product_list[$i];
-                        mysqli_query($this->db, $delete_existing_product);
-                    }
-                }
-                //here we are destroying user cookie
-                setcookie("product_list", "", strtotime("-1 day"), "/");
             }
             return [
                 'status' => 'success',
@@ -102,50 +83,15 @@ class userInfoModel
         $firstname = mysqli_real_escape_string($this->db, $firstname);
         $lastname = mysqli_real_escape_string($this->db, $lastname);
         //echo $firstname;
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-            return [
-                'status' => 'error',
-                'ERR' => 'invalid email'
-            ];
-        }
-        if (!$this->checkPassword($password)) {
-
-            return [
-                'status' => 'error',
-                'ERR' => 'invalid pw'
-            ];
-        }
-        if (empty($district) || empty($address) || empty($province)
-        ) {
-
-            return [
-                'status' => 'error',
-                'ERR' => 'invalid empty'
-            ];
-        }
-        if (!$this->checkRePassword($password, $rpw)) {
-
-            return [
-                'status' => 'error',
-                'ERR' => 'invalid rpw'
-            ];
-        }
-        if (!$this->checkName($lastname)) {
-
-            return [
-                'status' => 'error',
-                'ERR' => 'invalid name'
-            ];
-        }
-        /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)||!$this->checkPassword($password)||empty($district)||empty($address)||empty($province)
-        ||!$this->checkRePassword($password,$rpw)||!$this->checkName($firstname)||!$this->checkName($lastname)) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)||!$this->checkPassword($password)||empty($district)||empty($address)||empty($province)
+            ||!$this->checkRePassword($password,$rpw)||!$this->checkName($firstname)||!$this->checkName($lastname)||$this->checkMobile($mobile)) {
 
             return [
                 'status' => 'error',
                 'ERR'=> 'invalid input'
             ];
-        }*/
+        }
         $password = md5($password);
         $sql = "SELECT user_id FROM user_info WHERE email = '$email' LIMIT 1";
         $check_query = mysqli_query($this->db, $sql);
@@ -189,8 +135,127 @@ class userInfoModel
             $user_data = mysqli_fetch_array($run_query);
             return $user_data;
         }
-         return [];
+        return [];
 
+    }
+    public function passManagement( $password,$rpw,$oldpassword)
+    {
+        $password = mysqli_real_escape_string($this->db, $password);
+        $oldpassword = mysqli_real_escape_string($this->db, $oldpassword);
+        $rpw = mysqli_real_escape_string($this->db, $rpw);
+
+        if (isset($_COOKIE["uid"]) || isset($_SESSION["uid"])) {
+            if (!(isset($_SESSION["uid"]))) {
+                $_SESSION["uid"] = $_COOKIE["uid"];
+                $_SESSION["name"] = $_COOKIE["name"];
+            }
+
+            if (!$this->checkPassword($oldpassword) || !$this->checkPassword($password) || !$this->checkRePassword($password,$rpw)) {
+                return [
+                    'status' => 'failed',
+                ];
+            }
+            $oldpassword=md5($oldpassword);
+            $password=md5($password);
+            $sql = "SELECT * FROM user_info WHERE user_id = '".$_SESSION["uid"]."' AND password = '$oldpassword'";
+            $run_query = mysqli_query($this->db, $sql);
+            $count = mysqli_num_rows($run_query);
+            //if user record is available in database then $count will be equal to 1
+            if ($count == 1) {
+                $sql = "UPDATE user_info SET password = '$password' WHERE user_id = '".$_SESSION["uid"]."' LIMIT 1";
+                $run_query = mysqli_query($this->db, $sql);
+                if ($run_query) {
+                    return [
+                        'status' => 'success',
+                        'ERR' => ''
+                    ];
+                } else {
+                    return [
+                        'status' => 'error',
+                        'ERR' => 'DB ERROR'
+                    ];
+                }
+            }
+            else{
+                return [
+                    'status' => 'failed',
+                ];
+            }
+
+        }
+    }
+
+    public function updateInfo( $email, $address, $district, $province, $mobile, $firstname, $lastname)
+    {
+
+
+        $email = mysqli_real_escape_string($this->db, $email);
+        $address = mysqli_real_escape_string($this->db, $address);
+        $district = mysqli_real_escape_string($this->db, $district);
+        $province = mysqli_real_escape_string($this->db, $province);
+        $firstname = mysqli_real_escape_string($this->db, $firstname);
+        $lastname = mysqli_real_escape_string($this->db, $lastname);
+        //echo $firstname;
+
+        if (isset($_COOKIE["uid"]) || isset($_SESSION["uid"])) {
+            if (!(isset($_SESSION["uid"]))) {
+                $_SESSION["uid"] = $_COOKIE["uid"];
+                $_SESSION["name"] = $_COOKIE["name"];
+            }
+
+            if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+                return [
+                    'status' => 'error',
+                    'ERR' => 'invalid email'
+                ];
+            }
+
+            if (!empty($lastname) && !$this->checkName($lastname)) {
+
+                return [
+                    'status' => 'error',
+                    'ERR' => 'invalid name'
+                ];
+            }
+            if (!empty($firstname) && !$this->checkName($firstname)) {
+
+                return [
+                    'status' => 'error',
+                    'ERR' => 'invalid name'
+                ];
+            }
+            if (!empty($mobile) && !$this->checkMobile($mobile)) {
+                return [
+                    'status' => 'error',
+                    'ERR' => 'invalid mobile'
+                ];
+            }
+            $sql = "UPDATE user_info SET ";
+            if (!empty($email)) $sql .= "email = '$email' , ";
+            if (!empty($address)) $sql .= "address = '$address' , ";
+            if (!empty($province)) $sql .= "province = '$province' , ";
+            if (!empty($district)) $sql .= "district  = '$district' , ";
+            if (!empty($firstname)) $sql .= "first_name = '$firstname' , ";
+            if (!empty($lastname)) $sql .= "last_name = '$lastname' , ";
+            if (!empty($mobile)) $sql .= "mobile = '$mobile' ,";
+            $sql = substr($sql, 0, -1);
+            $sql .= " WHERE user_id = '$_SESSION[uid]'";
+            echo $sql;
+            $run_query = mysqli_query($this->db, $sql);
+            if ($run_query) {
+                return [
+                    'status' => 'success',
+                    'ERR' => ''
+                ];
+            } else {
+                return [
+                    'status' => 'error',
+                    'ERR' => 'DB ERROR'
+                ];
+            }
+
+        }
     }
 }
 ?>

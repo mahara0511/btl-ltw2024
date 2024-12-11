@@ -82,6 +82,21 @@ switch ($parts[1]) {
                 }
             }
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                if (array_key_exists('logout_admin', $_POST) ) {
+                header ("location: /");
+                unset($_SESSION['admin']);
+                unset($_SESSION['admin_name']);
+                header("location: /admin/login");
+                exit();
+            } else if (array_key_exists('logout', $_POST)) {
+                require_once ROOT_PATH . "/controllers/userInfoController.php";
+                unset($_POST['logout']);
+                userInfoController::logout();
+                $request = $_SERVER['REQUEST_URI'];
+                header("location: ".$request);
+                exit();
+            }
+
             $action = $_GET['action'] ?? null;
             switch ($action) {
                 case 'addComment':
@@ -118,34 +133,38 @@ switch ($parts[1]) {
     case 'admin':
         include_once("admin/index.php");
         break;
+    case 'subcribe': 
+        require(ROOT_PATH . '/controllers/HomeController.php');
+        $controller = new HomeController();
+        $controller->postEmail();
     case 'login':
-        if (isset($_COOKIE["uid"]) || isset($_SESSION["uid"])) {
+        if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])){
             header('Location: /');
             echo '<script>console.log("You are already logged in");</script>';
-        } else {
+        }
+        else {
             echo '<script>console.log("You are not logged in");</script>';
         }
-        $sender = '';
-        if (isset($_SERVER['HTTP_REFERER']))
-            $sender = $_SERVER['HTTP_REFERER'];
-        setcookie('returnPage', $sender, strtotime("+1 day"), "/", "", "", TRUE);
+        $sender='';
+        if (isset($_SERVER['HTTP_REFERER']))$sender=$_SERVER['HTTP_REFERER'];
+        setcookie('returnPage',$sender,strtotime("+1 day"),"/","","",TRUE);
         require(ROOT_PATH . '/controllers/userInfoController.php');
-        $controller = new userInfoController($conn);
+        $controller=new userInfoController($conn);
         $controller->login_form();
         break;
     case 'register':
-        if (isset($_COOKIE["uid"]) || isset($_SESSION["uid"])) {
+        if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])){
             header('Location: /');
             echo '<script>console.log("You are already logged in");</script>';
-        } else {
+        }
+        else {
             echo '<script>console.log("You are not logged in");</script>';
         }
-        $sender = '';
-        if (isset($_SERVER['HTTP_REFERER']))
-            $sender = $_SERVER['HTTP_REFERER'];
-        setcookie('returnPage', $sender, strtotime("+1 day"), "/", "", "", TRUE);
+        $sender='';
+        if (isset($_SERVER['HTTP_REFERER']))$sender=$_SERVER['HTTP_REFERER'];
+        setcookie('returnPage',$sender,strtotime("+1 day"),"/","","",TRUE);
         require(ROOT_PATH . '/controllers/userInfoController.php');
-        $controller = new userInfoController($conn);
+        $controller=new userInfoController($conn);
         $controller->register_form();
         break;
     case 'checkout-form':
@@ -161,6 +180,19 @@ switch ($parts[1]) {
             exit;
         }
         break;
+    case 'user_info':
+        if(!isset ($_SESSION['uid'])&& !isset ($_COOKIE['uid'])) header('Location: /');
+        if (!isset ($_SESSION['uid'])) $_SESSION['uid']=$_SESSION['uid'];
+        require(ROOT_PATH . '/controllers/userInfoController.php');
+        $controller=new userInfoController($conn);
+        $controller->showInfo();
+        break;
+    case 'password':
+        if(!isset ($_SESSION['uid'])&& !isset ($_COOKIE['uid'])) header('Location: /');
+        if (!isset ($_SESSION['uid'])) $_SESSION['uid']=$_SESSION['uid'];
+        require(ROOT_PATH . '/controllers/userInfoController.php');
+        $controller=new userInfoController($conn);
+        $controller->passManagement();
     default:
         http_response_code(404);
         echo "404 Not Found";

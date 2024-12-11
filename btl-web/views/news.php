@@ -21,7 +21,7 @@
                         <br>
                         <button id="back-btn" onclick="setSessionCookie(<?php echo ($curpage - 1); ?>)" class="btn-back-and-forth">Back</button>
                         <button class="page-num" disabled="true">Page <?php echo $curpage ?> / <?php echo $npage ?></button>
-                        <button id="front-btn" onclick="setSessionCookie(<?php echo ($curpage + 1); ?>)" class="btn-back-and-forth">Forth</button>
+                        <button id="forth-btn" onclick="setSessionCookie(<?php echo ($curpage + 1); ?>)" class="btn-back-and-forth">Next</button>
                         <br>
                     </div>
                     <?php foreach ($news as $dummy):
@@ -37,7 +37,7 @@
                             <div class="col-md-4">
                                 <div class="card">
                                     <?php echo "<script>console.log($news_image)</script>" ?>
-                                    <img src="public/img/<?php echo $news_image ?>" alt="News Image" style="width:100%">
+                                    <img src="public/img/<?php echo $news_image ?>" alt="News Image" style="width:100%; height:32vh;">
                                     <div class="wrapper">
                                         <div class="news-title">
                                             <p><?php echo $news_title ?></p>

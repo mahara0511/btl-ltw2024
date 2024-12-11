@@ -9,6 +9,7 @@
         $this->model = new HomeModel();
     }
         public function index() {
+            
             $products1 = $this->model->getProduct(70, 75);
             $products2 = $this->model->getProduct(59, 65);
             require(ROOT_PATH.'/views/pages/homePageView/index.php');

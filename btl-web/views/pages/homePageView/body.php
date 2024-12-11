@@ -59,7 +59,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Laptop<br>Collection</h3>
-								<a href="product.php?p=78" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="store?p=78" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</a>
@@ -145,7 +145,7 @@
 				$pro_old_price = $pro_price*($pro_sale + 100)/100;
 				echo "	
 					<div class='product'>
-						<a href='store?p=$pro_id'><div class='product-img'>
+						<a href='store?product_id=$pro_id'><div class='product-img'>
 							<img src='public/product_images/$pro_image' style='max-height: 170px;' alt=''>
 							<div class='product-label'>
 								<span class='sale'>-$pro_sale%</span>
@@ -154,7 +154,7 @@
 						</div></a>
 						<div class='product-body'>
 							<p class='product-category'>$cat_name</p>
-							<h3 class='product-name header-cart-item-name'><a href='store?p=$pro_id'>$pro_title</a></h3>
+							<h3 class='product-name header-cart-item-name'><a href='store?product_id=$pro_id'>$pro_title</a></h3>
 							<h4 class='product-price header-cart-item-info'>$pro_price<del class='product-old-price'> $$pro_old_price</del></h4>
 							<div class='product-rating'>
 								<i class='fa fa-star'></i>
@@ -278,7 +278,7 @@
 
 					echo "
 						<div class='product'>
-							<a href='store?p=$pro_id'><div class='product-img'>
+							<a href='store?product_id=$pro_id'><div class='product-img'>
 								<img src='public/product_images/$pro_image' style='max-height: 170px;' alt=''>
 								<div class='product-label'>
 									<span class='sale'>-$pro_sale%</span>
@@ -287,7 +287,7 @@
 							</div></a>
 							<div class='product-body'>
 								<p class='product-category'>$cat_name</p>
-								<h3 class='product-name header-cart-item-name'><a href='store?p=$pro_id'>$pro_title</a></h3>
+								<h3 class='product-name header-cart-item-name'><a href='store?product_id=$pro_id'>$pro_title</a></h3>
 								<h4 class='product-price header-cart-item-info'>$pro_price<del class='product-old-price'>$$pro_old_price</del></h4>
 								<div class='product-rating'>
 									<i class='fa fa-star'></i>

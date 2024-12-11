@@ -82,6 +82,21 @@ switch ($parts[1]) {
                 }
             }
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                if (array_key_exists('logout_admin', $_POST) ) {
+                header ("location: /");
+                unset($_SESSION['admin']);
+                unset($_SESSION['admin_name']);
+                header("location: /admin/login");
+                exit();
+            } else if (array_key_exists('logout', $_POST)) {
+                require_once ROOT_PATH . "/controllers/userInfoController.php";
+                unset($_POST['logout']);
+                userInfoController::logout();
+                $request = $_SERVER['REQUEST_URI'];
+                header("location: ".$request);
+                exit();
+            }
+
             $action = $_GET['action'] ?? null;
             switch ($action) {
                 case 'addComment':

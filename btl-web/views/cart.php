@@ -60,7 +60,7 @@ $total_price = $data['total_price'] ?? 0;
                                                 <div class="row">
                                                     <a href="index.php?product_id=<?= $item['product_id']; ?>">
                                                         <div class="col-sm-4 text-center">
-                                                            <img src="<?= 'product_images/' . htmlspecialchars($item['product_image']); ?>"
+                                                            <img src="<?= 'public/product_images/' . htmlspecialchars($item['product_image']); ?>"
                                                                 style="height: 70px; width: 75px;" alt="Product Image" />
                                                             <div
                                                                 class=" nomargin product-name header-cart-item-name text-center text-uppercase fs-6">

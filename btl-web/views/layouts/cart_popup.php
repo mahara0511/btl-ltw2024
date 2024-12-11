@@ -25,7 +25,7 @@ $cartController = new CartController($conn);
                     <div class="product-widget"
                         onclick="window.location.href='/store?product_id=<?php echo $item['product_id']; ?>'">
                         <div class="product-img">
-                            <img src="<?= 'product_images/' . htmlspecialchars($item['product_image']); ?>"
+                            <img src="<?= 'public/product_images/' . htmlspecialchars($item['product_image']); ?>"
                                 alt="<?= htmlspecialchars($item['product_title']); ?>">
                         </div>
                         <div class="product-body">
@@ -103,7 +103,7 @@ $cartController = new CartController($conn);
                     $('#cart_product').append(`
                         <div class="product-widget" onclick="window.location.href='/store?product_id=${product.product_id}'">
                             <div class="product-img"s>
-                                <img src="product_images/${product.product_image}" alt="${(product.product_title)}">
+                                <img src="public/product_images/${product.product_image}" alt="${(product.product_title)}">
                             </div>
                             <div class="product-body">
                                 <h3 class="product-name">

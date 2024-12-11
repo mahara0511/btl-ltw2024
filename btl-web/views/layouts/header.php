@@ -264,11 +264,10 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
                     <!-- LOGO -->
                     <div class="col-md-3">
                         <div class="header-logo">
-                            <a href="#" class="logo">
+                            <a href="/" class="logo">
                                 <font style="font-style:normal; font-size: 33px;color: aliceblue;font-family: serif">
                                     Online Shop
                                 </font>
-
                             </a>
                         </div>
                     </div>

@@ -12,12 +12,12 @@ if(isset($_SESSION['message']))
 
 
 if (array_key_exists('logout_admin', $_POST) ) {
+    header ("location: /");
     unset($_SESSION['admin']);
     unset($_SESSION['admin_name']);
     header("location: /admin/login");
     exit();
 } else if (array_key_exists('logout', $_POST)) {
-    echo "tf";
     require_once ROOT_PATH . "/controllers/userInfoController.php";
     unset($_POST['logout']);
     userInfoController::logout();
@@ -27,6 +27,14 @@ if (array_key_exists('logout_admin', $_POST) ) {
     if($parts[1]=="user_info"||$parts[1]=="password"){
         header('Location: /');
         exit();
+    }
+    else{
+        if(isset($_SESSION['message']))
+        {
+            $message = $_SESSION['message'];
+            require_once  (ROOT_PATH.'/views/layouts/login_popup.php');
+            unset($_SESSION['message']);
+        }
     }
 }
 

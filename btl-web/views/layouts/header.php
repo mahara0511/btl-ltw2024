@@ -2,14 +2,14 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION['admin']){
+if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION['admin']) {
     unset($_SESSION['admin']);
     unset($_SESSION['admin_name']);
     session_destroy();
     header('Location: /admin');
     exit();
-} else if (array_key_exists('logout', $_POST)){
-    require_once ROOT_PATH."/controllers/userInfoController.php";
+} else if (array_key_exists('logout', $_POST)) {
+    require_once ROOT_PATH . "/controllers/userInfoController.php";
     unset($_POST['logout']);
     userInfoController::logout();
 }
@@ -158,8 +158,6 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
         .glyphicon-chevron-right:before {
             content: "\f054"
         }
-
-
     </style>
 
 </head>
@@ -167,13 +165,13 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
 <body>
     <!-- HEADER -->
 
-    <?php 
-        $con = new mysqli('localhost', 'root', '', 'onlineshop');
-        $stmt = $con->prepare("SELECT * FROM about_info");
-        $stmt->execute();
-        $result = $stmt->get_result(); 
-        $about = $result->fetch_assoc();   
-        $stmt->close();
+    <?php
+    $con = new mysqli('localhost', 'root', '', 'onlineshop');
+    $stmt = $con->prepare("SELECT * FROM about_info");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $about = $result->fetch_assoc();
+    $stmt->close();
     ?>
     <header>
         <!-- TOP HEADER -->
@@ -185,11 +183,11 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
                     <li><a href="#"><i class="fa fa-map-marker"></i><?php echo $about['location'] ?></a></li>
                 </ul>
                 <ul class="header-links pull-right">
-                    <li><a href="#"><i class="fa fa-inr"></i> INR</a></li>
+                    <!-- <li><a href="#"><i class="fa fa-inr"></i> INR</a></li>  -->
                     <li><?php
-                    include_once ROOT_PATH. "/config/db.php";
-                    if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])) {
-                        if (!isset($_SESSION["uid"])){
+                    include_once ROOT_PATH . "/config/db.php";
+                    if (isset($_COOKIE["uid"]) || isset($_SESSION["uid"])) {
+                        if (!isset($_SESSION["uid"])) {
                             $_SESSION["uid"] = $_COOKIE["uid"];
                             $_SESSION["name"] = $_COOKIE["name"];
                         }
@@ -199,7 +197,7 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
 
                         echo '
                                <div class="dropdownn">
-                                  <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> HI ' . $row["first_name"]. '</a>
+                                  <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> HI ' . $row["first_name"] . '</a>
                                   <div class="dropdownn-content">
                                     <a href="/user_info" ><i class="fa fa-user-circle" aria-hidden="true" ></i>My Profile</a>
                                     
@@ -214,11 +212,11 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
                                     
                                   </div>
                                 </div>';
-                    
-                    } else if(isset($_SESSION['admin']) && $_SESSION['admin']) {
+
+                    } else if (isset($_SESSION['admin']) && $_SESSION['admin']) {
                         echo '
                                <div class="dropdownn">
-                                  <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> HI ' . $_SESSION["admin_name"]. '</a>
+                                  <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> HI ' . $_SESSION["admin_name"] . '</a>
                                   <div class="dropdownn-content">
                                     <a href="/admin" ><i class="fa fa-user-circle" aria-hidden="true" ></i>Go to admin</a>
                                     
@@ -233,8 +231,7 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
                                     
                                   </div>
                                 </div>';
-                    } 
-                    else {
+                    } else {
                         echo '
                                 <div class="dropdownn">
                                   <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> My Account</a>
@@ -280,15 +277,17 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
                     <!-- SEARCH BAR -->
                     <div class="col-md-6">
                         <div class="header-search">
-                            <form>
-                                <select class="input-select">
+                            <!-- <form> -->
+                            <!-- <select class="input-select">
                                     <option value="0">All Categories</option>
                                     <option value="1">Men</option>
                                     <option value="1">Women </option>
-                                </select>
-                                <input class="input" id="search" type="text" placeholder="Search here">
-                                <button type="submit" id="search_btn" class="search-btn">Search</button>
-                            </form>
+                                </select> -->
+                            <!-- <input class="input" id="search" type="text" placeholder="Search here"> -->
+                            <button id="search_btn" class="search-btn" onclick="window.location.href='/store'">Search
+                                your favorite
+                                products</button>
+                            <!-- </form> -->
                         </div>
                     </div>
                     <!-- /SEARCH BAR -->
@@ -297,13 +296,13 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
                     <div class="col-md-3 clearfix">
                         <div class="header-ctn">
                             <!-- Wishlist -->
-                            <div>
+                            <!-- <div>
                                 <a href="">
                                     <i class="fa-brands fa-github"></i>
                                     <span>Github</span>
 
                                 </a>
-                            </div>
+                            </div> -->
                             <!-- /Wishlist -->
 
                             <!-- Cart -->
@@ -332,9 +331,9 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
     <nav id='navigation'>
         <!-- container -->
         <div class="container" id="get_category_home">
-            <?php 
-                $current_page = $_SERVER['REQUEST_URI'];
-                echo "
+            <?php
+            $current_page = $_SERVER['REQUEST_URI'];
+            echo "
                 				<!-- responsive-nav -->
 				<div id='responsive-nav'>
 					<!-- NAV -->
@@ -349,12 +348,9 @@ if (array_key_exists('logout', $_POST) && isset($_SESSION['admin']) && $_SESSION
 				</div>
 				<!-- /responsive-nav -->
                 "
-            
-            ?>
+
+                ?>
         </div>
         <!-- responsive-nav -->
         <!-- /container -->
     </nav>
-
-
- 

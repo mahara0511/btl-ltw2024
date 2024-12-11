@@ -232,7 +232,9 @@ $_SESSION['product_id'] = $product_detail['product_id'];
 
                                 <div class="comment-actions">
                                     <div class="reply-group">
-                                        <button class="reply-btn" data-comment-id="<?php echo $comment['cmt_id']; ?>">Reply</button>
+                                        <button class="reply-btn" data-comment-id="<?php echo $comment['cmt_id']; ?>"
+                                            style="cursor: <?= isset($_SESSION['admin']) && $_SESSION['admin'] === true ? 'not-allowed' : 'pointer' ?>"
+                                            <?= isset($_SESSION['admin']) && $_SESSION['admin'] === true ? 'disabled' : '' ?>>Reply</button>
                                         <?php if ($indent === 0): ?>
                                             <div class="comment-replies">
                                                 <?php if (isset($replyCounts[$comment['cmt_id']]) && $replyCounts[$comment['cmt_id']] > 0): ?>
@@ -245,11 +247,10 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                                                 <?php endif; ?>
                                             </div>
                                         <?php endif; ?>
-
                                     </div>
 
                                     <?php
-                                    if (isset($_SESSION['uid']) && $_SESSION['uid'] == $comment['user_id']):
+                                    if (isset($_SESSION['admin']) && $_SESSION['admin'] === true || (isset($_SESSION['uid']) && $_SESSION['uid'] == $comment['user_id'])):
                                         // if ($comment['user_id'] == 1):
                                         ?>
                                         <div class="dropdown">

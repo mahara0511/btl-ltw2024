@@ -605,6 +605,10 @@ textarea.input {
 
 .header-search {
   padding: 15px 0px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-search form {
@@ -626,13 +630,14 @@ textarea.input {
 
 .header-search form .input {
   height: 40px;
+  border-radius: 40px 0 0 40px;
   flex: 1;
   outline: none;
 }
 
-.header-search form .search-btn {
+.header-search .search-btn {
   height: 40px;
-  width: 100px;
+  width: 80%;
   background: #00b4db; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to bottom,
@@ -648,7 +653,22 @@ textarea.input {
   color: #fff;
   font-weight: 700;
   border: none;
-  border-radius: 0px 40px 40px 0px;
+  border-radius: 40px;
+}
+
+.header-search button:hover {
+  color: #d10024 !important;
+  background: #005e74; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #00455d,
+    #007f9b
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #002a38,
+    #007590
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 /*----------------------------*\
@@ -1155,6 +1175,7 @@ table#cart tbody td.actions {
   box-shadow: 0px 0px 0px 0px #e4e7ed, 0px 0px 0px 1px #e4e7ed;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
+  cursor: pointer;
 }
 
 .product:hover {

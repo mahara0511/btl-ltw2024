@@ -1,6 +1,5 @@
 <?php
 require_once ROOT_PATH . "/views/layouts/header.php";
-
 ?>
 
 <?php

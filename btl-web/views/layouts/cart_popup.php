@@ -40,11 +40,7 @@ $cartController = new CartController($conn);
                 <?php endforeach; ?>
                 <div class="cart-summary">
                     <small class="qty"><?= count($cart_items) . " Item(s) in cart" ?></small>
-                    <h5>Total price : $<?= round($total_price, 2) ?></h5>
-                </div>
-            <?php else: ?>
-                <div class="alert alert-warning m-auto " role="alert">
-                    Your cart is empty.
+                    <h5>Total price : $<?= round($total_price, 0) ?></h5>
                 </div>
             <?php endif; ?>
         </div>
@@ -74,38 +70,68 @@ $cartController = new CartController($conn);
     });
 
     // If user does not login already, load cart in local storage
-    // Else call $cartController in below
+    // Else call $cartController above
     // If user is logged in, display server-side cart
-    if (!<?= isset($_SESSION['uid']) ? 'true' : 'false' ?>) {
+    const isUserLoggedIn = <?= isset($_SESSION['uid']) ? 'true' : 'false' ?>;
+    if (!isUserLoggedIn) {
         // User is not logged in, load cart from localStorage
+        loadLocalStorageCart();
+    }
+
+    function loadLocalStorageCart() {
         let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
         let totalPrice = 0;
-        console.log(cartItems)
-        // Populate cart    
+
         if (cartItems.length > 0) {
-            cartItems.forEach(item => {
-                totalPrice += item.qty * item.product_price;
-                $('#cart_product').append(`
-                        <div class="product-widget">
-                            <div class="product-img">
-                                <img src="product_images/${item.product_image}" alt="${item.product_title}">
+            let requests = cartItems.map(item => {
+                return $.ajax({
+                    url: '/store',
+                    method: 'GET',
+                    data: { cart_pid: item.pid },
+                    dataType: 'json'
+                });
+            });
+
+            $.when.apply($, requests).done(function (...responses) {
+                responses = responses.map(res => res[0]); // Extract data from each response
+
+                responses.forEach((product, index) => {
+                    const item = cartItems[index];
+                    const productTotalPrice = item.qty * product.product_price;
+                    totalPrice += productTotalPrice;
+
+                    $('#cart_product').append(`
+                        <div class="product-widget" onclick="window.location.href='/store?product_id=${product.product_id}'">
+                            <div class="product-img"s>
+                                <img src="product_images/${product.product_image}" alt="${(product.product_title)}">
                             </div>
                             <div class="product-body">
-                                <h3 class="product-name"><a href="/store?product_id=${item.product_id}">${item.product_title}</a></h3>
-                                <h4 class="product-price"><span class="qty">${item.qty}</span> x $${item.product_price}</h4>
+                                <h3 class="product-name">
+                                    <a href="/store?product_id=${product.product_id}">${(product.product_title)}</a>
+                                </h3>
+                                <h4 class="product-price">
+                                    <span class="qty">${item.qty}</span> x $${Math.round(product.product_price)}
+                                </h4>
                             </div>
                         </div>
                     `);
-            });
+                });
 
-            $('#cartItemCount').text(cartItems.length);
-            $('.cart-summary').html(`
+                // Update total cart price and item count
+                $('#cartItemCount').text(cartItems.length);
+                $('#cart_product').append(`
                     <small class="qty">${cartItems.length} Item(s) in cart</small>
-                    <h5>Total price: $${totalPrice.toFixed(2)}</h5>
+                    <h5>Total price: $${Math.round(totalPrice)}</h5>
                 `);
+            }).fail(function () {
+                console.error('Failed to fetch product details from the server.');
+                $('#cart_product').html('<div class="alert alert-warning m-auto" role="alert">Failed to load cart items.</div>');
+            });
         } else {
             $('#cart_product').html('<div class="alert alert-warning m-auto" role="alert">Your cart is empty.</div>');
+            $('#cartItemCount').text('0');
         }
     }
+
 
 </script>

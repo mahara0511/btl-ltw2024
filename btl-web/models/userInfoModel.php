@@ -39,7 +39,7 @@ class userInfoModel
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !$this->checkPassword($password)) {
             return [
                 'status' => 'failed',
-                'IAM' => 'user'
+                'ERR'=> 'wrong input format'
             ];
         }
 
@@ -59,13 +59,13 @@ class userInfoModel
             }
             return [
                 'status' => 'success',
-                'IAM' => 'user'
+                'ERR'=> ''
             ];
         } else {
 
             return [
                 'status' => 'failed',
-                'IAM' => 'user'
+                'ERR'=> 'wrong validation'
             ];
 
         }
@@ -84,9 +84,14 @@ class userInfoModel
         $lastname = mysqli_real_escape_string($this->db, $lastname);
         //echo $firstname;
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)||!$this->checkPassword($password)||empty($district)||empty($address)||empty($province)
-            ||!$this->checkRePassword($password,$rpw)||!$this->checkName($firstname)||!$this->checkName($lastname)||$this->checkMobile($mobile)) {
-
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)||!$this->checkPassword($password)||empty($district)||empty($address)||empty($province)
+            ||!$this->checkRePassword($password,$rpw)||!$this->checkName($firstname)||!$this->checkName($lastname)||!$this->checkMobile($mobile)) {
+            if ( empty($address)) {
+                return [
+                    'status' => 'error',
+                    'ERR'=> 'invalid mobil'
+                ];
+            }
             return [
                 'status' => 'error',
                 'ERR'=> 'invalid input'

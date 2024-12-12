@@ -36,7 +36,7 @@ class userInfoController
                 //TO DO: add code to go back to prev page//
             }
             else {
-                $_SESSION['message'] = "Login failed!";
+                $_SESSION['message'] = $state['ERR'];
                 header ('location: /login');
                 exit;
 
@@ -49,18 +49,24 @@ class userInfoController
     }
 
 
-     public static function logout(){
+    public static function logout(){
         if(session_id() == '') {
             session_start();
         }
-        $_SESSION['message'] ="Logout successful!";
-        unset($_SESSION["uid"]);
-        unset($_SESSION["name"]);
-        if (isset($_COOKIE["uid"])){
-            unset($_COOKIE['uid']);
-            unset($_COOKIE['name']);
-            setcookie('uid');
-            setcookie('name');
+        $_SESSION['message'] = "Logout successful!";
+        if (isset($_SESSION['admin']) && $_SESSION['admin']) {
+            unset($_SESSION['admin_name']);
+            unset($_SESSION['admin']);
+        }
+        else {
+            unset($_SESSION["uid"]);
+            unset($_SESSION["name"]);
+            if (isset($_COOKIE["uid"])) {
+                unset($_COOKIE['uid']);
+                unset($_COOKIE['name']);
+                setcookie('uid');
+                setcookie('name');
+            }
         }
 
     }
@@ -83,7 +89,7 @@ class userInfoController
 
             echo '<script>console.log("'.$state['status'].'")</script>';
             if ($state['status']=='error'){
-                $_SESSION['message'] = "Registration failed!";
+                $_SESSION['message'] =$state['ERR'];
                 //echo $state['ERR'];
                 header ('location: /register');
                 exit;

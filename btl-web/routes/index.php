@@ -200,6 +200,7 @@ switch ($parts[1]) {
         require(ROOT_PATH . '/controllers/userInfoController.php');
         $controller=new userInfoController($conn);
         $controller->passManagement();
+        break;
     default:
         http_response_code(404);
         echo "404 Not Found";

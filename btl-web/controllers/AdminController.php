@@ -57,7 +57,6 @@ class AdminController
         
             if (count($errors) == 0) {
                 $password = md5($password);
-                echo $password;
                 $results = $this->model->login($admin_username, $password, $errors);
 
                 if ($results->num_rows === 1) {

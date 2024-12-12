@@ -2,7 +2,17 @@
 require_once ROOT_PATH . "/views/layouts/header.php";
 ?>
 <link type="text/css" rel="stylesheet" href="public/css/checkout.css" />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="public/js/jquery.min.js"></script>
+<script src="public/js/bootstrap.min.js"></script>
+<script src="public/js/slick.min.js"></script>
+<script src="public/js/nouislider.min.js"></script>
+<script src="public/js/jquery.zoom.min.js"></script>
+<script src="public/js/sweetalert.min.js"></script>
+<script src="public/js/jquery.payform.min.js" charset="utf-8"></script>
+<script src="public/js/main.js"></script>
+<script src="public/js/actions.js"></script>
+<script src="public/js/script.js"></script>
 <script>
     $(document).ready(function () {
         // Handle form submission

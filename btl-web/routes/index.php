@@ -159,7 +159,7 @@ switch ($parts[1]) {
         $sender = '';
         if (isset($_SERVER['HTTP_REFERER']))
             $sender = $_SERVER['HTTP_REFERER'];
-        setcookie('returnPage', $sender, strtotime("+1 day"), "/", "", "", TRUE);
+        setcookie('returnPage', $sender, strtotime("+1 day"), "/", "", false, TRUE);
         require(ROOT_PATH . '/controllers/userInfoController.php');
         $controller = new userInfoController($conn);
         $controller->login_form();
@@ -177,7 +177,7 @@ switch ($parts[1]) {
         $sender = '';
         if (isset($_SERVER['HTTP_REFERER']))
             $sender = $_SERVER['HTTP_REFERER'];
-        setcookie('returnPage', $sender, strtotime("+1 day"), "/", "", "", TRUE);
+        setcookie('returnPage', $sender, strtotime("+1 day"), "/", "", false, TRUE);
         require(ROOT_PATH . '/controllers/userInfoController.php');
         $controller = new userInfoController($conn);
         $controller->register_form();
@@ -213,7 +213,7 @@ switch ($parts[1]) {
         if (!isset($_SESSION['uid']) && !isset($_COOKIE['uid']))
             header('Location: /');
         if (!isset($_SESSION['uid']))
-            $_SESSION['uid'] = $_SESSION['uid'];
+            $_SESSION['uid'] = $_COOKIE['uid'];
         require(ROOT_PATH . '/controllers/userInfoController.php');
         $controller = new userInfoController($conn);
         $controller->showInfo();
@@ -225,7 +225,7 @@ switch ($parts[1]) {
         if (!isset($_SESSION['uid']) && !isset($_COOKIE['uid']))
             header('Location: /');
         if (!isset($_SESSION['uid']))
-            $_SESSION['uid'] = $_SESSION['uid'];
+            $_SESSION['uid'] = $_COOKIE['uid'];
         require(ROOT_PATH . '/controllers/userInfoController.php');
         $controller = new userInfoController($conn);
         $controller->passManagement();
@@ -236,7 +236,7 @@ switch ($parts[1]) {
         exit;
     default:
         http_response_code(404);
-        include ROOT_PATH."/views/errorPage.php";
+        include ROOT_PATH . "/views/errorPage.php";
         break;
 }
 

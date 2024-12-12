@@ -123,6 +123,23 @@ class OrderController
 
             require_once 'views/checkout_form.php';
         }
+         else {
+            if (array_key_exists('logout_admin', $_POST)) {
+                unset($_SESSION['admin']);
+                unset($_SESSION['admin_name']);
+                header("location: /admin/login");
+                exit();
+            } else if (array_key_exists('logout', $_POST)) {
+                require_once ROOT_PATH . "/controllers/userInfoController.php";
+                unset($_POST['logout']);
+                userInfoController::logout();
+                $request = $_SERVER['REQUEST_URI'];
+                header("location: " . $request);
+                exit();
+            }
+            header("Location: /");
+            exit();
+        }
     }
 
     public function placeOrder()

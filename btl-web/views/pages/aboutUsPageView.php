@@ -29,7 +29,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <link rel="stylesheet" href="public/css/aboutUsPage.css">
-<link rel="stylesheet" href="public/css/aboutUsresponsive.css">
+<link rel="stylesheet" href="public/css/responsiveAboutUs.css">
 <link rel="stylesheet" href="public/fonts/themify-icons-font/themify-icons/themify-icons.css">
 <div class="bigwrapper">
 

@@ -42,6 +42,10 @@ $cartController = new CartController($conn);
                     <small class="qty"><?= count($cart_items) . " Item(s) in cart" ?></small>
                     <h5>Total price : $<?= round($total_price, 0) ?></h5>
                 </div>
+            <?php else: ?>
+                <div class="alert alert-danger" role="alert">
+                    Your cart is empty.
+                </div>
             <?php endif; ?>
         </div>
         <div class="cart-btns">

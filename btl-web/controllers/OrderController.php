@@ -67,19 +67,21 @@ class OrderController
         $this->model->deleteOrder($orderId);
     }
 
-    /**
-     * Get details for a specific order.
-     * 
-     * @param int $orderId - The ID of the order.
-     * @return array|false - The order details or false if not found.
-     */
+    // /**
+    //  * Get details for a specific order.
+    //  * 
+    //  * @param int $orderId - The ID of the order.
+    //  * @return array|false - The order details or false if not found.
+    //  */
     public function getOrderDetails($orderId)
     {
         $order = $this->model->getOrderById($orderId);
         if ($order) {
             $order['products'] = $this->model->getOrderProducts($orderId);
         }
-        return $order;
+
+        echo json_encode($order);
+        // return $order;
     }
 
     public function showCheckoutForm()

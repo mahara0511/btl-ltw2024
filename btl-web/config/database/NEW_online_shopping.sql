@@ -142,8 +142,7 @@ CREATE TABLE `email_info` (
 
 INSERT INTO
     `email_info` (`email`)
-VALUES 
-    ('admin@gmail.com'),
+VALUES ('admin@gmail.com'),
     ('puneethreddy951@gmail.com'),
     ('puneethreddy@gmail.com');
 
@@ -1531,5 +1530,63 @@ VALUES (
         'Customer Spotlights',
         '2024-12-07'
     );
+
+INSERT INTO
+    `orders_info` (
+        `order_id`,
+        `user_id`,
+        `order_date`,
+        `f_name`,
+        `email`,
+        `address`,
+        `district`,
+        `province`,
+        `cardname`,
+        `cardnumber`,
+        `prod_count`,
+        `total_amt`
+    )
+VALUES (
+        1,
+        1,
+        '2024-11-11',
+        'John Doe',
+        'john.doe@example.com',
+        '123 Main Street',
+        'New York',
+        'NY',
+        'John Doe',
+        '1234567890',
+        4,
+        7100.00
+    ),
+    (
+        2,
+        1,
+        '2024-12-12',
+        'John Doe',
+        'john.doe@example.com',
+        '30 Ly Thuong Kiet Street',
+        'Quan 10',
+        'Ho Chi Minh',
+        'John Doe',
+        '1234567890',
+        4,
+        7100.00
+    );
+
+INSERT INTO
+    `order_products` (
+        `order_id`,
+        `product_id`,
+        `qty`,
+        `amt`
+    )
+VALUES (1, 1, 1, 5000.00),
+    (1, 16, 1, 600.00),
+    (1, 25, 2, 1500.00),
+    (2, 1, 1, 5000.00),
+    (2, 16, 1, 600.00),
+    (2, 25, 2, 1500.00);
 
 COMMIT;

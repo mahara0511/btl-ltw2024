@@ -15,7 +15,6 @@ $total_price = $data['total_price'] ?? 0;
 
 
 
-
 <section class="section">
     <!-- Modal -->
     <div class="modal fade" id="Modal_alert" tabindex="-1" role="dialog" aria-labelledby="ModalAlertLabel"

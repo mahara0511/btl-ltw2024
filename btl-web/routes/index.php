@@ -198,7 +198,13 @@ switch ($parts[1]) {
     case 'orders':
         require(ROOT_PATH . '/controllers/OrderController.php');
         $controller = new OrderController($conn);
-        // $controller->getUserOrders(intval($_SESSION('uid')));
+
+        if (count($parts) == 2) {
+            $user_id = intval($_SESSION['uid']) ?? 0;
+            $controller->getUserOrders($user_id);
+        } elseif (count($parts) == 3) {
+            $controller->getOrderDetails(intval($parts[2]));
+        }
         break;
     case 'user_info':
         if (count($parts) > 2) {

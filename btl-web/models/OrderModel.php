@@ -102,7 +102,7 @@ class OrderModel
      */
     public function getOrderProducts($orderId)
     {
-        $sql = "SELECT * FROM order_products WHERE order_id = ?";
+        $sql = "SELECT * FROM order_products, products WHERE products.product_id = order_products.product_id AND order_id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param('i', $orderId); // 'i' for integer
         $stmt->execute();

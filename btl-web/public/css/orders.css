@@ -1,0 +1,193 @@
+/* Responsive Table Styles */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  min-height: 50vh;
+  background-color: #eee;
+  border-radius: 22px;
+  box-shadow: 5px 10px #888888;
+  padding: 22px;
+}
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  tbody tr:hover {
+    background-color: #ffe2e7;
+    cursor: pointer;
+  }
+
+  tbody td.status.Delivered {
+    color: green !important;
+    font-weight: bold;
+  }
+  tbody td.status.Delivering {
+    color: #d10024 !important;
+    font-weight: bold;
+  }
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.order-info {
+  margin-bottom: 20px;
+}
+
+table.order-products {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.order-products th,
+table.order-products td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table.order-products tr:hover {
+  background-color: #ffe2e7;
+  cursor: pointer;
+}
+
+.product-thumbnail {
+  max-width: 50px;
+  max-height: 50px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Make table rows clickable */
+.responsive-table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.responsive-table tbody tr:hover {
+  background-color: #ffe2e7;
+}
+
+/* Mobile-first approach */
+@media screen and (max-width: 768px) {
+  .responsive-table thead {
+    display: none;
+  }
+
+  .responsive-table tr {
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #000000;
+  }
+
+  .responsive-table td {
+    display: block;
+    text-align: right;
+    padding: 10px;
+    border-bottom: 1px solid #000000;
+  }
+
+  .responsive-table td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .responsive-table td:last-child {
+    border-bottom: none;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 10% 2.5%;
+  }
+  .modal-content thead {
+    display: none;
+  }
+
+  .modal-content tr {
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #000000;
+  }
+
+  .modal-content td {
+    display: block;
+    text-align: right !important;
+    padding: 10px;
+    border-bottom: 1px solid #000000;
+  }
+
+  .modal-content td:first-child {
+    text-align: center !important;
+  }
+
+  .modal-content td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+  }
+
+  .modal-content td:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Desktop styles */
+@media screen and (min-width: 769px) {
+  .responsive-table th,
+  .responsive-table td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .responsive-table tr:nth-child(even) {
+    background-color: #e0e0e0;
+  }
+
+  .responsive-table th {
+    background-color: #d10024;
+    color: white;
+  }
+}

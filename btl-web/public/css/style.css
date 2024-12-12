@@ -745,7 +745,7 @@ textarea.input {
 
 .cart-dropdown .cart-list {
   max-height: 180px;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-bottom: 15px;
 }
 
@@ -843,9 +843,9 @@ textarea.input {
   vertical-align: middle;
 }
 
-/* #cart tbody {
-  height: 50vh;
-} */
+#cart tbody {
+  min-height: 50vh;
+}
 
 #cart tbody tr td {
   padding-top: 20px; /* Optional: Round corners */

@@ -10,6 +10,12 @@ $_SESSION['product_id'] = $product_detail['product_id'];
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
+<script>
+    // Check if user is logged in by checking the PHP session variable
+    const isLoggedIn = <?php echo isset($_SESSION['uid']) ? 'true' : 'false'; ?>;
+</script>
 <script src="public/js/product.js"></script>
 
 <!-- Bootstrap Bundle with Popper -->
@@ -138,7 +144,7 @@ $_SESSION['product_id'] = $product_detail['product_id'];
                     <ul class="product-links">
                         <li>Category:</li>
                         <li>
-                            <a href=<?php echo "'index.php?action=view_category&cid=" . $product_detail['cat_id'] . "'" ?>>
+                            <a href=<?php echo "'/store?action=view_category&cid=" . $product_detail['cat_id'] . "'" ?>>
                                 <?php echo $product_detail['category'] ?>
                             </a>
                         </li>

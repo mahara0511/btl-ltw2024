@@ -14,11 +14,13 @@ switch ($parts[1]) {
         $controller->index();
         break;
     case 'about_us':
+        if (count($parts) >2) {header("location: /".$parts[1]);}
         require(ROOT_PATH . '/controllers/AboutUsController.php');
         $controller = new AboutUsController();
         $controller->index();
         break;
     case 'news':
+        if (count($parts) >2) {header("location: /".$parts[1]);}
         require(ROOT_PATH . '/controllers/NewsController.php');
         $controller = new NewsController();
 
@@ -124,6 +126,7 @@ switch ($parts[1]) {
         require('Product.php');
         break;
     case 'contact_us':
+        if (count($parts) >2) {header("location: /".$parts[1]);}
         require(ROOT_PATH . '/controllers/HomeController.php');
         $controller = new HomeController();
         $controller->contact_us();
@@ -138,7 +141,8 @@ switch ($parts[1]) {
         $controller = new HomeController();
         $controller->postEmail();
     case 'login':
-        if (isset($_COOKIE["uid"]) || isset($_SESSION["uid"])) {
+        if (count($parts) >2) {header("location: /".$parts[1]);}
+        if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])){
             header('Location: /');
             echo '<script>console.log("You are already logged in");</script>';
         } else {
@@ -153,7 +157,8 @@ switch ($parts[1]) {
         $controller->login_form();
         break;
     case 'register':
-        if (isset($_COOKIE["uid"]) || isset($_SESSION["uid"])) {
+        if (count($parts) >2) {header("location: /".$parts[1]);}
+        if (isset($_COOKIE["uid"])||isset($_SESSION["uid"])){
             header('Location: /');
             echo '<script>console.log("You are already logged in");</script>';
         } else {
@@ -181,22 +186,21 @@ switch ($parts[1]) {
         }
         break;
     case 'user_info':
-        if (!isset($_SESSION['uid']) && !isset($_COOKIE['uid']))
-            header('Location: /');
-        if (!isset($_SESSION['uid']))
-            $_SESSION['uid'] = $_COOKIE['uid'];
+        if (count($parts) >2) {header("location: /".$parts[1]);}
+        if(!isset ($_SESSION['uid'])&& !isset ($_COOKIE['uid'])) header('Location: /');
+        if (!isset ($_SESSION['uid'])) $_SESSION['uid']=$_SESSION['uid'];
         require(ROOT_PATH . '/controllers/userInfoController.php');
         $controller = new userInfoController($conn);
         $controller->showInfo();
         break;
     case 'password':
-        if (!isset($_SESSION['uid']) && !isset($_COOKIE['uid']))
-            header('Location: /');
-        if (!isset($_SESSION['uid']))
-            $_SESSION['uid'] = $_COOKIE['uid'];
+         if (count($parts) >2) {header("location: /".$parts[1]);}
+        if(!isset ($_SESSION['uid'])&& !isset ($_COOKIE['uid'])) header('Location: /');
+        if (!isset ($_SESSION['uid'])) $_SESSION['uid']=$_SESSION['uid'];
         require(ROOT_PATH . '/controllers/userInfoController.php');
         $controller = new userInfoController($conn);
         $controller->passManagement();
+        break;
     default:
         http_response_code(404);
         echo "404 Not Found";

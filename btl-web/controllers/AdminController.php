@@ -64,6 +64,22 @@ class AdminController
                     $_SESSION['admin_name'] = $admin_username;
                     $_SESSION['admin'] = TRUE;
                     $_SESSION['success'] = "You are now logged in";
+                    if (isset ($_SESSION['uid'])||isset($_COOKIE['uid'])) {
+                        if(session_id() == '') {
+                            session_start();
+                        }
+                        unset($_SESSION["uid"]);
+                        unset($_SESSION["name"]);
+                        if (isset($_COOKIE["uid"])) {
+                            unset($_COOKIE['uid']);
+                            unset($_COOKIE['name']);
+                            setcookie('uid');
+                            setcookie('name');
+                        }
+
+                    }
+
+                    
                     header('location: /admin');
                     exit(); // Luôn thêm exit sau header
                 } else {

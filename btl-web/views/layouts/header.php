@@ -9,9 +9,7 @@ if (isset($_SESSION['message'])) {
 }
 
 
-
 if (array_key_exists('logout_admin', $_POST)) {
-    header("location: /");
     unset($_SESSION['admin']);
     unset($_SESSION['admin_name']);
     header("location: /admin/login");
@@ -23,7 +21,8 @@ if (array_key_exists('logout_admin', $_POST)) {
     $request = $_SERVER['REQUEST_URI'];
     $request = parse_url($request, PHP_URL_PATH);
     $parts = explode('/', $request);
-    if ($parts[1] == "user_info" || $parts[1] == "password") {
+    if ($parts[1] == "user_info" || $parts[1] == "password"|| $parts[1] == "place-order"|| $parts[1] == "checkout-form"||
+        $parts[1] == "orders"|| $parts[1] == "view_cart") {
         header('Location: /');
         exit();
     } else {
@@ -34,6 +33,7 @@ if (array_key_exists('logout_admin', $_POST)) {
         }
     }
 }
+
 
 ?>
 

@@ -35,9 +35,26 @@ switch ($parts[1]) {
         }
         break;
     case 'view_cart':
+        if (!isset($_SESSION['uid']) && !isset($_COOKIE['uid']))
+            header('Location: /');
+        if (!isset($_SESSION['uid']))
+            $_SESSION['uid'] =$_COOKIE['uid'];
         require(ROOT_PATH . '/controllers/CartController.php');
         $cartController = new CartController($conn);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (array_key_exists('logout_admin', $_POST)) {
+                unset($_SESSION['admin']);
+                unset($_SESSION['admin_name']);
+                header("location: /admin/login");
+                exit();
+            } else if (array_key_exists('logout', $_POST)) {
+                require_once ROOT_PATH . "/controllers/userInfoController.php";
+                unset($_POST['logout']);
+                userInfoController::logout();
+                $request = $_SERVER['REQUEST_URI'];
+                header("location: " . $request);
+                exit();
+            }
             $cartController->handleAjaxRequest();
             exit;
         }
@@ -89,7 +106,6 @@ switch ($parts[1]) {
             }
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (array_key_exists('logout_admin', $_POST)) {
-                header("location: /");
                 unset($_SESSION['admin']);
                 unset($_SESSION['admin_name']);
                 header("location: /admin/login");
@@ -183,6 +199,10 @@ switch ($parts[1]) {
         $controller->register_form();
         break;
     case 'checkout-form':
+        if (!isset($_SESSION['uid']) && !isset($_COOKIE['uid']))
+            header('Location: /');
+        if (!isset($_SESSION['uid']))
+            $_SESSION['uid'] =$_COOKIE['uid'];
         require(ROOT_PATH . '/controllers/OrderController.php');
         $controller = new OrderController($conn);
         $controller->showCheckoutForm();
@@ -196,6 +216,10 @@ switch ($parts[1]) {
         }
         break;
     case 'orders':
+        if (!isset($_SESSION['uid']) && !isset($_COOKIE['uid']))
+            header('Location: /');
+        if (!isset($_SESSION['uid']))
+            $_SESSION['uid'] =$_COOKIE['uid'];
         require(ROOT_PATH . '/controllers/OrderController.php');
         $controller = new OrderController($conn);
 
@@ -230,15 +254,18 @@ switch ($parts[1]) {
         $controller = new userInfoController($conn);
         $controller->passManagement();
         break;
-    case 'sitemap.xml':
-        header("Content-Type: application/xml; charset=utf-8");
-        readfile(ROOT_PATH . '/sitemap.xml');
-        exit;
     default:
         http_response_code(404);
         include ROOT_PATH . "/views/errorPage.php";
         break;
 }
 
+// if ($_GET['action'] == 'listProducts') {
+//     $db = $conn;
+//     $productModel = new ProductModel($db);
+//     $productController = new ProductController($productModel);
+//     $products = $productController->listProducts();
+//     include 'views/product_list_view.php';
+// }
 
 ?>

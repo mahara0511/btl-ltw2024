@@ -30,7 +30,7 @@
             }
             default:
                 http_response_code(404);
-                echo "404 Not Found(Admin)";
+                include ROOT_PATH."/views/errorPage.php";
                 break;
         }
     } else {

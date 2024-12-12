@@ -203,7 +203,7 @@ switch ($parts[1]) {
         break;
     default:
         http_response_code(404);
-        echo "404 Not Found";
+        include ROOT_PATH."/views/errorPage.php";
         break;
 }
 

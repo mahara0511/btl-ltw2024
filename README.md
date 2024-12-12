@@ -1,6 +1,6 @@
 Phiên bản hỗ trợ: PHP 8.0.30.
 Môi trường chạy: XAMPP.
-# Bước 1: Cài đặt XAMPP từ trang web https://www.apachefriends.org/download.html
+Bước 1: Cài đặt XAMPP từ trang web https://www.apachefriends.org/download.html
 #Bước 2: Cài đặt XAMPP vào máy bằng cách chạy file exe vừa tải về.
 #Bước 3: Truy cập vào github: https://github.com/mahara0511/btl-ltw2024
 #Bước 4: Clone dự án từ nhánh main về lưu vào một thư mục.

@@ -1,4 +1,30 @@
 <?php include ROOT_PATH . "/views/layouts/header.php"; ?>
+<style>
+    .map{
+        width: fit-content;
+        margin: auto;
+
+        transition: all 0.1s linear;
+        background: black;
+    }
+    .mapping{
+        width: 800px;
+        max-width: 100%;
+    }
+    #tour{
+        padding-bottom:112px;
+    }
+    .form-control-clear {
+        float: right;
+        position: relative;
+        top: 20px;
+        right: 30px;
+        transition: opacity 0.2s linear
+        color: white;
+
+    }
+</style>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <link rel="stylesheet" href="public/css/aboutUsPage.css">
 <link rel="stylesheet" href="public/css/aboutUsresponsive.css">
@@ -146,6 +172,15 @@
             </div>
 
 
+             <div class="clear"></div>
+            <div class="map" ><iframe
+                        class="mapping"
+                        style="margin: auto"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387194.06243047205!2d-74.30933728043162!3d40.69701925911035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%20City%2C%20New%20York%2C%20USA!5e0!3m2!1sde!2s!4v1733964387216!5m2!1sde!2s"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <a class="form-control-clear" ><i class=" material-icons">clear</i></a>
+            </div>
+
             <div class="clear"></div>
 
 
@@ -185,6 +220,62 @@
             c++;
         }
     }
+
+  $('.place-ticket-btn').click(  function() {
+        var $this = $(this);
+        if ( !$('.map').is( ":hidden" ) ) {
+            $('.map').slideUp( "slow",  function() {
+                console.log("jos");
+                getVal($this.val());
+                if ( $('.map').is( ":hidden" ) ) {
+                    $('.map').slideDown( "slow");
+                }
+            });
+        }
+        else{
+            getVal($this.val());
+            if ( $('.map').is( ":hidden" ) ) {
+                $('.map').slideDown( "slow");
+            }
+        }
+        console.log($this.val());
+
+        return;
+
+    });
+
+    $('.form-control-clear').click(  function() {
+        var $this = $(this);
+        if ( !$('.map').is( ":hidden" ) ) {
+            $('.map').slideUp( "slow");
+
+        }
+    });
+
+     function getVal(value){
+         console.log("here")
+        if(value==="NewYork") {
+            $('.mapping').attr('src', "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387194.06243047205!2d-74.30933728043162!3d40.69701925911035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%20City%2C%20New%20York%2C%20USA!5e0!3m2!1sde!2s!4v1733964387216!5m2!1sde!2s");
+        }
+        else if (value==="Ohio")
+        {
+            $('.mapping').attr('src',"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12086.488716836415!2d-84.6249062978732!3d40.77033394215364!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883e3f5cd6411433%3A0xcb6245c68360033c!2sOhio%20City%2C%20Ohio%2045874%2C%20USA!5e0!3m2!1sde!2s!4v1733965368855!5m2!1sde!2s" );
+        }
+        else if (value==="Florida")
+        {
+            $('.mapping').attr('src',"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28823.460374457038!2d-80.48738112675254!3d25.440518563488695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9e0cb35a8cf39%3A0xf7bdead0fe918320!2sFlorida%20City%2C%20Florida%2C%20USA!5e0!3m2!1sde!2s!4v1733965636788!5m2!1sde!2s" );
+        }
+        $('.mapping').load(function() {
+            $('.map').slideDown( "slow");
+        });
+        return;
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        $('.map').hide();
+    });
+
+    
 </script>
 <!-- <script type="text/javascript">
         $('.block2-btn-addcart').each(function(){

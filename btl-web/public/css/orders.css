@@ -85,7 +85,7 @@ table.order-products td {
   text-align: left;
 }
 
-table.order-products tr:hover {
+table.order-products tbody tr:hover {
   background-color: #ffe2e7;
   cursor: pointer;
 }
@@ -107,6 +107,29 @@ table.order-products tr:hover {
   background-color: #ffe2e7;
 }
 
+th.sortable {
+  cursor: pointer;
+  position: relative;
+  padding-right: 20px;
+}
+
+th.sortable::after {
+  content: '▼▲';
+  position: absolute;
+  right: 5px;
+  opacity: 0.3;
+}
+
+th.sortable.asc::after {
+  content: '▲';
+  color: blue;
+}
+
+th.sortable.desc::after {
+  content: '▼';
+  color: blue;
+}
+
 /* Mobile-first approach */
 @media screen and (max-width: 768px) {
   .responsive-table thead {
@@ -115,7 +138,8 @@ table.order-products tr:hover {
 
   .responsive-table tr {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     border: 1px solid #000000;
   }
 
@@ -126,11 +150,16 @@ table.order-products tr:hover {
     border-bottom: 1px solid #000000;
   }
 
+  .responsive-table td:first-child {
+    background-color: #d10024;
+    color: #ffffff;
+    font-weight: bold !important;
+  }
+
   .responsive-table td::before {
     content: attr(data-label);
     float: left;
     font-weight: bold;
-    text-transform: uppercase;
   }
 
   .responsive-table td:last-child {

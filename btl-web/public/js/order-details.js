@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const table = document.querySelector('.responsive-table')
+  const table = document.querySelector('.responsive-table tbody')
 
   // Modal HTML to be inserted into the document
   const modalHtml = `

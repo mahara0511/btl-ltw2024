@@ -15,6 +15,11 @@ class userInfoController
 
     public function login_form(){
         if (array_key_exists('login', $_POST)&&isset($_POST["email"]) && isset($_POST["password"])) {
+             if (isset($_SESSION['admin']) && $_SESSION['admin'] === TRUE) {
+                $_SESSION['message'] = "You are admin";
+                header('location: /login'); // Chuyển hướng đến trang admin
+                exit();
+            }
             $email = $_POST["email"];
             $password = $_POST["password"];
             $checkbox=$_POST["checkbox"];
@@ -75,6 +80,11 @@ class userInfoController
         if (array_key_exists('register', $_POST)&&isset($_POST["email"]) && isset($_POST["password"]) &&
             isset($_POST["firstname"]) && isset($_POST["lastname"])&&isset($_POST["mobile"])&&isset($_POST["address"])
             &&isset($_POST["province"])&&isset($_POST["district"])&&isset($_POST["rpw"])) {
+             if (isset($_SESSION['admin']) && $_SESSION['admin'] === TRUE) {
+                $_SESSION['message'] = "You are admin";
+                header('location: /login'); // Chuyển hướng đến trang admin
+                exit();
+            }
             $email = $_POST["email"];
             $password = $_POST["password"];
             $address= $_POST["address"];

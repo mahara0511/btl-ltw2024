@@ -21,7 +21,7 @@ require_once ROOT_PATH . "/views/layouts/header.php";
 ?>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="public/js/main.js"></script>
 <script>
     // Check if user is logged in by checking the PHP session variable
     const isLoggedIn = <?php echo isset($_SESSION['uid']) ? 'true' : 'false'; ?>;

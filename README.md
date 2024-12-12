@@ -9,7 +9,7 @@
 -   Bước 7: Chuyển sang phần nhập(Import) và thêm file NEW_shopping_online.sql.
 -   Bước 8: Cấu hình lại web root:
     -   Mở thư mục xampp/apache/conf/httpd.conf
-    -   Thay đổi đường dẫn ở dòng DocumentRoot "C:/xampp/htdocs" thành đường dẫn mà thư mục được tải về.
-    -   Thay đổi đường dẫn ở dòng <Directory "C:/xampp/htdocs" > thành đường dẫn mà thư mục được tải về.
+    -   Thay đổi đường dẫn ở dòng DocumentRoot "C:/xampp/htdocs" thành đường dẫn mà thư mục `btl-web` được tải về.
+    -   Thay đổi đường dẫn ở dòng <Directory "C:/xampp/htdocs" > thành đường dẫn mà thư mục  `btl-web` được tải về.
 -   Bước 9: Khởi động apache và nhấn admin.
 -   Bước 10: Tham quan web site, có thể đăng nhập bằng admin với username = admin@gmail.com và password = admin123

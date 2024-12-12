@@ -2,17 +2,16 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-if(isset($_SESSION['message']))
-{
+if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
-    require_once  (ROOT_PATH.'/views/layouts/login_popup.php');
+    require_once(ROOT_PATH . '/views/layouts/login_popup.php');
     unset($_SESSION['message']);
 }
 
 
 
-if (array_key_exists('logout_admin', $_POST) ) {
-    header ("location: /");
+if (array_key_exists('logout_admin', $_POST)) {
+    header("location: /");
     unset($_SESSION['admin']);
     unset($_SESSION['admin_name']);
     header("location: /admin/login");
@@ -24,15 +23,13 @@ if (array_key_exists('logout_admin', $_POST) ) {
     $request = $_SERVER['REQUEST_URI'];
     $request = parse_url($request, PHP_URL_PATH);
     $parts = explode('/', $request);
-    if($parts[1]=="user_info"||$parts[1]=="password"){
+    if ($parts[1] == "user_info" || $parts[1] == "password") {
         header('Location: /');
         exit();
-    }
-    else{
-        if(isset($_SESSION['message']))
-        {
+    } else {
+        if (isset($_SESSION['message'])) {
             $message = $_SESSION['message'];
-            require_once  (ROOT_PATH.'/views/layouts/login_popup.php');
+            require_once(ROOT_PATH . '/views/layouts/login_popup.php');
             unset($_SESSION['message']);
         }
     }
@@ -96,7 +93,7 @@ if (array_key_exists('logout_admin', $_POST) ) {
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     <style>
-	   .inline {
+        .inline {
             display: inline;
         }
 
@@ -111,11 +108,13 @@ if (array_key_exists('logout_admin', $_POST) ) {
             transition: 0.2s color;
             font-weight: 500;
         }
+
         .link-button:hover {
             color: #d10024;
         }
+
         .link-button:active {
-            color:red;
+            color: red;
         }
 
         #navigation {
@@ -247,16 +246,14 @@ if (array_key_exists('logout_admin', $_POST) ) {
                                   <a href="#" class="dropdownn" data-toggle="modal" data-target="#myModal" ><i class="fa fa-user-o"></i> HI ' . $row["first_name"] . '</a>
                                   <div class="dropdownn-content">
                                     <a href="/user_info" ><i class="fa fa-user-circle" aria-hidden="true" ></i>My Profile</a>
-                                    
+                                    <a href="/orders" ><i class="fa-solid fa-bag-shopping" aria-hidden="true" ></i>My Orders</a>
+
                                     <form method="post"  class="inline dropdown">
                                         <input type="hidden" name="logout" value="logout">
                                         <button type="submit" name="submit_param" value="submit_value" class="link-button">
                                             <i class="fa fa-sign-in" aria-hidden="true"></i>Log out
-                                            
                                          </button>
                                     </form>
-                                    
-                                    
                                   </div>
                                 </div>';
 
@@ -329,10 +326,13 @@ if (array_key_exists('logout_admin', $_POST) ) {
                                     <option value="1">Men</option>
                                     <option value="1">Women </option>
                                 </select> -->
-                                
-                            <a class="input" id="search" href="store" style="cursor:pointer ;display: flex; justify-content: center; align-items: center;" type="text" placeholder="">
+
+                            <a class="input" id="search" href="store"
+                                style="cursor:pointer ;display: flex; justify-content: center; align-items: center;"
+                                type="text" placeholder="">
                                 Search Product
-                                <i class="fa fa-magnifying-glass" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%)"></i>
+                                <i class="fa fa-magnifying-glass"
+                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%)"></i>
                             </a>
                             <!-- <button id="search_btn" class="search-btn" onclick="window.location.href='/store'">Search
                                 your favorite

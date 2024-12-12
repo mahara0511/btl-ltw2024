@@ -42,6 +42,10 @@ $cartController = new CartController($conn);
                     <small class="qty"><?= count($cart_items) . " Item(s) in cart" ?></small>
                     <h5>Total price : $<?= round($total_price, 0) ?></h5>
                 </div>
+            <?php else: ?>
+                <div class="alert alert-danger" role="alert">
+                    Your cart is empty.
+                </div>
             <?php endif; ?>
         </div>
         <div class="cart-btns">
@@ -72,66 +76,64 @@ $cartController = new CartController($conn);
     // If user does not login already, load cart in local storage
     // Else call $cartController above
     // If user is logged in, display server-side cart
-    const isUserLoggedIn = <?= isset($_SESSION['uid']) ? 'true' : 'false' ?>;
-    if (!isUserLoggedIn) {
-        // User is not logged in, load cart from localStorage
-        loadLocalStorageCart();
-    }
+    // const isUserLoggedIn = <?= isset($_SESSION['uid']) ? 'true' : 'false' ?>;
+    // if (!isUserLoggedIn) {
+    //     // User is not logged in, load cart from localStorage
+    //     loadLocalStorageCart();
+    // }
 
-    function loadLocalStorageCart() {
-        let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-        let totalPrice = 0;
+    // function loadLocalStorageCart() {
+    //     let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    //     let totalPrice = 0;
 
-        if (cartItems.length > 0) {
-            let requests = cartItems.map(item => {
-                return $.ajax({
-                    url: '/store',
-                    method: 'GET',
-                    data: { cart_pid: item.pid },
-                    dataType: 'json'
-                });
-            });
+    //     if (cartItems.length > 0) {
+    //         let requests = cartItems.map(item => {
+    //             return $.ajax({
+    //                 url: '/store',
+    //                 method: 'GET',
+    //                 data: { cart_pid: item.pid },
+    //                 dataType: 'json'
+    //             });
+    //         });
 
-            $.when.apply($, requests).done(function (...responses) {
-                responses = responses.map(res => res[0]); // Extract data from each response
+    //         $.when.apply($, requests).done(function (...responses) {
+    //             responses = responses.map(res => res[0]); // Extract data from each response
 
-                responses.forEach((product, index) => {
-                    const item = cartItems[index];
-                    const productTotalPrice = item.qty * product.product_price;
-                    totalPrice += productTotalPrice;
+    //             responses.forEach((product, index) => {
+    //                 const item = cartItems[index];
+    //                 const productTotalPrice = item.qty * product.product_price;
+    //                 totalPrice += productTotalPrice;
 
-                    $('#cart_product').append(`
-                        <div class="product-widget" onclick="window.location.href='/store?product_id=${product.product_id}'">
-                            <div class="product-img"s>
-                                <img src="public/product_images/${product.product_image}" alt="${(product.product_title)}">
-                            </div>
-                            <div class="product-body">
-                                <h3 class="product-name">
-                                    <a href="/store?product_id=${product.product_id}">${(product.product_title)}</a>
-                                </h3>
-                                <h4 class="product-price">
-                                    <span class="qty">${item.qty}</span> x $${Math.round(product.product_price)}
-                                </h4>
-                            </div>
-                        </div>
-                    `);
-                });
+    //                 $('#cart_product').append(`
+    //                     <div class="product-widget" onclick="window.location.href='/store?product_id=${product.product_id}'">
+    //                         <div class="product-img"s>
+    //                             <img src="public/product_images/${product.product_image}" alt="${(product.product_title)}">
+    //                         </div>
+    //                         <div class="product-body">
+    //                             <h3 class="product-name">
+    //                                 <a href="/store?product_id=${product.product_id}">${(product.product_title)}</a>
+    //                             </h3>
+    //                             <h4 class="product-price">
+    //                                 <span class="qty">${item.qty}</span> x $${Math.round(product.product_price)}
+    //                             </h4>
+    //                         </div>
+    //                     </div>
+    //                 `);
+    //             });
 
-                // Update total cart price and item count
-                $('#cartItemCount').text(cartItems.length);
-                $('#cart_product').append(`
-                    <small class="qty">${cartItems.length} Item(s) in cart</small>
-                    <h5>Total price: $${Math.round(totalPrice)}</h5>
-                `);
-            }).fail(function () {
-                console.error('Failed to fetch product details from the server.');
-                $('#cart_product').html('<div class="alert alert-warning m-auto" role="alert">Failed to load cart items.</div>');
-            });
-        } else {
-            $('#cart_product').html('<div class="alert alert-warning m-auto" role="alert">Your cart is empty.</div>');
-            $('#cartItemCount').text('0');
-        }
-    }
-
-
+    //             // Update total cart price and item count
+    //             $('#cartItemCount').text(cartItems.length);
+    //             $('#cart_product').append(`
+    //                 <small class="qty">${cartItems.length} Item(s) in cart</small>
+    //                 <h5>Total price: $${Math.round(totalPrice)}</h5>
+    //             `);
+    //         }).fail(function () {
+    //             console.error('Failed to fetch product details from the server.');
+    //             $('#cart_product').html('<div class="alert alert-warning m-auto" role="alert">Failed to load cart items.</div>');
+    //         });
+    //     } else {
+    //         $('#cart_product').html('<div class="alert alert-warning m-auto" role="alert">Your cart is empty.</div>');
+    //         $('#cartItemCount').text('0');
+    //     }
+    // }
 </script>

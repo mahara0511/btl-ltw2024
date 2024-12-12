@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function showModal(modalItem, title, content) {
     modalItem.find('#ModalAlertLabel').text(title)
-    modalItem.find('#modal_message').text(content)
+    modalItem.find('#modal_message').html(content)
     toggleModal()
   }
 
@@ -93,45 +93,61 @@ document.addEventListener('DOMContentLoaded', function () {
     const productId = $(this).attr('pid')
     const quantity =
       $(this).closest('.product').find('#quantity-input').val() || 1 // Default to 1 if not found
-
-    $.ajax({
-      url: '/view_cart',
-      method: 'POST',
-      data: {
-        cart_action: 'addToCart',
-        pid: productId,
-        qty: quantity,
-      },
-      success: function (response) {
-        let status = 'Error'
-        switch (response.status) {
-          case 'success':
-            status = 'Notification'
-            break
-          case 'warning':
-            status = 'Alert'
-            break
-          default:
-            status = 'Error'
-            break
-        }
-
-        showModal(
-          modal,
-          status,
-          response.message || 'An error occurred while adding to cart.'
-        )
-
-        $('#Modal_alert button').on('click', function () {
-          if (modal.hasClass('fade')) {
-            if (status == 'Notification') location.reload() // Reload to update the cart
+    if (isLoggedIn) {
+      $.ajax({
+        url: '/view_cart',
+        method: 'POST',
+        data: {
+          cart_action: 'addToCart',
+          pid: productId,
+          qty: quantity,
+        },
+        success: function (response) {
+          let status = 'Error'
+          switch (response.status) {
+            case 'success':
+              status = 'Notification'
+              break
+            case 'warning':
+              status = 'Alert'
+              break
+            default:
+              status = 'Error'
+              break
           }
-        })
-      },
-      error: function () {
-        showModal(modal, 'Error', 'An error occurred while updating the cart.')
-      },
-    })
+
+          showModal(
+            modal,
+            status,
+            response.message || 'An error occurred while adding to cart.'
+          )
+
+          $('#Modal_alert button').on('click', function () {
+            if (modal.hasClass('fade')) {
+              if (status == 'Notification') location.reload() // Reload to update the cart
+            }
+          })
+        },
+        error: function () {
+          showModal(
+            modal,
+            'Error',
+            'An error occurred while updating the cart.'
+          )
+        },
+      })
+    } else {
+      showModal(
+        modal,
+        'Alert ',
+        `Please log in to complete the purchase! <a href='/login'>Log in here</a>`
+      )
+      $('#Modal_alert button').on('click', function () {
+        if (modal.hasClass('fade')) {
+          location.reload()
+        }
+      })
+    }
   })
 
   // Reply Button Functionality
@@ -216,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
           } else {
             // Failure: Show the error message
             if (data.message === 'Not logged in') {
-              messageElement.innerHTML = `You must login to comment. <a href='login-form.php'>Log in here</a>`
+              messageElement.innerHTML = `You must login to comment. <a href='/login'>Log in here</a>`
             } else {
               messageElement.textContent = data.message
             }
@@ -263,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
               form.reset()
             } else {
               if (data.message === 'Not logged in') {
-                messageElement.innerHTML = `You must login to reply. <a href='login-form.php'>Log in here</a>`
+                messageElement.innerHTML = `You must login to reply. <a href='/login'>Log in here</a>`
               } else {
                 messageElement.textContent = data.message
               }

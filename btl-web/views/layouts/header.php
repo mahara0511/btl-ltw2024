@@ -50,7 +50,8 @@ if (array_key_exists('logout_admin', $_POST) ) {
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <title>Online Shopping</title>
-
+    <meta name="keywords" content="shopping, online shopping, iphone, samsung, electronic, clothes">
+    <meta name="description" content="Buy all the worlds here. Open from 8am to 17pm all the day">
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 

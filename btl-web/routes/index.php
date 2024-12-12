@@ -230,18 +230,15 @@ switch ($parts[1]) {
         $controller = new userInfoController($conn);
         $controller->passManagement();
         break;
+    case 'sitemap.xml':
+        header("Content-Type: application/xml; charset=utf-8");
+        readfile(ROOT_PATH . '/sitemap.xml');
+        exit;
     default:
         http_response_code(404);
         include ROOT_PATH."/views/errorPage.php";
         break;
 }
 
-// if ($_GET['action'] == 'listProducts') {
-//     $db = $conn;
-//     $productModel = new ProductModel($db);
-//     $productController = new ProductController($productModel);
-//     $products = $productController->listProducts();
-//     include 'views/product_list_view.php';
-// }
 
 ?>

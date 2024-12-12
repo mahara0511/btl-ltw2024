@@ -22,7 +22,7 @@ class OrderController
         foreach ($orders_data as $item) {
             array_push($orders, $item);
         }
-        require_once 'views/order.php';
+        require_once 'views/orders.php';
     }
 
     /**

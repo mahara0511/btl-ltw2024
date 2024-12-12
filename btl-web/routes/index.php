@@ -137,7 +137,6 @@ switch ($parts[1]) {
         include_once("admin/index.php");
         break;
     case 'subcribe': 
-        if (count($parts) >2) {header("location: /".$parts[1]);}
         require(ROOT_PATH . '/controllers/HomeController.php');
         $controller = new HomeController();
         $controller->postEmail();

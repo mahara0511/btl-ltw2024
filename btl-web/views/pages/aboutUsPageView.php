@@ -1,11 +1,13 @@
 <?php include ROOT_PATH . "/views/layouts/header.php"; ?>
+
 <style>
     .map{
         width: fit-content;
         margin: auto;
-
+        position: relative;
         transition: all 0.1s linear;
         background: black;
+        scroll-margin-top: 20px;
     }
     .mapping{
         width: 800px;
@@ -128,7 +130,7 @@
                 </ul>
 
                 <div class="place-list row">
-                    <div class="col col-three s-col-full mt-16">
+                    <div class="col col-xs-12 col-sm-4 mt-16">
                         <img src="public/img/place-list/place1.jpg" alt="New York" class="place-img">
                         <div class="place-infor">
                             <p class="place-heading">New York</p>
@@ -137,43 +139,48 @@
                             </div>
                             <div class="place-desc">Praesent tincidunt sed tellus ut rutrum sed
                                 vitae justo.</div>
-                            <button class="place-ticket-btn js-place-ticket-btn s-full-width ">See
+                            <button class="place-ticket-btn js-place-ticket-btn s-full-width " value="NewYork" >See
                                 Map</button>
                         </div>
                     </div>
 
-                    <div class="col col-three s-col-full mt-16">
+                    <div class="col col-xs-12 col-sm-4 mt-16">
                         <img src="public/img/place-list/place2.jpg" alt="New York" class="place-img">
                         <div class="place-infor">
                             <p class="place-heading">Florida</p>
                             <div class="place-time">Opening: 7am - 9pm</div>
                             <div class="place-desc">Praesent tincidunt sed tellus ut rutrum sed
                                 vitae justo.</div>
-                            <button class="place-ticket-btn js-place-ticket-btn s-full-width ">See
+                            <button class="place-ticket-btn js-place-ticket-btn s-full-width " value="Florida" >See
                                 Map</button>
                         </div>
 
                     </div>
 
-                    <div class="col col-three s-col-full mt-16">
+                    <div class="col col-xs-12 col-sm-4 mt-16">
                         <img src="public/img/place-list/place3.jpg" alt="New York" class="place-img">
                         <div class="place-infor">
                             <p class="place-heading">Ohio</p>
                             <div class="place-time">Opening: 7am - 9pm</div>
                             <div class="place-desc">Praesent tincidunt sed tellus ut rutrum sed
                                 vitae justo.</div>
-                            <button class="place-ticket-btn js-place-ticket-btn s-full-width ">See
+                            <button class="place-ticket-btn js-place-ticket-btn s-full-width " value="Ohio" >See
                                 Map</button>
                         </div>
                     </div>
 
                     <div class="clear"></div>
+
                 </div>
+
             </div>
 
 
-             <div class="clear"></div>
-            <div class="map" ><iframe
+            <div class="clear" id="before"></div>
+            <div class="map" id="map" height="450" >
+                <div id="anchor" style="position: absolute; top: -100px; left: 0"></div>
+
+                <iframe
                         class="mapping"
                         style="margin: auto"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387194.06243047205!2d-74.30933728043162!3d40.69701925911035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%20City%2C%20New%20York%2C%20USA!5e0!3m2!1sde!2s!4v1733964387216!5m2!1sde!2s"
@@ -182,8 +189,6 @@
             </div>
 
             <div class="clear"></div>
-
-
         </div>
             </div>
 
@@ -221,7 +226,8 @@
         }
     }
 
-  $('.place-ticket-btn').click(  function() {
+    $('.place-ticket-btn').click(  function() {
+
         var $this = $(this);
         if ( !$('.map').is( ":hidden" ) ) {
             $('.map').slideUp( "slow",  function() {
@@ -238,6 +244,8 @@
                 $('.map').slideDown( "slow");
             }
         }
+        $("#anchor").get(0).scrollIntoView({behavior: 'smooth',block: "start"});
+
         console.log($this.val());
 
         return;
@@ -275,7 +283,6 @@
         $('.map').hide();
     });
 
-    
 </script>
 <!-- <script type="text/javascript">
         $('.block2-btn-addcart').each(function(){
